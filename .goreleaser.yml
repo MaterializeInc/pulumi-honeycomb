@@ -13,6 +13,6 @@ builds:
     main: ./cmd/pulumi-resource-honeycomb
     binary: pulumi-resource-honeycomb
     ldflags:
-      - -X main.version={{.Tag}}
+      - -X github.com/MaterializeInc/pulumi-honeycomb/provider/pkg/version.Version={{.Version}}
 changelog:
   skip: true
