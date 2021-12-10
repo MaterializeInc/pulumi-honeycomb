@@ -33,7 +33,6 @@ const (
 	mainPkg = "honeycomb"
 	// modules:
 	mainMod = "index" // the xyz module
-	docBase = ""
 )
 
 // preConfigureCallback is called before the providerConfigure function of the underlying provider.
