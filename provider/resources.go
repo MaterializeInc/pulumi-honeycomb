@@ -33,6 +33,7 @@ const (
 	mainPkg = "honeycomb"
 	// modules:
 	mainMod = "index" // the xyz module
+	docBase = ""
 )
 
 // preConfigureCallback is called before the providerConfigure function of the underlying provider.
@@ -51,41 +52,45 @@ func Provider() tfbridge.ProviderInfo {
 	// Create a Pulumi provider mapping
 	prov := tfbridge.ProviderInfo{
 		P:           p,
-		Name:        "honeycomb",
+		Name:        "honeycombio",
 		Description: "A Pulumi package for creating and managing honeycomb.io resources.",
 		Keywords:    []string{"pulumi", "honeycomb", "tracing", "o11y", "monitoring", "otel"},
 		License:     "Apache-2.0",
+		GitHubOrg:   "kvrhdn",
 		Homepage:    "https://github.com/antifuchs/pulumi-honeycomb",
-		Repository:  "https://github.com/antifuchs/pulumi-honeycomb",
-		Config:      map[string]*tfbridge.SchemaInfo{
-			// Add any required configuration here, or remove the example below if
-			// no additional points are required.
-			// "region": {
-			//	Type: tfbridge.MakeType("region", "Region"),
-			//	Default: &tfbridge.DefaultInfo{
-			//		EnvVars: []string{"AWS_REGION", "AWS_DEFAULT_REGION"},
-			//	},
-			// },
+		Repository:  "https://github.com/kvrhdn/honeycombio",
+		Config: map[string]*tfbridge.SchemaInfo{
+			"api_key": {
+				Default: &tfbridge.DefaultInfo{
+					EnvVars: []string{"HONEYCOMBIO_APIKEY"},
+				},
+			},
+			"api_url": {
+				Default: &tfbridge.DefaultInfo{
+					Value: "https://api.honeycomb.io",
+				},
+			},
+			"debug": {
+				Default: &tfbridge.DefaultInfo{
+					Value: false,
+				},
+			},
 		},
 		PreConfigureCallback: preConfigureCallback,
-		Resources:            map[string]*tfbridge.ResourceInfo{
-			// Map each resource in the Terraform provider to a Pulumi type. Two examples
-			// are below - the single line form is the common case. The multi-line form is
-			// needed only if you wish to override types or other default options.
-			//
-			// "aws_iam_role": {Tok: tfbridge.MakeResource(mainMod, "IamRole")}
-			//
-			// "aws_acm_certificate": {
-			//	Tok: tfbridge.MakeResource(mainMod, "Certificate"),
-			//	Fields: map[string]*tfbridge.SchemaInfo{
-			//		"tags": {Type: tfbridge.MakeType(mainPkg, "Tags")},
-			//	},
-			// },
+		Resources: map[string]*tfbridge.ResourceInfo{
+			"honeycombio_board":            {Tok: tfbridge.MakeResource(mainPkg, mainMod, "Board")},
+			"honeycombio_column":           {Tok: tfbridge.MakeResource(mainPkg, mainMod, "Column")},
+			"honeycombio_dataset":          {Tok: tfbridge.MakeResource(mainPkg, mainMod, "Dataset")},
+			"honeycombio_derived_column":   {Tok: tfbridge.MakeResource(mainPkg, mainMod, "DerivedColumn")},
+			"honeycombio_marker":           {Tok: tfbridge.MakeResource(mainPkg, mainMod, "Marker")},
+			"honeycombio_query":            {Tok: tfbridge.MakeResource(mainPkg, mainMod, "Query")},
+			"honeycombio_query_annotation": {Tok: tfbridge.MakeResource(mainPkg, mainMod, "QueryAnnotation")},
+			"honeycombio_trigger":          {Tok: tfbridge.MakeResource(mainPkg, mainMod, "Trigger")},
 		},
 		DataSources: map[string]*tfbridge.DataSourceInfo{
-			// Map each resource in the Terraform provider to a Pulumi function. An example
-			// is below.
-			// "aws_ami": {Tok: tfbridge.MakeDataSource(mainMod, "getAmi")},
+			"honeycombio_datasets":          {Tok: tfbridge.MakeDataSource(mainPkg, mainMod, "Datasets")},
+			"honeycombio_query":             {Tok: tfbridge.MakeDataSource(mainPkg, mainMod, "Query")},
+			"honeycombio_trigger_recipient": {Tok: tfbridge.MakeDataSource(mainPkg, mainMod, "TriggerRecipient")},
 		},
 		JavaScript: &tfbridge.JavaScriptInfo{
 			// List any npm dependencies and their versions
