@@ -1,0 +1,24 @@
+name: build
+
+on:
+  push:
+    branches:
+
+jobs:
+  goreleaser-build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      # https://github.com/actions/checkout/issues/290
+      - run: git fetch --force --tags
+      - uses: actions/setup-go@v2
+        with:
+          go-version: 1.16
+      - run: make linkerd2
+      - uses: goreleaser/goreleaser-action@v2
+        with:
+          distribution: goreleaser
+          version: latest
+          args: build --skip-validate --rm-dist
