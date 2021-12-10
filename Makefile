@@ -7,8 +7,8 @@ bin/pulumi-tfgen-honeycomb: provider/cmd/pulumi-tfgen-honeycomb/*.go provider/go
 	cd provider && go build -o ../bin/pulumi-tfgen-honeycomb  -ldflags "-X github.com/MaterializeInc/pulumi-honeycomb/provider/pkg/version.Version=${VERSION}" ./cmd/pulumi-tfgen-honeycomb
 
 provider/cmd/pulumi-resource-honeycomb/schema.json: bin/pulumi-tfgen-honeycomb provider/resources.go
-	(cd provider && VERSION=$(VERSION) go generate cmd/pulumi-resource-honeycomb/main.go)
 	bin/pulumi-tfgen-honeycomb schema --out ./provider/cmd/pulumi-resource-honeycomb
+	(cd provider && VERSION=$(VERSION) go generate cmd/pulumi-resource-honeycomb/main.go)
 
 schema: provider/cmd/pulumi-resource-honeycomb/schema.json
 
