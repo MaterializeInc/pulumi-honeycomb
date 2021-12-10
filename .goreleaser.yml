@@ -1,0 +1,18 @@
+archives:
+  - id: archive
+    name_template: "{{ .Binary }}-{{ .Tag }}-{{ .Os }}-{{ .Arch }}"
+builds:
+  - goarch:
+      - amd64
+      - arm64
+    goos:
+      - darwin
+      - windows
+      - linux
+    dir: ./provider
+    main: ./cmd/pulumi-resource-honeycomb
+    binary: pulumi-resource-honeycomb
+    ldflags:
+      - -X main.version={{.Tag}}
+changelog:
+  skip: true
