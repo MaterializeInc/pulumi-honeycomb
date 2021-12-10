@@ -17,8 +17,8 @@
 package main
 
 import (
-	honeycomb "github.com/antifuchs/pulumi-honeycomb/provider"
-	"github.com/antifuchs/pulumi-honeycomb/provider/pkg/version"
+	honeycomb "github.com/MaterializeInc/pulumi-honeycomb/provider"
+	"github.com/MaterializeInc/pulumi-honeycomb/provider/pkg/version"
 	"github.com/pulumi/pulumi-terraform-bridge/v3/pkg/tfbridge"
 )
 

@@ -1,7 +1,7 @@
 PROJECT_NAME := honeycomb Package
 
 PACK             := honeycomb
-ORG              := antifuchs
+ORG              := MaterializeInc
 PROJECT          := github.com/${ORG}/pulumi-${PACK}
 NODE_MODULE_NAME := @pulumi/${PACK}
 TF_NAME          := ${PACK}

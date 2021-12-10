@@ -18,7 +18,7 @@ import (
 	"fmt"
 	"path/filepath"
 
-	"github.com/antifuchs/pulumi-honeycomb/provider/pkg/version"
+	"github.com/MaterializeInc/pulumi-honeycomb/provider/pkg/version"
 	"github.com/kvrhdn/terraform-provider-honeycombio/honeycombio"
 	"github.com/pulumi/pulumi-terraform-bridge/v3/pkg/tfbridge"
 	shim "github.com/pulumi/pulumi-terraform-bridge/v3/pkg/tfshim"
@@ -56,7 +56,7 @@ func Provider() tfbridge.ProviderInfo {
 		Keywords:    []string{"pulumi", "honeycomb", "tracing", "o11y", "monitoring", "otel"},
 		License:     "Apache-2.0",
 		GitHubOrg:   "kvrhdn",
-		Homepage:    "https://github.com/antifuchs/pulumi-honeycomb",
+		Homepage:    "https://github.com/MaterializeInc/pulumi-honeycomb",
 		Repository:  "https://github.com/kvrhdn/honeycombio",
 		Config: map[string]*tfbridge.SchemaInfo{
 			"api_key": {

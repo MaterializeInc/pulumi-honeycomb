@@ -1,4 +1,4 @@
-module github.com/antifuchs/pulumi-honeycomb/provider
+module github.com/MaterializeInc/pulumi-honeycomb/provider
 
 go 1.16
 

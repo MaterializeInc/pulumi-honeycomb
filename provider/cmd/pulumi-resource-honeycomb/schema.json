@@ -9,7 +9,7 @@
         "monitoring",
         "otel"
     ],
-    "homepage": "https://github.com/antifuchs/pulumi-honeycomb",
+    "homepage": "https://github.com/MaterializeInc/pulumi-honeycomb",
     "license": "Apache-2.0",
     "attribution": "This Pulumi package is based on the [`honeycombio` Terraform Provider](https://github.com/kvrhdn/terraform-provider-honeycombio).",
     "repository": "https://github.com/kvrhdn/honeycombio",
