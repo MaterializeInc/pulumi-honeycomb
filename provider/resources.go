@@ -88,9 +88,9 @@ func Provider() tfbridge.ProviderInfo {
 			"honeycombio_trigger":          {Tok: tfbridge.MakeResource(mainPkg, mainMod, "Trigger")},
 		},
 		DataSources: map[string]*tfbridge.DataSourceInfo{
-			"honeycombio_datasets":          {Tok: tfbridge.MakeDataSource(mainPkg, mainMod, "Datasets")},
-			"honeycombio_query":             {Tok: tfbridge.MakeDataSource(mainPkg, mainMod, "Query")},
-			"honeycombio_trigger_recipient": {Tok: tfbridge.MakeDataSource(mainPkg, mainMod, "TriggerRecipient")},
+			"honeycombio_datasets":          {Tok: tfbridge.MakeDataSource(mainPkg, mainMod, "GetDatasets")},
+			"honeycombio_query":             {Tok: tfbridge.MakeDataSource(mainPkg, mainMod, "GetQuery")},
+			"honeycombio_trigger_recipient": {Tok: tfbridge.MakeDataSource(mainPkg, mainMod, "GetTriggerRecipient")},
 		},
 		JavaScript: &tfbridge.JavaScriptInfo{
 			// List any npm dependencies and their versions
