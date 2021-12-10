@@ -12,25 +12,25 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package xyz
+package honeycomb
 
 import (
 	"fmt"
 	"path/filepath"
 
+	"github.com/antifuchs/pulumi-honeycomb/provider/pkg/version"
+	"github.com/kvrhdn/terraform-provider-honeycombio/honeycombio"
 	"github.com/pulumi/pulumi-terraform-bridge/v3/pkg/tfbridge"
 	shim "github.com/pulumi/pulumi-terraform-bridge/v3/pkg/tfshim"
 	shimv2 "github.com/pulumi/pulumi-terraform-bridge/v3/pkg/tfshim/sdk-v2"
-	"github.com/pulumi/pulumi-xyz/provider/pkg/version"
 	"github.com/pulumi/pulumi/sdk/v3/go/common/resource"
-	"github.com/terraform-providers/terraform-provider-xyz/xyz"
 )
 
 // all of the token components used below.
 const (
 	// This variable controls the default name of the package in the package
 	// registries for nodejs and python:
-	mainPkg = "xyz"
+	mainPkg = "honeycomb"
 	// modules:
 	mainMod = "index" // the xyz module
 )
@@ -46,25 +46,25 @@ func preConfigureCallback(vars resource.PropertyMap, c shim.ResourceConfig) erro
 // Provider returns additional overlaid schema and metadata associated with the provider..
 func Provider() tfbridge.ProviderInfo {
 	// Instantiate the Terraform provider
-	p := shimv2.NewProvider(xyz.Provider())
+	p := shimv2.NewProvider(honeycombio.Provider())
 
 	// Create a Pulumi provider mapping
 	prov := tfbridge.ProviderInfo{
 		P:           p,
-		Name:        "xyz",
-		Description: "A Pulumi package for creating and managing xyz cloud resources.",
-		Keywords:    []string{"pulumi", "xyz"},
+		Name:        "honeycomb",
+		Description: "A Pulumi package for creating and managing honeycomb.io resources.",
+		Keywords:    []string{"pulumi", "honeycomb", "tracing", "o11y", "monitoring", "otel"},
 		License:     "Apache-2.0",
-		Homepage:    "https://pulumi.io",
-		Repository:  "https://github.com/pulumi/pulumi-xyz",
+		Homepage:    "https://github.com/antifuchs/pulumi-honeycomb",
+		Repository:  "https://github.com/antifuchs/pulumi-honeycomb",
 		Config:      map[string]*tfbridge.SchemaInfo{
 			// Add any required configuration here, or remove the example below if
 			// no additional points are required.
 			// "region": {
-			// 	Type: tfbridge.MakeType("region", "Region"),
-			// 	Default: &tfbridge.DefaultInfo{
-			// 		EnvVars: []string{"AWS_REGION", "AWS_DEFAULT_REGION"},
-			// 	},
+			//	Type: tfbridge.MakeType("region", "Region"),
+			//	Default: &tfbridge.DefaultInfo{
+			//		EnvVars: []string{"AWS_REGION", "AWS_DEFAULT_REGION"},
+			//	},
 			// },
 		},
 		PreConfigureCallback: preConfigureCallback,
@@ -76,10 +76,10 @@ func Provider() tfbridge.ProviderInfo {
 			// "aws_iam_role": {Tok: tfbridge.MakeResource(mainMod, "IamRole")}
 			//
 			// "aws_acm_certificate": {
-			// 	Tok: tfbridge.MakeResource(mainMod, "Certificate"),
-			// 	Fields: map[string]*tfbridge.SchemaInfo{
-			// 		"tags": {Type: tfbridge.MakeType(mainPkg, "Tags")},
-			// 	},
+			//	Tok: tfbridge.MakeResource(mainMod, "Certificate"),
+			//	Fields: map[string]*tfbridge.SchemaInfo{
+			//		"tags": {Type: tfbridge.MakeType(mainPkg, "Tags")},
+			//	},
 			// },
 		},
 		DataSources: map[string]*tfbridge.DataSourceInfo{
