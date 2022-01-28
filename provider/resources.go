@@ -19,7 +19,7 @@ import (
 	"path/filepath"
 
 	"github.com/MaterializeInc/pulumi-honeycomb/provider/pkg/version"
-	"github.com/kvrhdn/terraform-provider-honeycombio/honeycombio"
+	"github.com/honeycombio/terraform-provider-honeycombio/honeycombio"
 	"github.com/pulumi/pulumi-terraform-bridge/v3/pkg/tfbridge"
 	shim "github.com/pulumi/pulumi-terraform-bridge/v3/pkg/tfshim"
 	shimv2 "github.com/pulumi/pulumi-terraform-bridge/v3/pkg/tfshim/sdk-v2"
@@ -55,9 +55,9 @@ func Provider() tfbridge.ProviderInfo {
 		Description: "A Pulumi package for creating and managing honeycomb.io resources.",
 		Keywords:    []string{"pulumi", "honeycomb", "tracing", "o11y", "monitoring", "otel"},
 		License:     "Apache-2.0",
-		GitHubOrg:   "kvrhdn",
-		Homepage:    "https://github.com/MaterializeInc/pulumi-honeycomb",
-		Repository:  "https://github.com/kvrhdn/honeycombio",
+		GitHubOrg:   "honeycombio",
+		Homepage:    "https://github.com/honeycombio/terraform-provider-honeycombio",
+		Repository:  "https://github.com/honeycombio/terraform-provider-honeycombio",
 		Config: map[string]*tfbridge.SchemaInfo{
 			"api_key": {
 				Default: &tfbridge.DefaultInfo{
@@ -87,9 +87,9 @@ func Provider() tfbridge.ProviderInfo {
 			"honeycombio_trigger":          {Tok: tfbridge.MakeResource(mainPkg, mainMod, "Trigger")},
 		},
 		DataSources: map[string]*tfbridge.DataSourceInfo{
-			"honeycombio_datasets":          {Tok: tfbridge.MakeDataSource(mainPkg, mainMod, "GetDatasets")},
-			"honeycombio_query":             {Tok: tfbridge.MakeDataSource(mainPkg, mainMod, "GetQuery")},
-			"honeycombio_trigger_recipient": {Tok: tfbridge.MakeDataSource(mainPkg, mainMod, "GetTriggerRecipient")},
+			"honeycombio_datasets":            {Tok: tfbridge.MakeDataSource(mainPkg, mainMod, "GetDatasets")},
+			"honeycombio_query_specification": {Tok: tfbridge.MakeDataSource(mainPkg, mainMod, "GetQuerySpecification")},
+			"honeycombio_trigger_recipient":   {Tok: tfbridge.MakeDataSource(mainPkg, mainMod, "GetTriggerRecipient")},
 		},
 		JavaScript: &tfbridge.JavaScriptInfo{
 			// List any npm dependencies and their versions
