@@ -50,32 +50,16 @@ func Provider() tfbridge.ProviderInfo {
 
 	// Create a Pulumi provider mapping
 	prov := tfbridge.ProviderInfo{
-		P:                 p,
-		Name:              "honeycombio",
-		Description:       "A Pulumi package for creating and managing honeycomb.io resources.",
-		Keywords:          []string{"pulumi", "honeycomb", "tracing", "o11y", "monitoring", "otel"},
-		License:           "Apache-2.0",
-		GitHubOrg:         "honeycombio",
-		Homepage:          "https://github.com/honeycombio/terraform-provider-honeycombio",
-		Repository:        "https://github.com/honeycombio/terraform-provider-honeycombio",
-		PluginDownloadURL: fmt.Sprintf("https://github.com/MaterializeInc/pulumi-honeycomb/releases/download/v%s/", version.Version),
-		Config: map[string]*tfbridge.SchemaInfo{
-			"api_key": {
-				Default: &tfbridge.DefaultInfo{
-					EnvVars: []string{"HONEYCOMBIO_APIKEY"},
-				},
-			},
-			"api_url": {
-				Default: &tfbridge.DefaultInfo{
-					Value: "https://api.honeycomb.io",
-				},
-			},
-			"debug": {
-				Default: &tfbridge.DefaultInfo{
-					Value: false,
-				},
-			},
-		},
+		P:                    p,
+		Name:                 "honeycombio",
+		Description:          "A Pulumi package for creating and managing honeycomb.io resources.",
+		Keywords:             []string{"pulumi", "honeycomb", "tracing", "o11y", "monitoring", "otel"},
+		License:              "Apache-2.0",
+		GitHubOrg:            "honeycombio",
+		Homepage:             "https://github.com/honeycombio/terraform-provider-honeycombio",
+		Repository:           "https://github.com/honeycombio/terraform-provider-honeycombio",
+		PluginDownloadURL:    fmt.Sprintf("https://github.com/MaterializeInc/pulumi-honeycomb/releases/download/v%s/", version.Version),
+		Config:               map[string]*tfbridge.SchemaInfo{},
 		PreConfigureCallback: preConfigureCallback,
 		Resources: map[string]*tfbridge.ResourceInfo{
 			"honeycombio_board":            {Tok: tfbridge.MakeResource(mainPkg, mainMod, "Board")},
