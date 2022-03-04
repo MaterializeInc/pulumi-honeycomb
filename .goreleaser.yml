@@ -9,6 +9,8 @@ builds:
       - darwin
       - windows
       - linux
+    env:
+      - CGO_ENABLED=0
     dir: ./provider
     main: ./cmd/pulumi-resource-honeycomb
     binary: pulumi-resource-honeycomb
