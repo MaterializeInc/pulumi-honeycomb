@@ -1,0 +1,1225 @@
+{
+    "name": "honeycomb",
+    "displayName": "Honeycomb.io",
+    "description": "A Pulumi package for creating and managing honeycomb.io resources.",
+    "keywords": [
+        "pulumi",
+        "honeycomb",
+        "tracing",
+        "o11y",
+        "monitoring",
+        "otel",
+        "category/utility"
+    ],
+    "homepage": "https://github.com/honeycombio/terraform-provider-honeycombio",
+    "license": "Apache-2.0",
+    "attribution": "This Pulumi package is based on the [`honeycombio` Terraform Provider](https://github.com/honeycombio/terraform-provider-honeycombio).",
+    "repository": "https://github.com/honeycombio/terraform-provider-honeycombio",
+    "pluginDownloadURL": "https://github.com/MaterializeInc/pulumi-honeycomb/releases/download/${VERSION}",
+    "publisher": "Materialize Inc",
+    "meta": {
+        "moduleFormat": "(.*)(?:/[^/]*)"
+    },
+    "config": {
+        "variables": {
+            "apiKey": {
+                "type": "string"
+            },
+            "apiUrl": {
+                "type": "string"
+            },
+            "debug": {
+                "type": "boolean"
+            }
+        },
+        "defaults": [
+            "apiKey"
+        ]
+    },
+    "types": {
+        "honeycomb:index/BoardQuery:BoardQuery": {
+            "properties": {
+                "caption": {
+                    "type": "string",
+                    "description": "A description of the query that will be displayed on the board. Supports markdown.\n",
+                    "language": {
+                        "python": {
+                            "mapCase": false
+                        }
+                    }
+                },
+                "dataset": {
+                    "type": "string",
+                    "description": "The dataset this query is associated with.\n",
+                    "language": {
+                        "python": {
+                            "mapCase": false
+                        }
+                    }
+                },
+                "queryAnnotationId": {
+                    "type": "string",
+                    "description": "The ID of the Query Annotation to associate with this query.\n",
+                    "language": {
+                        "python": {
+                            "mapCase": false
+                        }
+                    }
+                },
+                "queryId": {
+                    "type": "string",
+                    "description": "The ID of the Query to run.\n",
+                    "language": {
+                        "python": {
+                            "mapCase": false
+                        }
+                    }
+                },
+                "queryStyle": {
+                    "type": "string",
+                    "description": "How the query should be displayed within the board, either `graph` (the default), `table` or `combo`.\n",
+                    "language": {
+                        "python": {
+                            "mapCase": false
+                        }
+                    }
+                }
+            },
+            "type": "object",
+            "required": [
+                "dataset",
+                "queryId"
+            ],
+            "language": {
+                "nodejs": {
+                    "requiredOutputs": [
+                        "dataset",
+                        "queryId",
+                        "queryStyle"
+                    ]
+                }
+            }
+        },
+        "honeycomb:index/GetQuerySpecificationCalculation:GetQuerySpecificationCalculation": {
+            "properties": {
+                "column": {
+                    "type": "string",
+                    "description": "The column to apply the operator to, not needed with `COUNT` or `CONCURRENCY`.\n",
+                    "language": {
+                        "python": {
+                            "mapCase": false
+                        }
+                    }
+                },
+                "op": {
+                    "type": "string",
+                    "description": "The operator to apply, see the supported list of calculation operators at [Calculation Operators](https://docs.honeycomb.io/api/query-specification/#calculation-operators).\n",
+                    "language": {
+                        "python": {
+                            "mapCase": false
+                        }
+                    }
+                }
+            },
+            "type": "object",
+            "required": [
+                "op"
+            ]
+        },
+        "honeycomb:index/GetQuerySpecificationFilter:GetQuerySpecificationFilter": {
+            "properties": {
+                "column": {
+                    "type": "string",
+                    "description": "The column to apply the filter to.\n",
+                    "language": {
+                        "python": {
+                            "mapCase": false
+                        }
+                    }
+                },
+                "op": {
+                    "type": "string",
+                    "description": "The operator to apply, see the supported list of filter operators at [Filter Operators](https://docs.honeycomb.io/api/query-specification/#filter-operators). Not all operators require a value.\n",
+                    "language": {
+                        "python": {
+                            "mapCase": false
+                        }
+                    }
+                },
+                "value": {
+                    "type": "string",
+                    "description": "The value used for the filter. Not needed if op is `exists`, `not-exists`, `in` or `not-in`. Mutually exclusive with the other `value_*` options.\n",
+                    "language": {
+                        "python": {
+                            "mapCase": false
+                        }
+                    }
+                },
+                "valueBoolean": {
+                    "type": "boolean",
+                    "description": "Deprecated: use 'value' instead. The value used for the filter when the column is a boolean. Mutually exclusive with `value` and the other `value_*` options.\n",
+                    "deprecationMessage": "Use of attribute `value_boolean` is discouraged and will fail to plan if using 'false'. Use of `value` is encouraged.",
+                    "language": {
+                        "python": {
+                            "mapCase": false
+                        }
+                    }
+                },
+                "valueFloat": {
+                    "type": "number",
+                    "description": "Deprecated: use 'value' instead. The value used for the filter when the column is a float. Mutually exclusive with `value` and the other `value_*` options.\n",
+                    "deprecationMessage": "Use of attribute `value_float` is discouraged and will fail to plan if using '0'. Use of `value` is encouraged.",
+                    "language": {
+                        "python": {
+                            "mapCase": false
+                        }
+                    }
+                },
+                "valueInteger": {
+                    "type": "integer",
+                    "description": "Deprecated: use 'value' instead. The value used for the filter when the column is an integer. Mutually exclusive with `value` and the other `value_*` options.\n",
+                    "deprecationMessage": "Use of attribute `value_integer` is discouraged and will fail to plan if using '0'. Use of `value` is encouraged.",
+                    "language": {
+                        "python": {
+                            "mapCase": false
+                        }
+                    }
+                },
+                "valueString": {
+                    "type": "string",
+                    "description": "Deprecated: use 'value' instead. The value used for the filter when the column is a string. Mutually exclusive with `value` and the other `value_*` options.\n",
+                    "deprecationMessage": "Use of attribute `value_string` is discouraged and will fail to plan if using the empty string. Use of `value` is encouraged.",
+                    "language": {
+                        "python": {
+                            "mapCase": false
+                        }
+                    }
+                }
+            },
+            "type": "object",
+            "required": [
+                "column",
+                "op"
+            ]
+        },
+        "honeycomb:index/GetQuerySpecificationHaving:GetQuerySpecificationHaving": {
+            "properties": {
+                "calculateOp": {
+                    "type": "string",
+                    "description": "The calculation operator to apply, supports all of the [Calculation Operators](https://docs.honeycomb.io/api/query-specification/#calculation-operators) with the exception of `HEATMAP`.\n",
+                    "language": {
+                        "python": {
+                            "mapCase": false
+                        }
+                    }
+                },
+                "column": {
+                    "type": "string",
+                    "description": "The column to apply the `calculate_op` to, not needed with `COUNT` or `CONCURRENCY`.\n",
+                    "language": {
+                        "python": {
+                            "mapCase": false
+                        }
+                    }
+                },
+                "op": {
+                    "type": "string",
+                    "description": "The operator to apply to filter the query results. One of `=`, `!=`, `\u003e`, `\u003e=`, `\u003c`, or `\u003c=`.\n",
+                    "language": {
+                        "python": {
+                            "mapCase": false
+                        }
+                    }
+                },
+                "value": {
+                    "type": "number",
+                    "description": "The value used with `op`. Currently assumed to be a number.\n",
+                    "language": {
+                        "python": {
+                            "mapCase": false
+                        }
+                    }
+                }
+            },
+            "type": "object",
+            "required": [
+                "calculateOp",
+                "op",
+                "value"
+            ]
+        },
+        "honeycomb:index/GetQuerySpecificationOrder:GetQuerySpecificationOrder": {
+            "properties": {
+                "column": {
+                    "type": "string",
+                    "description": "Either a column present in `breakdown` or a column to `op` applies to.\n",
+                    "language": {
+                        "python": {
+                            "mapCase": false
+                        }
+                    }
+                },
+                "op": {
+                    "type": "string",
+                    "description": "The calculation operator to apply, see the supported list of calculation operators at [Calculation Operators](https://docs.honeycomb.io/api/query-specification/#calculation-operators).\n",
+                    "language": {
+                        "python": {
+                            "mapCase": false
+                        }
+                    }
+                },
+                "order": {
+                    "type": "string",
+                    "description": "The sort direction, if set must be `ascending` or `descending`.\n",
+                    "language": {
+                        "python": {
+                            "mapCase": false
+                        }
+                    }
+                }
+            },
+            "type": "object"
+        },
+        "honeycomb:index/TriggerRecipient:TriggerRecipient": {
+            "properties": {
+                "id": {
+                    "type": "string",
+                    "description": "The ID of an already existing recipient. Should not be used in combination with `type` and `target`.\n",
+                    "language": {
+                        "python": {
+                            "mapCase": false
+                        }
+                    }
+                },
+                "target": {
+                    "type": "string",
+                    "description": "Target of the trigger recipient, this has another meaning depending on the type of recipient (see the table below). Should not be used in combination with `id`.\n",
+                    "language": {
+                        "python": {
+                            "mapCase": false
+                        }
+                    }
+                },
+                "type": {
+                    "type": "string",
+                    "description": "The type of the trigger recipient, allowed types are `email`, `marker`, `pagerduty`, `slack` and `webhook`. Should not be used in combination with `id`.\n",
+                    "language": {
+                        "python": {
+                            "mapCase": false
+                        }
+                    }
+                }
+            },
+            "type": "object",
+            "language": {
+                "nodejs": {
+                    "requiredOutputs": [
+                        "id",
+                        "target",
+                        "type"
+                    ]
+                }
+            }
+        },
+        "honeycomb:index/TriggerThreshold:TriggerThreshold": {
+            "properties": {
+                "op": {
+                    "type": "string",
+                    "description": "The operator to apply, allowed threshold operators are `\u003e`, `\u003e=`, `\u003c`, and `\u003c=`.\n",
+                    "language": {
+                        "python": {
+                            "mapCase": false
+                        }
+                    }
+                },
+                "value": {
+                    "type": "number",
+                    "description": "The value to be used with the operator.\n",
+                    "language": {
+                        "python": {
+                            "mapCase": false
+                        }
+                    }
+                }
+            },
+            "type": "object",
+            "required": [
+                "op",
+                "value"
+            ]
+        }
+    },
+    "provider": {
+        "description": "The provider type for the honeycombio package. By default, resources use package-wide configuration\nsettings, however an explicit `Provider` instance may be created and passed during resource\nconstruction to achieve fine-grained programmatic control over provider settings. See the\n[documentation](https://www.pulumi.com/docs/reference/programming-model/#providers) for more information.\n",
+        "properties": {
+            "apiKey": {
+                "type": "string"
+            },
+            "apiUrl": {
+                "type": "string"
+            },
+            "debug": {
+                "type": "boolean"
+            }
+        },
+        "required": [
+            "apiKey"
+        ],
+        "inputProperties": {
+            "apiKey": {
+                "type": "string"
+            },
+            "apiUrl": {
+                "type": "string"
+            },
+            "debug": {
+                "type": "boolean"
+            }
+        },
+        "requiredInputs": [
+            "apiKey"
+        ]
+    },
+    "resources": {
+        "honeycomb:index/board:Board": {
+            "description": "## # Resource: honeycomb.Board\n\nCreates a board. For more information about boards, check out [Collaborate with Boards](https://docs.honeycomb.io/working-with-your-data/collaborating/boards/#docs-sidebar).\n\n{{% examples %}}\n## Example Usage\n{{% example %}}\n\n```typescript\nimport * as pulumi from \"@pulumi/pulumi\";\nimport * as honeycomb from \"@pulumi/honeycomb\";\n\nconst queryGetQuerySpecification = honeycomb.GetQuerySpecification({\n    calculations: [{\n        op: \"P99\",\n        column: \"duration_ms\",\n    }],\n    filters: [{\n        column: \"trace.parent_id\",\n        op: \"does-not-exist\",\n    }],\n    breakdowns: [\"app.tenant\"],\n});\nconst queryQuery = new honeycomb.Query(\"queryQuery\", {\n    dataset: _var.dataset,\n    queryJson: queryGetQuerySpecification.then(queryGetQuerySpecification =\u003e queryGetQuerySpecification.json),\n});\nconst board = new honeycomb.Board(\"board\", {queries: [{\n    dataset: _var.dataset,\n    queryId: queryQuery.id,\n}]});\n```\n```python\nimport pulumi\nimport pulumi_honeycomb as honeycomb\n\nquery_get_query_specification = honeycomb.get_query_specification(calculations=[honeycomb.GetQuerySpecificationCalculationArgs(\n        op=\"P99\",\n        column=\"duration_ms\",\n    )],\n    filters=[honeycomb.GetQuerySpecificationFilterArgs(\n        column=\"trace.parent_id\",\n        op=\"does-not-exist\",\n    )],\n    breakdowns=[\"app.tenant\"])\nquery_query = honeycomb.Query(\"queryQuery\",\n    dataset=var[\"dataset\"],\n    query_json=query_get_query_specification.json)\nboard = honeycomb.Board(\"board\", queries=[honeycomb.BoardQueryArgs(\n    dataset=var[\"dataset\"],\n    query_id=query_query.id,\n)])\n```\n```csharp\nusing Pulumi;\nusing Honeycomb = Pulumi.Honeycomb;\n\nclass MyStack : Stack\n{\n    public MyStack()\n    {\n        var queryGetQuerySpecification = Output.Create(Honeycomb.GetQuerySpecification.InvokeAsync(new Honeycomb.GetQuerySpecificationArgs\n        {\n            Calculations = \n            {\n                new Honeycomb.Inputs.GetQuerySpecificationCalculationArgs\n                {\n                    Op = \"P99\",\n                    Column = \"duration_ms\",\n                },\n            },\n            Filters = \n            {\n                new Honeycomb.Inputs.GetQuerySpecificationFilterArgs\n                {\n                    Column = \"trace.parent_id\",\n                    Op = \"does-not-exist\",\n                },\n            },\n            Breakdowns = \n            {\n                \"app.tenant\",\n            },\n        }));\n        var queryQuery = new Honeycomb.Query(\"queryQuery\", new Honeycomb.QueryArgs\n        {\n            Dataset = @var.Dataset,\n            QueryJson = queryGetQuerySpecification.Apply(queryGetQuerySpecification =\u003e queryGetQuerySpecification.Json),\n        });\n        var board = new Honeycomb.Board(\"board\", new Honeycomb.BoardArgs\n        {\n            Queries = \n            {\n                new Honeycomb.Inputs.BoardQueryArgs\n                {\n                    Dataset = @var.Dataset,\n                    QueryId = queryQuery.Id,\n                },\n            },\n        });\n    }\n\n}\n```\n```go\npackage main\n\nimport (\n\t\"github.com/pulumi/pulumi-honeycomb/sdk/go/honeycomb\"\n\t\"github.com/pulumi/pulumi/sdk/v3/go/pulumi\"\n)\n\nfunc main() {\n\tpulumi.Run(func(ctx *pulumi.Context) error {\n\t\tqueryGetQuerySpecification, err := honeycomb.GetQuerySpecification(ctx, \u0026GetQuerySpecificationArgs{\n\t\t\tCalculations: []GetQuerySpecificationCalculation{\n\t\t\t\tGetQuerySpecificationCalculation{\n\t\t\t\t\tOp:     \"P99\",\n\t\t\t\t\tColumn: pulumi.StringRef(\"duration_ms\"),\n\t\t\t\t},\n\t\t\t},\n\t\t\tFilters: []GetQuerySpecificationFilter{\n\t\t\t\tGetQuerySpecificationFilter{\n\t\t\t\t\tColumn: \"trace.parent_id\",\n\t\t\t\t\tOp:     \"does-not-exist\",\n\t\t\t\t},\n\t\t\t},\n\t\t\tBreakdowns: []string{\n\t\t\t\t\"app.tenant\",\n\t\t\t},\n\t\t}, nil)\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\tqueryQuery, err := honeycomb.NewQuery(ctx, \"queryQuery\", \u0026honeycomb.QueryArgs{\n\t\t\tDataset:   pulumi.Any(_var.Dataset),\n\t\t\tQueryJson: pulumi.String(queryGetQuerySpecification.Json),\n\t\t})\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\t_, err = honeycomb.NewBoard(ctx, \"board\", \u0026honeycomb.BoardArgs{\n\t\t\tQueries: BoardQueryArray{\n\t\t\t\t\u0026BoardQueryArgs{\n\t\t\t\t\tDataset: pulumi.Any(_var.Dataset),\n\t\t\t\t\tQueryId: queryQuery.ID(),\n\t\t\t\t},\n\t\t\t},\n\t\t})\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\treturn nil\n\t})\n}\n```\n{{% /example %}}\n{{% /examples %}}\n\n## Import\n\nBoards can be imported using their ID, e.g.\n\n```sh\n $ pulumi import honeycomb:index/board:Board my_board AobW9oAZX71\n```\n\n You can find the ID in the URL bar when visiting the board from the UI. ",
+            "properties": {
+                "description": {
+                    "type": "string",
+                    "description": "Description of the board. Supports markdown.\n"
+                },
+                "name": {
+                    "type": "string",
+                    "description": "Name of the board.\n"
+                },
+                "queries": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/types/honeycomb:index/BoardQuery:BoardQuery"
+                    },
+                    "description": "Zero or more configurations blocks (described below) with the queries of the board.\n"
+                },
+                "style": {
+                    "type": "string",
+                    "description": "How the board should be displayed in the UI, either `list` (the default) or `visual`.\n"
+                }
+            },
+            "required": [
+                "name"
+            ],
+            "inputProperties": {
+                "description": {
+                    "type": "string",
+                    "description": "Description of the board. Supports markdown.\n"
+                },
+                "name": {
+                    "type": "string",
+                    "description": "Name of the board.\n"
+                },
+                "queries": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/types/honeycomb:index/BoardQuery:BoardQuery"
+                    },
+                    "description": "Zero or more configurations blocks (described below) with the queries of the board.\n"
+                },
+                "style": {
+                    "type": "string",
+                    "description": "How the board should be displayed in the UI, either `list` (the default) or `visual`.\n"
+                }
+            },
+            "stateInputs": {
+                "description": "Input properties used for looking up and filtering Board resources.\n",
+                "properties": {
+                    "description": {
+                        "type": "string",
+                        "description": "Description of the board. Supports markdown.\n"
+                    },
+                    "name": {
+                        "type": "string",
+                        "description": "Name of the board.\n"
+                    },
+                    "queries": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/types/honeycomb:index/BoardQuery:BoardQuery"
+                        },
+                        "description": "Zero or more configurations blocks (described below) with the queries of the board.\n"
+                    },
+                    "style": {
+                        "type": "string",
+                        "description": "How the board should be displayed in the UI, either `list` (the default) or `visual`.\n"
+                    }
+                },
+                "type": "object"
+            }
+        },
+        "honeycomb:index/column:Column": {
+            "description": "{{% examples %}}\n## Example Usage\n{{% example %}}\n\n```typescript\nimport * as pulumi from \"@pulumi/pulumi\";\nimport * as honeycomb from \"@pulumi/honeycomb\";\n\nconst config = new pulumi.Config();\nconst dataset = config.require(\"dataset\");\nconst durationMs = new honeycomb.Column(\"durationMs\", {\n    keyName: \"duration_ms_log10\",\n    type: \"float\",\n    description: \"Duration of the trace\",\n    dataset: dataset,\n});\n```\n```python\nimport pulumi\nimport pulumi_honeycomb as honeycomb\n\nconfig = pulumi.Config()\ndataset = config.require(\"dataset\")\nduration_ms = honeycomb.Column(\"durationMs\",\n    key_name=\"duration_ms_log10\",\n    type=\"float\",\n    description=\"Duration of the trace\",\n    dataset=dataset)\n```\n```csharp\nusing Pulumi;\nusing Honeycomb = Pulumi.Honeycomb;\n\nclass MyStack : Stack\n{\n    public MyStack()\n    {\n        var config = new Config();\n        var dataset = config.Require(\"dataset\");\n        var durationMs = new Honeycomb.Column(\"durationMs\", new Honeycomb.ColumnArgs\n        {\n            KeyName = \"duration_ms_log10\",\n            Type = \"float\",\n            Description = \"Duration of the trace\",\n            Dataset = dataset,\n        });\n    }\n\n}\n```\n```go\npackage main\n\nimport (\n\t\"github.com/pulumi/pulumi-honeycomb/sdk/go/honeycomb\"\n\t\"github.com/pulumi/pulumi/sdk/v3/go/pulumi\"\n\t\"github.com/pulumi/pulumi/sdk/v3/go/pulumi/config\"\n)\n\nfunc main() {\n\tpulumi.Run(func(ctx *pulumi.Context) error {\n\t\tcfg := config.New(ctx, \"\")\n\t\tdataset := cfg.Require(\"dataset\")\n\t\t_, err := honeycomb.NewColumn(ctx, \"durationMs\", \u0026honeycomb.ColumnArgs{\n\t\t\tKeyName:     pulumi.String(\"duration_ms_log10\"),\n\t\t\tType:        pulumi.String(\"float\"),\n\t\t\tDescription: pulumi.String(\"Duration of the trace\"),\n\t\t\tDataset:     pulumi.String(dataset),\n\t\t})\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\treturn nil\n\t})\n}\n```\n{{% /example %}}\n{{% /examples %}}\n\n## Import\n\nColumns can be imported using a combination of the dataset name and their key name, e.g.\n\n```sh\n $ pulumi import honeycomb:index/column:Column my_column my-dataset/duration_ms\n```\n\n ",
+            "properties": {
+                "dataset": {
+                    "type": "string",
+                    "description": "The dataset this column is added to.\n"
+                },
+                "description": {
+                    "type": "string",
+                    "description": "A description that is shown in the UI.\n"
+                },
+                "hidden": {
+                    "type": "boolean",
+                    "description": "Whether this column should be hidden in the query builder and sample data. Defaults to false.\n"
+                },
+                "keyName": {
+                    "type": "string",
+                    "description": "The name of the column. Must be unique per dataset.\n"
+                },
+                "type": {
+                    "type": "string",
+                    "description": "The type of the column, allowed values are `string`, `float`, `integer` and `boolean`. Defaults to `string`.\n"
+                }
+            },
+            "required": [
+                "dataset",
+                "keyName"
+            ],
+            "inputProperties": {
+                "dataset": {
+                    "type": "string",
+                    "description": "The dataset this column is added to.\n"
+                },
+                "description": {
+                    "type": "string",
+                    "description": "A description that is shown in the UI.\n"
+                },
+                "hidden": {
+                    "type": "boolean",
+                    "description": "Whether this column should be hidden in the query builder and sample data. Defaults to false.\n"
+                },
+                "keyName": {
+                    "type": "string",
+                    "description": "The name of the column. Must be unique per dataset.\n"
+                },
+                "type": {
+                    "type": "string",
+                    "description": "The type of the column, allowed values are `string`, `float`, `integer` and `boolean`. Defaults to `string`.\n"
+                }
+            },
+            "requiredInputs": [
+                "dataset",
+                "keyName"
+            ],
+            "stateInputs": {
+                "description": "Input properties used for looking up and filtering Column resources.\n",
+                "properties": {
+                    "dataset": {
+                        "type": "string",
+                        "description": "The dataset this column is added to.\n"
+                    },
+                    "description": {
+                        "type": "string",
+                        "description": "A description that is shown in the UI.\n"
+                    },
+                    "hidden": {
+                        "type": "boolean",
+                        "description": "Whether this column should be hidden in the query builder and sample data. Defaults to false.\n"
+                    },
+                    "keyName": {
+                        "type": "string",
+                        "description": "The name of the column. Must be unique per dataset.\n"
+                    },
+                    "type": {
+                        "type": "string",
+                        "description": "The type of the column, allowed values are `string`, `float`, `integer` and `boolean`. Defaults to `string`.\n"
+                    }
+                },
+                "type": "object"
+            }
+        },
+        "honeycomb:index/dataset:Dataset": {
+            "description": "## # Resource: honeycomb.Dataset\n\nCreates a dataset.\n\n\u003e **Note** If this dataset already exists, creating this resource is a no-op.\n\n\u003e **Note** Destroying or replacing this resource will not delete the created dataset. It's not possible to delete a dataset using the API.\n\n{{% examples %}}\n## Example Usage\n{{% example %}}\n\n```typescript\nimport * as pulumi from \"@pulumi/pulumi\";\nimport * as honeycombio from \"@pulumi/honeycombio\";\n\nconst myDataset = new honeycombio.Dataset(\"my_dataset\", {});\n```\n```python\nimport pulumi\nimport pulumi_honeycomb as honeycomb\n\nmy_dataset = honeycomb.Dataset(\"myDataset\")\n```\n```csharp\nusing Pulumi;\nusing Honeycomb = Pulumi.Honeycomb;\n\nclass MyStack : Stack\n{\n    public MyStack()\n    {\n        var myDataset = new Honeycomb.Dataset(\"myDataset\", new Honeycomb.DatasetArgs\n        {\n        });\n    }\n\n}\n```\n```go\npackage main\n\nimport (\n\t\"github.com/pulumi/pulumi-honeycomb/sdk/go/honeycomb\"\n\t\"github.com/pulumi/pulumi/sdk/v3/go/pulumi\"\n)\n\nfunc main() {\n\tpulumi.Run(func(ctx *pulumi.Context) error {\n\t\t_, err := honeycomb.NewDataset(ctx, \"myDataset\", nil)\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\treturn nil\n\t})\n}\n```\n{{% /example %}}\n{{% /examples %}}",
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "description": "The name of the dataset.\n"
+                },
+                "slug": {
+                    "type": "string",
+                    "description": "The slug of the dataset.\n"
+                }
+            },
+            "required": [
+                "name",
+                "slug"
+            ],
+            "inputProperties": {
+                "name": {
+                    "type": "string",
+                    "description": "The name of the dataset.\n"
+                }
+            },
+            "stateInputs": {
+                "description": "Input properties used for looking up and filtering Dataset resources.\n",
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "description": "The name of the dataset.\n"
+                    },
+                    "slug": {
+                        "type": "string",
+                        "description": "The slug of the dataset.\n"
+                    }
+                },
+                "type": "object"
+            }
+        },
+        "honeycomb:index/derivedColumn:DerivedColumn": {
+            "description": "## # Resource: honeycomb.DerivedColumn\n\nCreates a derived column. For more information about derived columns, check out [Calculate with derived columns](https://docs.honeycomb.io/working-with-your-data/customizing-your-query/derived-columns/).\n\n{{% examples %}}\n## Example Usage\n{{% example %}}\n\n```typescript\nimport * as pulumi from \"@pulumi/pulumi\";\nimport * as honeycomb from \"@pulumi/honeycomb\";\n\nconst config = new pulumi.Config();\nconst dataset = config.require(\"dataset\");\nconst durationMsLog = new honeycomb.DerivedColumn(\"durationMsLog\", {\n    alias: \"duration_ms_log10\",\n    expression: `LOG10($duration_ms)`,\n    description: \"LOG10 of duration_ms\",\n    dataset: dataset,\n});\n```\n```python\nimport pulumi\nimport pulumi_honeycomb as honeycomb\n\nconfig = pulumi.Config()\ndataset = config.require(\"dataset\")\nduration_ms_log = honeycomb.DerivedColumn(\"durationMsLog\",\n    alias=\"duration_ms_log10\",\n    expression=\"LOG10($duration_ms)\",\n    description=\"LOG10 of duration_ms\",\n    dataset=dataset)\n```\n```csharp\nusing Pulumi;\nusing Honeycomb = Pulumi.Honeycomb;\n\nclass MyStack : Stack\n{\n    public MyStack()\n    {\n        var config = new Config();\n        var dataset = config.Require(\"dataset\");\n        var durationMsLog = new Honeycomb.DerivedColumn(\"durationMsLog\", new Honeycomb.DerivedColumnArgs\n        {\n            Alias = \"duration_ms_log10\",\n            Expression = \"LOG10($duration_ms)\",\n            Description = \"LOG10 of duration_ms\",\n            Dataset = dataset,\n        });\n    }\n\n}\n```\n```go\npackage main\n\nimport (\n\t\"fmt\"\n\n\t\"github.com/pulumi/pulumi-honeycomb/sdk/go/honeycomb\"\n\t\"github.com/pulumi/pulumi/sdk/v3/go/pulumi\"\n\t\"github.com/pulumi/pulumi/sdk/v3/go/pulumi/config\"\n)\n\nfunc main() {\n\tpulumi.Run(func(ctx *pulumi.Context) error {\n\t\tcfg := config.New(ctx, \"\")\n\t\tdataset := cfg.Require(\"dataset\")\n\t\t_, err := honeycomb.NewDerivedColumn(ctx, \"durationMsLog\", \u0026honeycomb.DerivedColumnArgs{\n\t\t\tAlias:       pulumi.String(\"duration_ms_log10\"),\n\t\t\tExpression:  pulumi.String(fmt.Sprintf(\"%v%v%v\", \"LOG10(\", \"$\", \"duration_ms)\")),\n\t\t\tDescription: pulumi.String(\"LOG10 of duration_ms\"),\n\t\t\tDataset:     pulumi.String(dataset),\n\t\t})\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\treturn nil\n\t})\n}\n```\n{{% /example %}}\n{{% /examples %}}\n\n## Import\n\nDerived columns can be imported using a combination of the dataset name and their alias, e.g.\n\n```sh\n $ pulumi import honeycomb:index/derivedColumn:DerivedColumn my_column my-dataset/duration_ms_log10\n```\n\n ",
+            "properties": {
+                "alias": {
+                    "type": "string",
+                    "description": "The name of the derived column. Must be unique per dataset.\n"
+                },
+                "dataset": {
+                    "type": "string",
+                    "description": "The dataset this derived column is added to.\n"
+                },
+                "description": {
+                    "type": "string",
+                    "description": "A description that is shown in the UI.\n"
+                },
+                "expression": {
+                    "type": "string",
+                    "description": "The function of the derived column. See [Derived Column Syntax](https://docs.honeycomb.io/working-with-your-data/customizing-your-query/derived-columns/#derived-column-syntax).\n"
+                }
+            },
+            "required": [
+                "alias",
+                "dataset",
+                "expression"
+            ],
+            "inputProperties": {
+                "alias": {
+                    "type": "string",
+                    "description": "The name of the derived column. Must be unique per dataset.\n"
+                },
+                "dataset": {
+                    "type": "string",
+                    "description": "The dataset this derived column is added to.\n"
+                },
+                "description": {
+                    "type": "string",
+                    "description": "A description that is shown in the UI.\n"
+                },
+                "expression": {
+                    "type": "string",
+                    "description": "The function of the derived column. See [Derived Column Syntax](https://docs.honeycomb.io/working-with-your-data/customizing-your-query/derived-columns/#derived-column-syntax).\n"
+                }
+            },
+            "requiredInputs": [
+                "alias",
+                "dataset",
+                "expression"
+            ],
+            "stateInputs": {
+                "description": "Input properties used for looking up and filtering DerivedColumn resources.\n",
+                "properties": {
+                    "alias": {
+                        "type": "string",
+                        "description": "The name of the derived column. Must be unique per dataset.\n"
+                    },
+                    "dataset": {
+                        "type": "string",
+                        "description": "The dataset this derived column is added to.\n"
+                    },
+                    "description": {
+                        "type": "string",
+                        "description": "A description that is shown in the UI.\n"
+                    },
+                    "expression": {
+                        "type": "string",
+                        "description": "The function of the derived column. See [Derived Column Syntax](https://docs.honeycomb.io/working-with-your-data/customizing-your-query/derived-columns/#derived-column-syntax).\n"
+                    }
+                },
+                "type": "object"
+            }
+        },
+        "honeycomb:index/marker:Marker": {
+            "description": "## # Resource: honeycomb.Marker\n\nCreates a marker. For more information about markers, check out [Annotate the timeline with Markers](https://docs.honeycomb.io/working-with-your-data/customizing-your-query/markers/).\n\n\u003e **Note** Destroying or replacing this resource will not delete the previously created marker. This is intentional to preserve the markers. At this time, it is not possible to remove markers using this provider.\n\n{{% examples %}}\n## Example Usage\n{{% example %}}\n\n```typescript\nimport * as pulumi from \"@pulumi/pulumi\";\nimport * as honeycomb from \"@pulumi/honeycomb\";\n\nconst config = new pulumi.Config();\nconst dataset = config.require(\"dataset\");\nconst appVersion = config.require(\"appVersion\");\nconst marker = new honeycomb.Marker(\"marker\", {\n    message: `deploy ${appVersion}`,\n    type: \"deploy\",\n    url: \"http://www.example.com/\",\n    dataset: dataset,\n});\n```\n```python\nimport pulumi\nimport pulumi_honeycomb as honeycomb\n\nconfig = pulumi.Config()\ndataset = config.require(\"dataset\")\napp_version = config.require(\"appVersion\")\nmarker = honeycomb.Marker(\"marker\",\n    message=f\"deploy {app_version}\",\n    type=\"deploy\",\n    url=\"http://www.example.com/\",\n    dataset=dataset)\n```\n```csharp\nusing Pulumi;\nusing Honeycomb = Pulumi.Honeycomb;\n\nclass MyStack : Stack\n{\n    public MyStack()\n    {\n        var config = new Config();\n        var dataset = config.Require(\"dataset\");\n        var appVersion = config.Require(\"appVersion\");\n        var marker = new Honeycomb.Marker(\"marker\", new Honeycomb.MarkerArgs\n        {\n            Message = $\"deploy {appVersion}\",\n            Type = \"deploy\",\n            Url = \"http://www.example.com/\",\n            Dataset = dataset,\n        });\n    }\n\n}\n```\n```go\npackage main\n\nimport (\n\t\"fmt\"\n\n\t\"github.com/pulumi/pulumi-honeycomb/sdk/go/honeycomb\"\n\t\"github.com/pulumi/pulumi/sdk/v3/go/pulumi\"\n\t\"github.com/pulumi/pulumi/sdk/v3/go/pulumi/config\"\n)\n\nfunc main() {\n\tpulumi.Run(func(ctx *pulumi.Context) error {\n\t\tcfg := config.New(ctx, \"\")\n\t\tdataset := cfg.Require(\"dataset\")\n\t\tappVersion := cfg.Require(\"appVersion\")\n\t\t_, err := honeycomb.NewMarker(ctx, \"marker\", \u0026honeycomb.MarkerArgs{\n\t\t\tMessage: pulumi.String(fmt.Sprintf(\"%v%v\", \"deploy \", appVersion)),\n\t\t\tType:    pulumi.String(\"deploy\"),\n\t\t\tUrl:     pulumi.String(\"http://www.example.com/\"),\n\t\t\tDataset: pulumi.String(dataset),\n\t\t})\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\treturn nil\n\t})\n}\n```\n{{% /example %}}\n{{% /examples %}}",
+            "properties": {
+                "dataset": {
+                    "type": "string",
+                    "description": "The dataset this marker is placed on.\n"
+                },
+                "message": {
+                    "type": "string",
+                    "description": "The message on the marker.\n"
+                },
+                "type": {
+                    "type": "string",
+                    "description": "The type of the marker, Honeycomb.io can display markers in different colors depending on their type.\n"
+                },
+                "url": {
+                    "type": "string",
+                    "description": "A target for the Marker. If you click on the Marker text, it will take you to this URL.\n"
+                }
+            },
+            "required": [
+                "dataset"
+            ],
+            "inputProperties": {
+                "dataset": {
+                    "type": "string",
+                    "description": "The dataset this marker is placed on.\n"
+                },
+                "message": {
+                    "type": "string",
+                    "description": "The message on the marker.\n"
+                },
+                "type": {
+                    "type": "string",
+                    "description": "The type of the marker, Honeycomb.io can display markers in different colors depending on their type.\n"
+                },
+                "url": {
+                    "type": "string",
+                    "description": "A target for the Marker. If you click on the Marker text, it will take you to this URL.\n"
+                }
+            },
+            "requiredInputs": [
+                "dataset"
+            ],
+            "stateInputs": {
+                "description": "Input properties used for looking up and filtering Marker resources.\n",
+                "properties": {
+                    "dataset": {
+                        "type": "string",
+                        "description": "The dataset this marker is placed on.\n"
+                    },
+                    "message": {
+                        "type": "string",
+                        "description": "The message on the marker.\n"
+                    },
+                    "type": {
+                        "type": "string",
+                        "description": "The type of the marker, Honeycomb.io can display markers in different colors depending on their type.\n"
+                    },
+                    "url": {
+                        "type": "string",
+                        "description": "A target for the Marker. If you click on the Marker text, it will take you to this URL.\n"
+                    }
+                },
+                "type": "object"
+            }
+        },
+        "honeycomb:index/query:Query": {
+            "description": "## # Resource: honeycomb.Query\n\nCreates a query in a dataset.\n\nQueries can be used by triggers and boards, or be executed via the [Query Data API](https://docs.honeycomb.io/api/query-results/).\n\n\u003e **Note** Queries can only be created or read. Any changes will result in a new query object being created, and destroying it does nothing.\n\n{{% examples %}}\n## Example Usage\n{{% example %}}\n\n```typescript\nimport * as pulumi from \"@pulumi/pulumi\";\nimport * as honeycomb from \"@pulumi/honeycomb\";\n\nconst config = new pulumi.Config();\nconst dataset = config.require(\"dataset\");\nconst testQueryGetQuerySpecification = honeycomb.GetQuerySpecification({\n    calculations: [{\n        op: \"AVG\",\n        column: \"duration_ms\",\n    }],\n    filters: [{\n        column: \"duration_ms\",\n        op: \"\u003e\",\n        value: \"200\",\n    }],\n});\nconst testQueryQuery = new honeycomb.Query(\"testQueryQuery\", {\n    dataset: `%s`,\n    queryJson: testQueryGetQuerySpecification.then(testQueryGetQuerySpecification =\u003e testQueryGetQuerySpecification.json),\n});\n```\n```python\nimport pulumi\nimport pulumi_honeycomb as honeycomb\n\nconfig = pulumi.Config()\ndataset = config.require(\"dataset\")\ntest_query_get_query_specification = honeycomb.get_query_specification(calculations=[honeycomb.GetQuerySpecificationCalculationArgs(\n        op=\"AVG\",\n        column=\"duration_ms\",\n    )],\n    filters=[honeycomb.GetQuerySpecificationFilterArgs(\n        column=\"duration_ms\",\n        op=\"\u003e\",\n        value=\"200\",\n    )])\ntest_query_query = honeycomb.Query(\"testQueryQuery\",\n    dataset=\"%s\",\n    query_json=test_query_get_query_specification.json)\n```\n```csharp\nusing Pulumi;\nusing Honeycomb = Pulumi.Honeycomb;\n\nclass MyStack : Stack\n{\n    public MyStack()\n    {\n        var config = new Config();\n        var dataset = config.Require(\"dataset\");\n        var testQueryGetQuerySpecification = Output.Create(Honeycomb.GetQuerySpecification.InvokeAsync(new Honeycomb.GetQuerySpecificationArgs\n        {\n            Calculations = \n            {\n                new Honeycomb.Inputs.GetQuerySpecificationCalculationArgs\n                {\n                    Op = \"AVG\",\n                    Column = \"duration_ms\",\n                },\n            },\n            Filters = \n            {\n                new Honeycomb.Inputs.GetQuerySpecificationFilterArgs\n                {\n                    Column = \"duration_ms\",\n                    Op = \"\u003e\",\n                    Value = \"200\",\n                },\n            },\n        }));\n        var testQueryQuery = new Honeycomb.Query(\"testQueryQuery\", new Honeycomb.QueryArgs\n        {\n            Dataset = \"%s\",\n            QueryJson = testQueryGetQuerySpecification.Apply(testQueryGetQuerySpecification =\u003e testQueryGetQuerySpecification.Json),\n        });\n    }\n\n}\n```\n```go\npackage main\n\nimport (\n\t\"fmt\"\n\n\t\"github.com/pulumi/pulumi-honeycomb/sdk/go/honeycomb\"\n\t\"github.com/pulumi/pulumi/sdk/v3/go/pulumi\"\n\t\"github.com/pulumi/pulumi/sdk/v3/go/pulumi/config\"\n)\n\nfunc main() {\n\tpulumi.Run(func(ctx *pulumi.Context) error {\n\t\tcfg := config.New(ctx, \"\")\n\t\tdataset := cfg.Require(\"dataset\")\n\t\ttestQueryGetQuerySpecification, err := honeycomb.GetQuerySpecification(ctx, \u0026GetQuerySpecificationArgs{\n\t\t\tCalculations: []GetQuerySpecificationCalculation{\n\t\t\t\tGetQuerySpecificationCalculation{\n\t\t\t\t\tOp:     \"AVG\",\n\t\t\t\t\tColumn: pulumi.StringRef(\"duration_ms\"),\n\t\t\t\t},\n\t\t\t},\n\t\t\tFilters: []GetQuerySpecificationFilter{\n\t\t\t\tGetQuerySpecificationFilter{\n\t\t\t\t\tColumn: \"duration_ms\",\n\t\t\t\t\tOp:     \"\u003e\",\n\t\t\t\t\tValue:  pulumi.StringRef(\"200\"),\n\t\t\t\t},\n\t\t\t},\n\t\t}, nil)\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\t_, err = honeycomb.NewQuery(ctx, \"testQueryQuery\", \u0026honeycomb.QueryArgs{\n\t\t\tDataset:   pulumi.String(fmt.Sprintf(\"%v%v\", \"%\", \"s\")),\n\t\t\tQueryJson: pulumi.String(testQueryGetQuerySpecification.Json),\n\t\t})\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\treturn nil\n\t})\n}\n```\n{{% /example %}}\n{{% /examples %}}\n\n## Import\n\nQueries cannot be imported. ",
+            "properties": {
+                "dataset": {
+                    "type": "string",
+                    "description": "The dataset this query is added to.\n"
+                },
+                "queryJson": {
+                    "type": "string",
+                    "description": "A JSON object describing the query according to the [Query Specification](https://docs.honeycomb.io/api/query-specification/#fields-on-a-query-specification). While the JSON can be constructed manually, it is easiest to use the `honeycomb.GetQuerySpecification` data source.\n"
+                }
+            },
+            "required": [
+                "dataset",
+                "queryJson"
+            ],
+            "inputProperties": {
+                "dataset": {
+                    "type": "string",
+                    "description": "The dataset this query is added to.\n"
+                },
+                "queryJson": {
+                    "type": "string",
+                    "description": "A JSON object describing the query according to the [Query Specification](https://docs.honeycomb.io/api/query-specification/#fields-on-a-query-specification). While the JSON can be constructed manually, it is easiest to use the `honeycomb.GetQuerySpecification` data source.\n"
+                }
+            },
+            "requiredInputs": [
+                "dataset",
+                "queryJson"
+            ],
+            "stateInputs": {
+                "description": "Input properties used for looking up and filtering Query resources.\n",
+                "properties": {
+                    "dataset": {
+                        "type": "string",
+                        "description": "The dataset this query is added to.\n"
+                    },
+                    "queryJson": {
+                        "type": "string",
+                        "description": "A JSON object describing the query according to the [Query Specification](https://docs.honeycomb.io/api/query-specification/#fields-on-a-query-specification). While the JSON can be constructed manually, it is easiest to use the `honeycomb.GetQuerySpecification` data source.\n"
+                    }
+                },
+                "type": "object"
+            }
+        },
+        "honeycomb:index/queryAnnotation:QueryAnnotation": {
+            "description": "{{% examples %}}\n## Example Usage\n{{% example %}}\n\n```typescript\nimport * as pulumi from \"@pulumi/pulumi\";\nimport * as honeycomb from \"@pulumi/honeycomb\";\n\nconst config = new pulumi.Config();\nconst dataset = config.require(\"dataset\");\nconst testQueryGetQuerySpecification = honeycomb.GetQuerySpecification({\n    calculations: [{\n        op: \"AVG\",\n        column: \"duration_ms\",\n    }],\n    filters: [{\n        column: \"duration_ms\",\n        op: \"\u003e\",\n        value: 10,\n    }],\n});\nconst testQueryQuery = new honeycomb.Query(\"testQueryQuery\", {\n    dataset: dataset,\n    queryJson: testQueryGetQuerySpecification.then(testQueryGetQuerySpecification =\u003e testQueryGetQuerySpecification.json),\n});\nconst testAnnotation = new honeycomb.QueryAnnotation(\"testAnnotation\", {\n    dataset: dataset,\n    queryId: testQueryQuery.id,\n    description: \"Describes my cool query (optional)\",\n});\n```\n```python\nimport pulumi\nimport pulumi_honeycomb as honeycomb\n\nconfig = pulumi.Config()\ndataset = config.require(\"dataset\")\ntest_query_get_query_specification = honeycomb.get_query_specification(calculations=[honeycomb.GetQuerySpecificationCalculationArgs(\n        op=\"AVG\",\n        column=\"duration_ms\",\n    )],\n    filters=[honeycomb.GetQuerySpecificationFilterArgs(\n        column=\"duration_ms\",\n        op=\"\u003e\",\n        value=\"10\",\n    )])\ntest_query_query = honeycomb.Query(\"testQueryQuery\",\n    dataset=dataset,\n    query_json=test_query_get_query_specification.json)\ntest_annotation = honeycomb.QueryAnnotation(\"testAnnotation\",\n    dataset=dataset,\n    query_id=test_query_query.id,\n    description=\"Describes my cool query (optional)\")\n```\n```csharp\nusing Pulumi;\nusing Honeycomb = Pulumi.Honeycomb;\n\nclass MyStack : Stack\n{\n    public MyStack()\n    {\n        var config = new Config();\n        var dataset = config.Require(\"dataset\");\n        var testQueryGetQuerySpecification = Output.Create(Honeycomb.GetQuerySpecification.InvokeAsync(new Honeycomb.GetQuerySpecificationArgs\n        {\n            Calculations = \n            {\n                new Honeycomb.Inputs.GetQuerySpecificationCalculationArgs\n                {\n                    Op = \"AVG\",\n                    Column = \"duration_ms\",\n                },\n            },\n            Filters = \n            {\n                new Honeycomb.Inputs.GetQuerySpecificationFilterArgs\n                {\n                    Column = \"duration_ms\",\n                    Op = \"\u003e\",\n                    Value = \"10\",\n                },\n            },\n        }));\n        var testQueryQuery = new Honeycomb.Query(\"testQueryQuery\", new Honeycomb.QueryArgs\n        {\n            Dataset = dataset,\n            QueryJson = testQueryGetQuerySpecification.Apply(testQueryGetQuerySpecification =\u003e testQueryGetQuerySpecification.Json),\n        });\n        var testAnnotation = new Honeycomb.QueryAnnotation(\"testAnnotation\", new Honeycomb.QueryAnnotationArgs\n        {\n            Dataset = dataset,\n            QueryId = testQueryQuery.Id,\n            Description = \"Describes my cool query (optional)\",\n        });\n    }\n\n}\n```\n```go\npackage main\n\nimport (\n\t\"github.com/pulumi/pulumi-honeycomb/sdk/go/honeycomb\"\n\t\"github.com/pulumi/pulumi/sdk/v3/go/pulumi\"\n\t\"github.com/pulumi/pulumi/sdk/v3/go/pulumi/config\"\n)\n\nfunc main() {\n\tpulumi.Run(func(ctx *pulumi.Context) error {\n\t\tcfg := config.New(ctx, \"\")\n\t\tdataset := cfg.Require(\"dataset\")\n\t\ttestQueryGetQuerySpecification, err := honeycomb.GetQuerySpecification(ctx, \u0026GetQuerySpecificationArgs{\n\t\t\tCalculations: []GetQuerySpecificationCalculation{\n\t\t\t\tGetQuerySpecificationCalculation{\n\t\t\t\t\tOp:     \"AVG\",\n\t\t\t\t\tColumn: pulumi.StringRef(\"duration_ms\"),\n\t\t\t\t},\n\t\t\t},\n\t\t\tFilters: []GetQuerySpecificationFilter{\n\t\t\t\tGetQuerySpecificationFilter{\n\t\t\t\t\tColumn: \"duration_ms\",\n\t\t\t\t\tOp:     \"\u003e\",\n\t\t\t\t\tValue:  pulumi.StringRef(\"10\"),\n\t\t\t\t},\n\t\t\t},\n\t\t}, nil)\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\ttestQueryQuery, err := honeycomb.NewQuery(ctx, \"testQueryQuery\", \u0026honeycomb.QueryArgs{\n\t\t\tDataset:   pulumi.String(dataset),\n\t\t\tQueryJson: pulumi.String(testQueryGetQuerySpecification.Json),\n\t\t})\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\t_, err = honeycomb.NewQueryAnnotation(ctx, \"testAnnotation\", \u0026honeycomb.QueryAnnotationArgs{\n\t\t\tDataset:     pulumi.String(dataset),\n\t\t\tQueryId:     testQueryQuery.ID(),\n\t\t\tDescription: pulumi.String(\"Describes my cool query (optional)\"),\n\t\t})\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\treturn nil\n\t})\n}\n```\n{{% /example %}}\n{{% /examples %}}\n\n## Import\n\nQuery annotations cannot be imported. ",
+            "properties": {
+                "dataset": {
+                    "type": "string",
+                    "description": "The dataset this query is added to.\n"
+                },
+                "description": {
+                    "type": "string",
+                    "description": "The description for the query annotation.\n"
+                },
+                "name": {
+                    "type": "string",
+                    "description": "The name of the query annotation that will display in the Honeycomb UI.\n"
+                },
+                "queryId": {
+                    "type": "string",
+                    "description": "The ID of the query that the annotation will be created on. Note that a query can have more than one annotation.\n"
+                }
+            },
+            "required": [
+                "dataset",
+                "name",
+                "queryId"
+            ],
+            "inputProperties": {
+                "dataset": {
+                    "type": "string",
+                    "description": "The dataset this query is added to.\n"
+                },
+                "description": {
+                    "type": "string",
+                    "description": "The description for the query annotation.\n"
+                },
+                "name": {
+                    "type": "string",
+                    "description": "The name of the query annotation that will display in the Honeycomb UI.\n"
+                },
+                "queryId": {
+                    "type": "string",
+                    "description": "The ID of the query that the annotation will be created on. Note that a query can have more than one annotation.\n"
+                }
+            },
+            "requiredInputs": [
+                "dataset",
+                "queryId"
+            ],
+            "stateInputs": {
+                "description": "Input properties used for looking up and filtering QueryAnnotation resources.\n",
+                "properties": {
+                    "dataset": {
+                        "type": "string",
+                        "description": "The dataset this query is added to.\n"
+                    },
+                    "description": {
+                        "type": "string",
+                        "description": "The description for the query annotation.\n"
+                    },
+                    "name": {
+                        "type": "string",
+                        "description": "The name of the query annotation that will display in the Honeycomb UI.\n"
+                    },
+                    "queryId": {
+                        "type": "string",
+                        "description": "The ID of the query that the annotation will be created on. Note that a query can have more than one annotation.\n"
+                    }
+                },
+                "type": "object"
+            }
+        },
+        "honeycomb:index/trigger:Trigger": {
+            "description": "## # Resource: honeycomb.Trigger\n\nCreates a trigger. For more information about triggers, check out [Alert with Triggers](https://docs.honeycomb.io/working-with-your-data/triggers/).\n\n{{% examples %}}\n## Example Usage\n{{% example %}}\n\n```typescript\nimport * as pulumi from \"@pulumi/pulumi\";\nimport * as honeycomb from \"@pulumi/honeycomb\";\n\nconst config = new pulumi.Config();\nconst dataset = config.require(\"dataset\");\nconst exampleGetQuerySpecification = honeycomb.GetQuerySpecification({\n    calculations: [{\n        op: \"AVG\",\n        column: \"duration_ms\",\n    }],\n    filters: [{\n        column: \"trace.parent_id\",\n        op: \"does-not-exist\",\n    }],\n});\nconst exampleQuery = new honeycomb.Query(\"exampleQuery\", {\n    dataset: dataset,\n    queryJson: exampleGetQuerySpecification.then(exampleGetQuerySpecification =\u003e exampleGetQuerySpecification.json),\n});\nconst exampleTrigger = new honeycomb.Trigger(\"exampleTrigger\", {\n    description: \"Average duration of all requests for the last 10 minutes.\",\n    queryId: exampleQuery.id,\n    dataset: dataset,\n    frequency: 600,\n    threshold: {\n        op: \"\u003e\",\n        value: 1000,\n    },\n    recipients: [\n        {\n            type: \"email\",\n            target: \"hello@example.com\",\n        },\n        {\n            type: \"marker\",\n            target: \"Trigger - requests are slow\",\n        },\n    ],\n});\n```\n```python\nimport pulumi\nimport pulumi_honeycomb as honeycomb\n\nconfig = pulumi.Config()\ndataset = config.require(\"dataset\")\nexample_get_query_specification = honeycomb.get_query_specification(calculations=[honeycomb.GetQuerySpecificationCalculationArgs(\n        op=\"AVG\",\n        column=\"duration_ms\",\n    )],\n    filters=[honeycomb.GetQuerySpecificationFilterArgs(\n        column=\"trace.parent_id\",\n        op=\"does-not-exist\",\n    )])\nexample_query = honeycomb.Query(\"exampleQuery\",\n    dataset=dataset,\n    query_json=example_get_query_specification.json)\nexample_trigger = honeycomb.Trigger(\"exampleTrigger\",\n    description=\"Average duration of all requests for the last 10 minutes.\",\n    query_id=example_query.id,\n    dataset=dataset,\n    frequency=600,\n    threshold=honeycomb.TriggerThresholdArgs(\n        op=\"\u003e\",\n        value=1000,\n    ),\n    recipients=[\n        honeycomb.TriggerRecipientArgs(\n            type=\"email\",\n            target=\"hello@example.com\",\n        ),\n        honeycomb.TriggerRecipientArgs(\n            type=\"marker\",\n            target=\"Trigger - requests are slow\",\n        ),\n    ])\n```\n```csharp\nusing Pulumi;\nusing Honeycomb = Pulumi.Honeycomb;\n\nclass MyStack : Stack\n{\n    public MyStack()\n    {\n        var config = new Config();\n        var dataset = config.Require(\"dataset\");\n        var exampleGetQuerySpecification = Output.Create(Honeycomb.GetQuerySpecification.InvokeAsync(new Honeycomb.GetQuerySpecificationArgs\n        {\n            Calculations = \n            {\n                new Honeycomb.Inputs.GetQuerySpecificationCalculationArgs\n                {\n                    Op = \"AVG\",\n                    Column = \"duration_ms\",\n                },\n            },\n            Filters = \n            {\n                new Honeycomb.Inputs.GetQuerySpecificationFilterArgs\n                {\n                    Column = \"trace.parent_id\",\n                    Op = \"does-not-exist\",\n                },\n            },\n        }));\n        var exampleQuery = new Honeycomb.Query(\"exampleQuery\", new Honeycomb.QueryArgs\n        {\n            Dataset = dataset,\n            QueryJson = exampleGetQuerySpecification.Apply(exampleGetQuerySpecification =\u003e exampleGetQuerySpecification.Json),\n        });\n        var exampleTrigger = new Honeycomb.Trigger(\"exampleTrigger\", new Honeycomb.TriggerArgs\n        {\n            Description = \"Average duration of all requests for the last 10 minutes.\",\n            QueryId = exampleQuery.Id,\n            Dataset = dataset,\n            Frequency = 600,\n            Threshold = new Honeycomb.Inputs.TriggerThresholdArgs\n            {\n                Op = \"\u003e\",\n                Value = 1000,\n            },\n            Recipients = \n            {\n                new Honeycomb.Inputs.TriggerRecipientArgs\n                {\n                    Type = \"email\",\n                    Target = \"hello@example.com\",\n                },\n                new Honeycomb.Inputs.TriggerRecipientArgs\n                {\n                    Type = \"marker\",\n                    Target = \"Trigger - requests are slow\",\n                },\n            },\n        });\n    }\n\n}\n```\n```go\npackage main\n\nimport (\n\t\"github.com/pulumi/pulumi-honeycomb/sdk/go/honeycomb\"\n\t\"github.com/pulumi/pulumi/sdk/v3/go/pulumi\"\n\t\"github.com/pulumi/pulumi/sdk/v3/go/pulumi/config\"\n)\n\nfunc main() {\n\tpulumi.Run(func(ctx *pulumi.Context) error {\n\t\tcfg := config.New(ctx, \"\")\n\t\tdataset := cfg.Require(\"dataset\")\n\t\texampleGetQuerySpecification, err := honeycomb.GetQuerySpecification(ctx, \u0026GetQuerySpecificationArgs{\n\t\t\tCalculations: []GetQuerySpecificationCalculation{\n\t\t\t\tGetQuerySpecificationCalculation{\n\t\t\t\t\tOp:     \"AVG\",\n\t\t\t\t\tColumn: pulumi.StringRef(\"duration_ms\"),\n\t\t\t\t},\n\t\t\t},\n\t\t\tFilters: []GetQuerySpecificationFilter{\n\t\t\t\tGetQuerySpecificationFilter{\n\t\t\t\t\tColumn: \"trace.parent_id\",\n\t\t\t\t\tOp:     \"does-not-exist\",\n\t\t\t\t},\n\t\t\t},\n\t\t}, nil)\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\texampleQuery, err := honeycomb.NewQuery(ctx, \"exampleQuery\", \u0026honeycomb.QueryArgs{\n\t\t\tDataset:   pulumi.String(dataset),\n\t\t\tQueryJson: pulumi.String(exampleGetQuerySpecification.Json),\n\t\t})\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\t_, err = honeycomb.NewTrigger(ctx, \"exampleTrigger\", \u0026honeycomb.TriggerArgs{\n\t\t\tDescription: pulumi.String(\"Average duration of all requests for the last 10 minutes.\"),\n\t\t\tQueryId:     exampleQuery.ID(),\n\t\t\tDataset:     pulumi.String(dataset),\n\t\t\tFrequency:   pulumi.Int(600),\n\t\t\tThreshold: \u0026TriggerThresholdArgs{\n\t\t\t\tOp:    pulumi.String(\"\u003e\"),\n\t\t\t\tValue: pulumi.Float64(1000),\n\t\t\t},\n\t\t\tRecipients: TriggerRecipientArray{\n\t\t\t\t\u0026TriggerRecipientArgs{\n\t\t\t\t\tType:   pulumi.String(\"email\"),\n\t\t\t\t\tTarget: pulumi.String(\"hello@example.com\"),\n\t\t\t\t},\n\t\t\t\t\u0026TriggerRecipientArgs{\n\t\t\t\t\tType:   pulumi.String(\"marker\"),\n\t\t\t\t\tTarget: pulumi.String(\"Trigger - requests are slow\"),\n\t\t\t\t},\n\t\t\t},\n\t\t})\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\treturn nil\n\t})\n}\n```\n{{% /example %}}\n{{% /examples %}}\n\n## Import\n\nTriggers can be imported using a combination of the dataset name and their ID, e.g.\n\n```sh\n $ pulumi import honeycomb:index/trigger:Trigger my_trigger my-dataset/AeZzSoWws9G\n```\n\n You can find the ID in the URL bar when visiting the trigger from the UI. ",
+            "properties": {
+                "dataset": {
+                    "type": "string",
+                    "description": "The dataset this trigger is associated with.\n"
+                },
+                "description": {
+                    "type": "string",
+                    "description": "Description of the trigger.\n"
+                },
+                "disabled": {
+                    "type": "boolean",
+                    "description": "The state of the trigger. If true, the trigger will not be run. Defaults to false.\n"
+                },
+                "frequency": {
+                    "type": "integer",
+                    "description": "The interval (in seconds) in which to check the results of the query’s calculation against the threshold. Value must be divisible by 60 and between 60 and 86400 (between 1 minute and 1 day). Defaults to 900 (15 minutes).\n"
+                },
+                "name": {
+                    "type": "string",
+                    "description": "Name of the trigger.\n"
+                },
+                "queryId": {
+                    "type": "string",
+                    "description": "The ID of the Query that the Trigger will execute.\n"
+                },
+                "recipients": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/types/honeycomb:index/TriggerRecipient:TriggerRecipient"
+                    },
+                    "description": "Zero or more configuration blocks (described below) with the recipients to notify when the trigger fires.\n"
+                },
+                "threshold": {
+                    "$ref": "#/types/honeycomb:index/TriggerThreshold:TriggerThreshold",
+                    "description": "A configuration block (described below) describing the threshold of the trigger.\n"
+                }
+            },
+            "required": [
+                "dataset",
+                "frequency",
+                "name",
+                "queryId",
+                "threshold"
+            ],
+            "inputProperties": {
+                "dataset": {
+                    "type": "string",
+                    "description": "The dataset this trigger is associated with.\n"
+                },
+                "description": {
+                    "type": "string",
+                    "description": "Description of the trigger.\n"
+                },
+                "disabled": {
+                    "type": "boolean",
+                    "description": "The state of the trigger. If true, the trigger will not be run. Defaults to false.\n"
+                },
+                "frequency": {
+                    "type": "integer",
+                    "description": "The interval (in seconds) in which to check the results of the query’s calculation against the threshold. Value must be divisible by 60 and between 60 and 86400 (between 1 minute and 1 day). Defaults to 900 (15 minutes).\n"
+                },
+                "name": {
+                    "type": "string",
+                    "description": "Name of the trigger.\n"
+                },
+                "queryId": {
+                    "type": "string",
+                    "description": "The ID of the Query that the Trigger will execute.\n"
+                },
+                "recipients": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/types/honeycomb:index/TriggerRecipient:TriggerRecipient"
+                    },
+                    "description": "Zero or more configuration blocks (described below) with the recipients to notify when the trigger fires.\n"
+                },
+                "threshold": {
+                    "$ref": "#/types/honeycomb:index/TriggerThreshold:TriggerThreshold",
+                    "description": "A configuration block (described below) describing the threshold of the trigger.\n"
+                }
+            },
+            "requiredInputs": [
+                "dataset",
+                "queryId",
+                "threshold"
+            ],
+            "stateInputs": {
+                "description": "Input properties used for looking up and filtering Trigger resources.\n",
+                "properties": {
+                    "dataset": {
+                        "type": "string",
+                        "description": "The dataset this trigger is associated with.\n"
+                    },
+                    "description": {
+                        "type": "string",
+                        "description": "Description of the trigger.\n"
+                    },
+                    "disabled": {
+                        "type": "boolean",
+                        "description": "The state of the trigger. If true, the trigger will not be run. Defaults to false.\n"
+                    },
+                    "frequency": {
+                        "type": "integer",
+                        "description": "The interval (in seconds) in which to check the results of the query’s calculation against the threshold. Value must be divisible by 60 and between 60 and 86400 (between 1 minute and 1 day). Defaults to 900 (15 minutes).\n"
+                    },
+                    "name": {
+                        "type": "string",
+                        "description": "Name of the trigger.\n"
+                    },
+                    "queryId": {
+                        "type": "string",
+                        "description": "The ID of the Query that the Trigger will execute.\n"
+                    },
+                    "recipients": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/types/honeycomb:index/TriggerRecipient:TriggerRecipient"
+                        },
+                        "description": "Zero or more configuration blocks (described below) with the recipients to notify when the trigger fires.\n"
+                    },
+                    "threshold": {
+                        "$ref": "#/types/honeycomb:index/TriggerThreshold:TriggerThreshold",
+                        "description": "A configuration block (described below) describing the threshold of the trigger.\n"
+                    }
+                },
+                "type": "object"
+            }
+        }
+    },
+    "functions": {
+        "honeycomb:index/getDatasets:GetDatasets": {
+            "description": "## # Data Source: honeycomb.GetDatasets\n\nThe datasets data source allows the datasets of an account to be retrieved.\n",
+            "inputs": {
+                "description": "A collection of arguments for invoking GetDatasets.\n",
+                "properties": {
+                    "startsWith": {
+                        "type": "string",
+                        "description": "Only return datasets starting with the given value.\n"
+                    }
+                },
+                "type": "object"
+            },
+            "outputs": {
+                "description": "A collection of values returned by GetDatasets.\n",
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "description": "The provider-assigned unique ID for this managed resource.\n"
+                    },
+                    "names": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "description": "a list of all the dataset names.\n"
+                    },
+                    "slugs": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "description": "a list of all the dataset slugs.\n"
+                    },
+                    "startsWith": {
+                        "type": "string"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "names",
+                    "slugs",
+                    "id"
+                ]
+            }
+        },
+        "honeycomb:index/getQuerySpecification:GetQuerySpecification": {
+            "description": "## # Data Source: honeycomb.GetQuerySpecification\n\nGenerates a [Query Specificaiton](https://docs.honeycomb.io/api/query-specification/) in JSON format.\n\nThis is a data source which can be used to construct a JSON representation of a Honeycomb [Query Specification](https://docs.honeycomb.io/api/query-specification/). The `json` attribute contains a serialized JSON representation which can be passed to the `query_json` field of the `honeycomb.Query` resource for use in boards and triggers.\n\n{{% examples %}}\n## Example Usage\n{{% example %}}\n\n```typescript\nimport * as pulumi from \"@pulumi/pulumi\";\nimport * as honeycomb from \"@pulumi/honeycomb\";\n\nconst example = honeycomb.GetQuerySpecification({\n    calculations: [{\n        op: \"AVG\",\n        column: \"duration_ms\",\n    }],\n    filters: [\n        {\n            column: \"trace.parent_id\",\n            op: \"does-not-exist\",\n        },\n        {\n            column: \"app.tenant\",\n            op: \"=\",\n            value: \"ThatSpecialTenant\",\n        },\n    ],\n    filterCombination: \"AND\",\n    breakdowns: [\"app.tenant\"],\n    timeRange: 28800,\n});\nexport const jsonQuery = example.then(example =\u003e example.json);\n```\n```python\nimport pulumi\nimport pulumi_honeycomb as honeycomb\n\nexample = honeycomb.get_query_specification(calculations=[honeycomb.GetQuerySpecificationCalculationArgs(\n        op=\"AVG\",\n        column=\"duration_ms\",\n    )],\n    filters=[\n        honeycomb.GetQuerySpecificationFilterArgs(\n            column=\"trace.parent_id\",\n            op=\"does-not-exist\",\n        ),\n        honeycomb.GetQuerySpecificationFilterArgs(\n            column=\"app.tenant\",\n            op=\"=\",\n            value=\"ThatSpecialTenant\",\n        ),\n    ],\n    filter_combination=\"AND\",\n    breakdowns=[\"app.tenant\"],\n    time_range=28800)\npulumi.export(\"jsonQuery\", example.json)\n```\n```csharp\nusing Pulumi;\nusing Honeycomb = Pulumi.Honeycomb;\n\nclass MyStack : Stack\n{\n    public MyStack()\n    {\n        var example = Output.Create(Honeycomb.GetQuerySpecification.InvokeAsync(new Honeycomb.GetQuerySpecificationArgs\n        {\n            Calculations = \n            {\n                new Honeycomb.Inputs.GetQuerySpecificationCalculationArgs\n                {\n                    Op = \"AVG\",\n                    Column = \"duration_ms\",\n                },\n            },\n            Filters = \n            {\n                new Honeycomb.Inputs.GetQuerySpecificationFilterArgs\n                {\n                    Column = \"trace.parent_id\",\n                    Op = \"does-not-exist\",\n                },\n                new Honeycomb.Inputs.GetQuerySpecificationFilterArgs\n                {\n                    Column = \"app.tenant\",\n                    Op = \"=\",\n                    Value = \"ThatSpecialTenant\",\n                },\n            },\n            FilterCombination = \"AND\",\n            Breakdowns = \n            {\n                \"app.tenant\",\n            },\n            TimeRange = 28800,\n        }));\n        this.JsonQuery = example.Apply(example =\u003e example.Json);\n    }\n\n    [Output(\"jsonQuery\")]\n    public Output\u003cstring\u003e JsonQuery { get; set; }\n}\n```\n```go\npackage main\n\nimport (\n\t\"github.com/pulumi/pulumi-honeycomb/sdk/go/honeycomb\"\n\t\"github.com/pulumi/pulumi/sdk/v3/go/pulumi\"\n)\n\nfunc main() {\n\tpulumi.Run(func(ctx *pulumi.Context) error {\n\t\texample, err := honeycomb.GetQuerySpecification(ctx, \u0026GetQuerySpecificationArgs{\n\t\t\tCalculations: []GetQuerySpecificationCalculation{\n\t\t\t\tGetQuerySpecificationCalculation{\n\t\t\t\t\tOp:     \"AVG\",\n\t\t\t\t\tColumn: pulumi.StringRef(\"duration_ms\"),\n\t\t\t\t},\n\t\t\t},\n\t\t\tFilters: []GetQuerySpecificationFilter{\n\t\t\t\tGetQuerySpecificationFilter{\n\t\t\t\t\tColumn: \"trace.parent_id\",\n\t\t\t\t\tOp:     \"does-not-exist\",\n\t\t\t\t},\n\t\t\t\tGetQuerySpecificationFilter{\n\t\t\t\t\tColumn: \"app.tenant\",\n\t\t\t\t\tOp:     \"=\",\n\t\t\t\t\tValue:  pulumi.StringRef(\"ThatSpecialTenant\"),\n\t\t\t\t},\n\t\t\t},\n\t\t\tFilterCombination: pulumi.StringRef(\"AND\"),\n\t\t\tBreakdowns: []string{\n\t\t\t\t\"app.tenant\",\n\t\t\t},\n\t\t\tTimeRange: pulumi.IntRef(28800),\n\t\t}, nil)\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\tctx.Export(\"jsonQuery\", example.Json)\n\t\treturn nil\n\t})\n}\n```\n{{% /example %}}\n{{% /examples %}}",
+            "inputs": {
+                "description": "A collection of arguments for invoking GetQuerySpecification.\n",
+                "properties": {
+                    "breakdowns": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "description": "A list of fields to group by.\n"
+                    },
+                    "calculations": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/types/honeycomb:index/GetQuerySpecificationCalculation:GetQuerySpecificationCalculation"
+                        },
+                        "description": "Zero or more configuration blocks (described below) with the calculations that should be displayed. If no calculations are specified, `COUNT` will be used.\n"
+                    },
+                    "endTime": {
+                        "type": "integer",
+                        "description": "The absolute end time of the query in Unix Time (= seconds since epoch).\n"
+                    },
+                    "filterCombination": {
+                        "type": "string",
+                        "description": "How to combine multiple filters, either `AND` (default) or `OR`.\n"
+                    },
+                    "filters": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/types/honeycomb:index/GetQuerySpecificationFilter:GetQuerySpecificationFilter"
+                        },
+                        "description": "Zero or more configuration blocks (described below) with the filters that should be applied.\n"
+                    },
+                    "granularity": {
+                        "type": "integer",
+                        "description": "The time resolution of the query’s graph, in seconds. Valid values must be in between the query’s time range /10 at maximum, and /1000 at minimum.\n"
+                    },
+                    "havings": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/types/honeycomb:index/GetQuerySpecificationHaving:GetQuerySpecificationHaving"
+                        },
+                        "description": "Zero or more filters used to restrict returned groups in the query result.\n"
+                    },
+                    "limit": {
+                        "type": "integer",
+                        "description": "The maximum number of query results, must be between 1 and 1000.\n"
+                    },
+                    "orders": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/types/honeycomb:index/GetQuerySpecificationOrder:GetQuerySpecificationOrder"
+                        },
+                        "description": "Zero or more configuration blocks (described below) describing how to order the query results. Each term must appear in either `calculation` or `breakdowns`.\n"
+                    },
+                    "startTime": {
+                        "type": "integer",
+                        "description": "The absolute start time of the query in Unix Time (= seconds since epoch).\n"
+                    },
+                    "timeRange": {
+                        "type": "integer",
+                        "description": "The time range of the query in seconds, defaults to two hours.\n"
+                    }
+                },
+                "type": "object"
+            },
+            "outputs": {
+                "description": "A collection of values returned by GetQuerySpecification.\n",
+                "properties": {
+                    "breakdowns": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "calculations": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/types/honeycomb:index/GetQuerySpecificationCalculation:GetQuerySpecificationCalculation"
+                        }
+                    },
+                    "endTime": {
+                        "type": "integer"
+                    },
+                    "filterCombination": {
+                        "type": "string"
+                    },
+                    "filters": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/types/honeycomb:index/GetQuerySpecificationFilter:GetQuerySpecificationFilter"
+                        }
+                    },
+                    "granularity": {
+                        "type": "integer"
+                    },
+                    "havings": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/types/honeycomb:index/GetQuerySpecificationHaving:GetQuerySpecificationHaving"
+                        }
+                    },
+                    "id": {
+                        "type": "string",
+                        "description": "The provider-assigned unique ID for this managed resource.\n"
+                    },
+                    "json": {
+                        "type": "string",
+                        "description": "JSON representation of the query according to the [Query Specification](https://docs.honeycomb.io/api/query-specification/#fields-on-a-query-specification), can be used as input for other resources.\n"
+                    },
+                    "limit": {
+                        "type": "integer"
+                    },
+                    "orders": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/types/honeycomb:index/GetQuerySpecificationOrder:GetQuerySpecificationOrder"
+                        }
+                    },
+                    "startTime": {
+                        "type": "integer"
+                    },
+                    "timeRange": {
+                        "type": "integer"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "json",
+                    "id"
+                ]
+            }
+        },
+        "honeycomb:index/getTriggerRecipient:GetTriggerRecipient": {
+            "description": "## # Data Source: honeycomb.GetTriggerRecipient\n\nSearch the triggers of a dataset for a trigger recipient. The ID of the existing trigger recipient can be used when adding trigger recipients to new triggers. Specifying a trigger recipient by its ID is necessary when adding Slack recipients, since these can not be created using the API.\n\n{{% examples %}}\n## Example Usage\n{{% example %}}\n\n```typescript\nimport * as pulumi from \"@pulumi/pulumi\";\nimport * as honeycomb from \"@pulumi/honeycomb\";\n\nconst config = new pulumi.Config();\nconst dataset = config.require(\"dataset\");\nconst slack = honeycomb.GetTriggerRecipient({\n    dataset: dataset,\n    type: \"slack\",\n    target: \"honeycomb-triggers\",\n});\nconst exampleGetQuerySpecification = honeycomb.GetQuerySpecification({\n    calculations: [{\n        op: \"AVG\",\n        column: \"duration_ms\",\n    }],\n});\nconst exampleTrigger = new honeycomb.Trigger(\"exampleTrigger\", {\n    queryJson: exampleGetQuerySpecification.then(exampleGetQuerySpecification =\u003e exampleGetQuerySpecification.json),\n    dataset: dataset,\n    threshold: {\n        op: \"\u003e\",\n        value: 1000,\n    },\n    recipients: [\n        {\n            type: \"email\",\n            target: \"hello@example.com\",\n        },\n        {\n            id: slack.then(slack =\u003e slack.id),\n        },\n    ],\n});\n```\n{{% /example %}}\n{{% /examples %}}",
+            "inputs": {
+                "description": "A collection of arguments for invoking GetTriggerRecipient.\n",
+                "properties": {
+                    "dataset": {
+                        "type": "string",
+                        "description": "Search through all triggers linked to this dataset.\n"
+                    },
+                    "target": {
+                        "type": "string",
+                        "description": "Target of the trigger, this has another meaning depending on the type of recipient (see the table below).\n"
+                    },
+                    "type": {
+                        "type": "string",
+                        "description": "The type of recipient, allowed types are `email`, `marker`, `pagerduty`, `slack` and `webhook`.\n"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "dataset",
+                    "type"
+                ]
+            },
+            "outputs": {
+                "description": "A collection of values returned by GetTriggerRecipient.\n",
+                "properties": {
+                    "dataset": {
+                        "type": "string"
+                    },
+                    "id": {
+                        "type": "string",
+                        "description": "The provider-assigned unique ID for this managed resource.\n"
+                    },
+                    "target": {
+                        "type": "string"
+                    },
+                    "type": {
+                        "type": "string"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "dataset",
+                    "type",
+                    "id"
+                ]
+            }
+        }
+    },
+    "language": {
+        "csharp": {
+            "compatibility": "tfbridge20",
+            "namespaces": null,
+            "packageReferences": {
+                "Pulumi": "3.*"
+            }
+        },
+        "go": {
+            "generateExtraInputTypes": true,
+            "generateResourceContainerTypes": true,
+            "importBasePath": "github.com/pulumi/pulumi-honeycomb/sdk/go/honeycomb"
+        },
+        "nodejs": {
+            "compatibility": "tfbridge20",
+            "dependencies": {
+                "@pulumi/pulumi": "^3.0.0"
+            },
+            "devDependencies": {
+                "@types/mime": "^2.0.0",
+                "@types/node": "^10.0.0"
+            },
+            "disableUnionOutputTypes": true,
+            "packageDescription": "A Pulumi package for creating and managing honeycomb.io resources.",
+            "packageName": "",
+            "readme": "\u003e This provider is a derived work of the [Terraform Provider](https://github.com/honeycombio/terraform-provider-honeycombio)\n\u003e distributed under [MPL 2.0](https://www.mozilla.org/en-US/MPL/2.0/). If you encounter a bug or missing feature,\n\u003e first check the [`pulumi/pulumi-honeycomb` repo](https://github.com/pulumi/pulumi-honeycomb/issues); however, if that doesn't turn up anything,\n\u003e please consult the source [`honeycombio/terraform-provider-honeycombio` repo](https://github.com/honeycombio/terraform-provider-honeycombio/issues).",
+            "typescriptVersion": ""
+        },
+        "python": {
+            "compatibility": "tfbridge20",
+            "readme": "\u003e This provider is a derived work of the [Terraform Provider](https://github.com/honeycombio/terraform-provider-honeycombio)\n\u003e distributed under [MPL 2.0](https://www.mozilla.org/en-US/MPL/2.0/). If you encounter a bug or missing feature,\n\u003e first check the [`pulumi/pulumi-honeycomb` repo](https://github.com/pulumi/pulumi-honeycomb/issues); however, if that doesn't turn up anything,\n\u003e please consult the source [`honeycombio/terraform-provider-honeycombio` repo](https://github.com/honeycombio/terraform-provider-honeycombio/issues).",
+            "requires": {
+                "pulumi": "\u003e=3.0.0,\u003c4.0.0"
+            }
+        }
+    }
+}
