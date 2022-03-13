@@ -9,7 +9,7 @@ replace (
 
 require (
 	github.com/hashicorp/terraform-plugin-sdk v1.9.1 // indirect
-	github.com/honeycombio/terraform-provider-honeycombio v0.3.1
+	github.com/honeycombio/terraform-provider-honeycombio v0.3.2
 	github.com/kr/pretty v0.3.0 // indirect
 	github.com/pulumi/pulumi-terraform-bridge/v3 v3.19.2
 	github.com/pulumi/pulumi/sdk/v3 v3.25.0
