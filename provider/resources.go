@@ -21,9 +21,7 @@ import (
 	"github.com/MaterializeInc/pulumi-honeycomb/provider/pkg/version"
 	"github.com/honeycombio/terraform-provider-honeycombio/honeycombio"
 	"github.com/pulumi/pulumi-terraform-bridge/v3/pkg/tfbridge"
-	shim "github.com/pulumi/pulumi-terraform-bridge/v3/pkg/tfshim"
 	shimv2 "github.com/pulumi/pulumi-terraform-bridge/v3/pkg/tfshim/sdk-v2"
-	"github.com/pulumi/pulumi/sdk/v3/go/common/resource"
 )
 
 // all of the token components used below.
@@ -35,14 +33,6 @@ const (
 	mainMod = "index" // the xyz module
 )
 
-// preConfigureCallback is called before the providerConfigure function of the underlying provider.
-// It should validate that the provider can be configured, and provide actionable errors in the case
-// it cannot be. Configuration variables can be read from `vars` using the `stringValue` function -
-// for example `stringValue(vars, "accessKey")`.
-func preConfigureCallback(vars resource.PropertyMap, c shim.ResourceConfig) error {
-	return nil
-}
-
 // Provider returns additional overlaid schema and metadata associated with the provider..
 func Provider() tfbridge.ProviderInfo {
 	// Instantiate the Terraform provider
@@ -50,17 +40,19 @@ func Provider() tfbridge.ProviderInfo {
 
 	// Create a Pulumi provider mapping
 	prov := tfbridge.ProviderInfo{
-		P:                    p,
-		Name:                 "honeycombio",
-		Description:          "A Pulumi package for creating and managing honeycomb.io resources.",
-		Keywords:             []string{"pulumi", "honeycomb", "tracing", "o11y", "monitoring", "otel"},
-		License:              "Apache-2.0",
-		GitHubOrg:            "honeycombio",
-		Homepage:             "https://github.com/honeycombio/terraform-provider-honeycombio",
-		Repository:           "https://github.com/honeycombio/terraform-provider-honeycombio",
-		PluginDownloadURL:    fmt.Sprintf("https://github.com/MaterializeInc/pulumi-honeycomb/releases/download/v%s/", version.Version),
-		Config:               map[string]*tfbridge.SchemaInfo{},
-		PreConfigureCallback: preConfigureCallback,
+		P:                 p,
+		Name:              "honeycombio",
+		Description:       "A Pulumi package for creating and managing honeycomb.io resources.",
+		Keywords:          []string{"pulumi", "honeycomb", "tracing", "o11y", "monitoring", "otel", "category/utility"},
+		License:           "Apache-2.0",
+		Publisher:         "Materialize Inc",
+		LogoURL:           "https://raw.githubusercontent.com/MaterializeInc/pulumi-honeycomb/main/assets/honeycomb.svg",
+		GitHubOrg:         "honeycombio",
+		Homepage:          "https://github.com/honeycombio/terraform-provider-honeycombio",
+		Repository:        "https://github.com/honeycombio/terraform-provider-honeycombio",
+		PluginDownloadURL: "https://github.com/MaterializeInc/pulumi-honeycomb/releases/download/${VERSION}",
+		DisplayName:       "Honeycomb.io",
+		Config:            map[string]*tfbridge.SchemaInfo{},
 		Resources: map[string]*tfbridge.ResourceInfo{
 			"honeycombio_board":            {Tok: tfbridge.MakeResource(mainPkg, mainMod, "Board")},
 			"honeycombio_column":           {Tok: tfbridge.MakeResource(mainPkg, mainMod, "Column")},
@@ -73,6 +65,7 @@ func Provider() tfbridge.ProviderInfo {
 		},
 		DataSources: map[string]*tfbridge.DataSourceInfo{
 			"honeycombio_datasets":            {Tok: tfbridge.MakeDataSource(mainPkg, mainMod, "GetDatasets")},
+			"honeycombio_query_result":        {Tok: tfbridge.MakeDataSource(mainPkg, mainMod, "GetQueryResult")},
 			"honeycombio_query_specification": {Tok: tfbridge.MakeDataSource(mainPkg, mainMod, "GetQuerySpecification")},
 			"honeycombio_trigger_recipient":   {Tok: tfbridge.MakeDataSource(mainPkg, mainMod, "GetTriggerRecipient")},
 		},

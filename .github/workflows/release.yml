@@ -15,7 +15,17 @@ jobs:
       - run: git fetch --force --tags
       - uses: actions/setup-go@v2
         with:
-          go-version: 1.16
+          go-version: 1.18
+      - uses: actions/setup-python@v2
+        with:
+          python-version: 3.7
+      - uses: actions/setup-node@v2
+        with:
+          nodejs-version: 14.x
+      - name: Setup DotNet
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: 3.1.x
       - run: make schema
       - uses: goreleaser/goreleaser-action@v2
         with:
@@ -31,3 +41,19 @@ jobs:
         with:
           password: ${{ secrets.PYPI_API_TOKEN }}
           packages_dir: sdk/python/dist/
+      - run: make nodejs-sdk
+      - run: |
+          yarn install
+          yarn run tsc
+          cp ../../README.md ../../LICENSE package.json yarn.lock ./bin/
+          sed -i.bak -e "s/\$${VERSION}/$(VERSION)/g" ./bin/package.json
+        working-directory: sdk/nodejs
+      - uses: JS-DevTools/npm-publish@v1
+        with:
+          access: "public"
+          token: ${{ secrets.NPM_TOKEN }}
+          package: ${{github.workspace}}/sdk/nodejs/bin/package.json
+      - run: make dotnet-sdk
+      - name: publish nuget package
+        run: |
+          dotnet nuget push ${{github.workspace}}/sdk/dotnet/bin/Debug/*.nupkg -s https://api.nuget.org/v3/index.json -k ${{ secrets.NUGET_PUBLISH_KEY }}

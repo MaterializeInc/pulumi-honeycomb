@@ -2,8 +2,6 @@
 .pulumi
 **/bin/
 **/obj/
-Pulumi.*.yaml
-sdk/nodejs/node_modules
 
 **/command-output/
 
@@ -12,7 +10,8 @@ sdk/nodejs/node_modules
 
 yarn.lock
 .DS_Store
-/sdk
+/sdk/nodejs
+/sdk/dotnet
+/sdk/python
 /dist/
-/provider/cmd/pulumi-resource-honeycomb/Pulumi.yaml
-/provider/cmd/pulumi-resource-honeycomb/schema.json
+/provider/cmd/pulumi-resource-honeycomb/schema.go
