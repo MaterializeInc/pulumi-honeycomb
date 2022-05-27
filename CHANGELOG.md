@@ -1,6 +1,14 @@
 CHANGELOG
 =========
 
+## 0.0.9
+
+* Upgraded terraform-provider-honeycomb to
+  [0.6.0](https://github.com/honeycombio/terraform-provider-honeycombio/releases/tag/v0.6.0).
+
+* Added builds for the go, .NET and nodejs SDKs - thanks
+  [@stack72](https://github.com/stack72)!
+
 ## 0.0.8
 
 * Upgraded terraform-provider-honeycomb to
