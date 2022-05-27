@@ -1,6 +1,12 @@
 CHANGELOG
 =========
 
+## 0.0.10
+
+* Fixed the resource download URL.
+
+* Hopefully fixed the nodejs release package name.
+
 ## 0.0.9
 
 * Upgraded terraform-provider-honeycomb to
