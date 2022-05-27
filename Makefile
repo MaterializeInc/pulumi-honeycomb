@@ -33,7 +33,7 @@ dotnet-sdk: bin/pulumi-tfgen-honeycomb provider/cmd/pulumi-resource-honeycomb/sc
 	bin/pulumi-tfgen-honeycomb dotnet
 	cd sdk/dotnet/ && \
 		echo "${VERSION}" >version.txt && \
-		dotnet build /p:Version=${ERSION}
+		dotnet build /p:Version=${VERSION}
 	# Add the build step and inject the version to VERSION.txt
 
 go-sdk: bin/pulumi-tfgen-honeycomb provider/cmd/pulumi-resource-honeycomb/schema.json
