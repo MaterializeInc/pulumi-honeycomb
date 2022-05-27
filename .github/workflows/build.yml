@@ -35,3 +35,21 @@ jobs:
           distribution: goreleaser
           version: latest
           args: build --skip-validate --rm-dist
+
+  validate-codegen:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - run: git fetch --force --tags
+      - uses: actions/setup-go@v2
+        with:
+          go-version: 1.18
+      - run: make go-sdk
+      - name: git status
+        run: git status
+      - name: "Check if tree is dirty"
+        run: git diff --exit-code
+      - name: "Check if new files were created"
+        run: u="$(git ls-files --exclude-standard --others)" && test -z "$u"
