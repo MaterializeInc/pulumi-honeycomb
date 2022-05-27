@@ -19,7 +19,7 @@ jobs:
       - uses: actions/setup-python@v2
         with:
           python-version: 3.7
-      - uses: actions/setup-nodejs@v2
+      - uses: actions/setup-node@v2
         with:
           nodejs-version: 14.x
       - name: Setup DotNet
