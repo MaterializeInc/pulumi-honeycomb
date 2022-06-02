@@ -59,6 +59,7 @@ import (
 // 			QueryId:     exampleQuery.ID(),
 // 			Dataset:     pulumi.String(dataset),
 // 			Frequency:   pulumi.Int(600),
+// 			AlertType:   pulumi.String("on_change"),
 // 			Threshold: &TriggerThresholdArgs{
 // 				Op:    pulumi.String(">"),
 // 				Value: pulumi.Float64(1000),
@@ -94,6 +95,8 @@ import (
 type Trigger struct {
 	pulumi.CustomResourceState
 
+	// The frequency for the alert to trigger. (`onChange` is the default behavior, `onTrue` can also be selected)
+	AlertType pulumi.StringPtrOutput `pulumi:"alertType"`
 	// The dataset this trigger is associated with.
 	Dataset pulumi.StringOutput `pulumi:"dataset"`
 	// Description of the trigger.
@@ -151,6 +154,8 @@ func GetTrigger(ctx *pulumi.Context,
 
 // Input properties used for looking up and filtering Trigger resources.
 type triggerState struct {
+	// The frequency for the alert to trigger. (`onChange` is the default behavior, `onTrue` can also be selected)
+	AlertType *string `pulumi:"alertType"`
 	// The dataset this trigger is associated with.
 	Dataset *string `pulumi:"dataset"`
 	// Description of the trigger.
@@ -170,6 +175,8 @@ type triggerState struct {
 }
 
 type TriggerState struct {
+	// The frequency for the alert to trigger. (`onChange` is the default behavior, `onTrue` can also be selected)
+	AlertType pulumi.StringPtrInput
 	// The dataset this trigger is associated with.
 	Dataset pulumi.StringPtrInput
 	// Description of the trigger.
@@ -193,6 +200,8 @@ func (TriggerState) ElementType() reflect.Type {
 }
 
 type triggerArgs struct {
+	// The frequency for the alert to trigger. (`onChange` is the default behavior, `onTrue` can also be selected)
+	AlertType *string `pulumi:"alertType"`
 	// The dataset this trigger is associated with.
 	Dataset string `pulumi:"dataset"`
 	// Description of the trigger.
@@ -213,6 +222,8 @@ type triggerArgs struct {
 
 // The set of arguments for constructing a Trigger resource.
 type TriggerArgs struct {
+	// The frequency for the alert to trigger. (`onChange` is the default behavior, `onTrue` can also be selected)
+	AlertType pulumi.StringPtrInput
 	// The dataset this trigger is associated with.
 	Dataset pulumi.StringInput
 	// Description of the trigger.
@@ -316,6 +327,11 @@ func (o TriggerOutput) ToTriggerOutput() TriggerOutput {
 
 func (o TriggerOutput) ToTriggerOutputWithContext(ctx context.Context) TriggerOutput {
 	return o
+}
+
+// The frequency for the alert to trigger. (`onChange` is the default behavior, `onTrue` can also be selected)
+func (o TriggerOutput) AlertType() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *Trigger) pulumi.StringPtrOutput { return v.AlertType }).(pulumi.StringPtrOutput)
 }
 
 // The dataset this trigger is associated with.

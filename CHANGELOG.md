@@ -1,6 +1,16 @@
 CHANGELOG
 =========
 
+## 0.0.11
+
+* Upgraded the terraform provider to 0.7.0
+* New data source `Recipient`
+* New resources `SLO` and `BurnAlert`
+* Breaking change: the `QueryResult` data source now takes the query
+  specification JSON directly.
+* The provider should now identify itself to the honeycomb API as
+  "pulumi-honeycomb/<version>" in the User-Agent header.
+
 ## 0.0.10
 
 * Fixed the resource download URL.

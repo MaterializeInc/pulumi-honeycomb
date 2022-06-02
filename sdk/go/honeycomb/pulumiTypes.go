@@ -143,6 +143,121 @@ func (o BoardQueryArrayOutput) Index(i pulumi.IntInput) BoardQueryOutput {
 	}).(BoardQueryOutput)
 }
 
+type BurnAlertRecipient struct {
+	// The ID of an already existing recipient. Should not be used in combination with `type` and `target`.
+	Id *string `pulumi:"id"`
+	// Target of the recipient, this has another meaning depending on the type of recipient (see the table below). Should not be used in combination with `id`.
+	Target *string `pulumi:"target"`
+	// The type of the recipient, allowed types are `email`, `pagerduty`, `slack` and `webhook`. Should not be used in combination with `id`.
+	Type *string `pulumi:"type"`
+}
+
+// BurnAlertRecipientInput is an input type that accepts BurnAlertRecipientArgs and BurnAlertRecipientOutput values.
+// You can construct a concrete instance of `BurnAlertRecipientInput` via:
+//
+//          BurnAlertRecipientArgs{...}
+type BurnAlertRecipientInput interface {
+	pulumi.Input
+
+	ToBurnAlertRecipientOutput() BurnAlertRecipientOutput
+	ToBurnAlertRecipientOutputWithContext(context.Context) BurnAlertRecipientOutput
+}
+
+type BurnAlertRecipientArgs struct {
+	// The ID of an already existing recipient. Should not be used in combination with `type` and `target`.
+	Id pulumi.StringPtrInput `pulumi:"id"`
+	// Target of the recipient, this has another meaning depending on the type of recipient (see the table below). Should not be used in combination with `id`.
+	Target pulumi.StringPtrInput `pulumi:"target"`
+	// The type of the recipient, allowed types are `email`, `pagerduty`, `slack` and `webhook`. Should not be used in combination with `id`.
+	Type pulumi.StringPtrInput `pulumi:"type"`
+}
+
+func (BurnAlertRecipientArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*BurnAlertRecipient)(nil)).Elem()
+}
+
+func (i BurnAlertRecipientArgs) ToBurnAlertRecipientOutput() BurnAlertRecipientOutput {
+	return i.ToBurnAlertRecipientOutputWithContext(context.Background())
+}
+
+func (i BurnAlertRecipientArgs) ToBurnAlertRecipientOutputWithContext(ctx context.Context) BurnAlertRecipientOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(BurnAlertRecipientOutput)
+}
+
+// BurnAlertRecipientArrayInput is an input type that accepts BurnAlertRecipientArray and BurnAlertRecipientArrayOutput values.
+// You can construct a concrete instance of `BurnAlertRecipientArrayInput` via:
+//
+//          BurnAlertRecipientArray{ BurnAlertRecipientArgs{...} }
+type BurnAlertRecipientArrayInput interface {
+	pulumi.Input
+
+	ToBurnAlertRecipientArrayOutput() BurnAlertRecipientArrayOutput
+	ToBurnAlertRecipientArrayOutputWithContext(context.Context) BurnAlertRecipientArrayOutput
+}
+
+type BurnAlertRecipientArray []BurnAlertRecipientInput
+
+func (BurnAlertRecipientArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]BurnAlertRecipient)(nil)).Elem()
+}
+
+func (i BurnAlertRecipientArray) ToBurnAlertRecipientArrayOutput() BurnAlertRecipientArrayOutput {
+	return i.ToBurnAlertRecipientArrayOutputWithContext(context.Background())
+}
+
+func (i BurnAlertRecipientArray) ToBurnAlertRecipientArrayOutputWithContext(ctx context.Context) BurnAlertRecipientArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(BurnAlertRecipientArrayOutput)
+}
+
+type BurnAlertRecipientOutput struct{ *pulumi.OutputState }
+
+func (BurnAlertRecipientOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*BurnAlertRecipient)(nil)).Elem()
+}
+
+func (o BurnAlertRecipientOutput) ToBurnAlertRecipientOutput() BurnAlertRecipientOutput {
+	return o
+}
+
+func (o BurnAlertRecipientOutput) ToBurnAlertRecipientOutputWithContext(ctx context.Context) BurnAlertRecipientOutput {
+	return o
+}
+
+// The ID of an already existing recipient. Should not be used in combination with `type` and `target`.
+func (o BurnAlertRecipientOutput) Id() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v BurnAlertRecipient) *string { return v.Id }).(pulumi.StringPtrOutput)
+}
+
+// Target of the recipient, this has another meaning depending on the type of recipient (see the table below). Should not be used in combination with `id`.
+func (o BurnAlertRecipientOutput) Target() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v BurnAlertRecipient) *string { return v.Target }).(pulumi.StringPtrOutput)
+}
+
+// The type of the recipient, allowed types are `email`, `pagerduty`, `slack` and `webhook`. Should not be used in combination with `id`.
+func (o BurnAlertRecipientOutput) Type() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v BurnAlertRecipient) *string { return v.Type }).(pulumi.StringPtrOutput)
+}
+
+type BurnAlertRecipientArrayOutput struct{ *pulumi.OutputState }
+
+func (BurnAlertRecipientArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]BurnAlertRecipient)(nil)).Elem()
+}
+
+func (o BurnAlertRecipientArrayOutput) ToBurnAlertRecipientArrayOutput() BurnAlertRecipientArrayOutput {
+	return o
+}
+
+func (o BurnAlertRecipientArrayOutput) ToBurnAlertRecipientArrayOutputWithContext(ctx context.Context) BurnAlertRecipientArrayOutput {
+	return o
+}
+
+func (o BurnAlertRecipientArrayOutput) Index(i pulumi.IntInput) BurnAlertRecipientOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) BurnAlertRecipient {
+		return vs[0].([]BurnAlertRecipient)[vs[1].(int)]
+	}).(BurnAlertRecipientOutput)
+}
+
 type GetQuerySpecificationCalculation struct {
 	// The column to apply the operator to, not needed with `COUNT` or `CONCURRENCY`.
 	Column *string `pulumi:"column"`
@@ -937,6 +1052,8 @@ func (o TriggerThresholdPtrOutput) Value() pulumi.Float64PtrOutput {
 func init() {
 	pulumi.RegisterInputType(reflect.TypeOf((*BoardQueryInput)(nil)).Elem(), BoardQueryArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*BoardQueryArrayInput)(nil)).Elem(), BoardQueryArray{})
+	pulumi.RegisterInputType(reflect.TypeOf((*BurnAlertRecipientInput)(nil)).Elem(), BurnAlertRecipientArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*BurnAlertRecipientArrayInput)(nil)).Elem(), BurnAlertRecipientArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*GetQuerySpecificationCalculationInput)(nil)).Elem(), GetQuerySpecificationCalculationArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*GetQuerySpecificationCalculationArrayInput)(nil)).Elem(), GetQuerySpecificationCalculationArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*GetQuerySpecificationFilterInput)(nil)).Elem(), GetQuerySpecificationFilterArgs{})
@@ -951,6 +1068,8 @@ func init() {
 	pulumi.RegisterInputType(reflect.TypeOf((*TriggerThresholdPtrInput)(nil)).Elem(), TriggerThresholdArgs{})
 	pulumi.RegisterOutputType(BoardQueryOutput{})
 	pulumi.RegisterOutputType(BoardQueryArrayOutput{})
+	pulumi.RegisterOutputType(BurnAlertRecipientOutput{})
+	pulumi.RegisterOutputType(BurnAlertRecipientArrayOutput{})
 	pulumi.RegisterOutputType(GetQuerySpecificationCalculationOutput{})
 	pulumi.RegisterOutputType(GetQuerySpecificationCalculationArrayOutput{})
 	pulumi.RegisterOutputType(GetQuerySpecificationFilterOutput{})

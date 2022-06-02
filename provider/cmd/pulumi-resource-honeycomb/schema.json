@@ -101,6 +101,47 @@
                 }
             }
         },
+        "honeycomb:index/BurnAlertRecipient:BurnAlertRecipient": {
+            "properties": {
+                "id": {
+                    "type": "string",
+                    "description": "The ID of an already existing recipient. Should not be used in combination with `type` and `target`.\n",
+                    "language": {
+                        "python": {
+                            "mapCase": false
+                        }
+                    }
+                },
+                "target": {
+                    "type": "string",
+                    "description": "Target of the recipient, this has another meaning depending on the type of recipient (see the table below). Should not be used in combination with `id`.\n",
+                    "language": {
+                        "python": {
+                            "mapCase": false
+                        }
+                    }
+                },
+                "type": {
+                    "type": "string",
+                    "description": "The type of the recipient, allowed types are `email`, `pagerduty`, `slack` and `webhook`. Should not be used in combination with `id`.\n",
+                    "language": {
+                        "python": {
+                            "mapCase": false
+                        }
+                    }
+                }
+            },
+            "type": "object",
+            "language": {
+                "nodejs": {
+                    "requiredOutputs": [
+                        "id",
+                        "target",
+                        "type"
+                    ]
+                }
+            }
+        },
         "honeycomb:index/GetQuerySpecificationCalculation:GetQuerySpecificationCalculation": {
             "properties": {
                 "column": {
@@ -383,7 +424,7 @@
     },
     "resources": {
         "honeycomb:index/board:Board": {
-            "description": "## # Resource: honeycomb.Board\n\nCreates a board. For more information about boards, check out [Collaborate with Boards](https://docs.honeycomb.io/working-with-your-data/collaborating/boards/#docs-sidebar).\n\n{{% examples %}}\n## Example Usage\n{{% example %}}\n\n```typescript\nimport * as pulumi from \"@pulumi/pulumi\";\nimport * as honeycomb from \"@pulumi/honeycomb\";\nimport * as pulumi_honeycomb from \"@materializeinc/pulumi-honeycomb\";\n\nconst queryGetQuerySpecification = honeycomb.GetQuerySpecification({\n    calculations: [{\n        op: \"P99\",\n        column: \"duration_ms\",\n    }],\n    filters: [{\n        column: \"trace.parent_id\",\n        op: \"does-not-exist\",\n    }],\n    breakdowns: [\"app.tenant\"],\n});\nconst queryQuery = new honeycomb.Query(\"queryQuery\", {\n    dataset: _var.dataset,\n    queryJson: queryGetQuerySpecification.then(queryGetQuerySpecification =\u003e queryGetQuerySpecification.json),\n});\nconst board = new honeycomb.Board(\"board\", {queries: [{\n    dataset: _var.dataset,\n    queryId: queryQuery.id,\n}]});\n```\n```python\nimport pulumi\nimport pulumi_honeycomb as honeycomb\n\nquery_get_query_specification = honeycomb.get_query_specification(calculations=[honeycomb.GetQuerySpecificationCalculationArgs(\n        op=\"P99\",\n        column=\"duration_ms\",\n    )],\n    filters=[honeycomb.GetQuerySpecificationFilterArgs(\n        column=\"trace.parent_id\",\n        op=\"does-not-exist\",\n    )],\n    breakdowns=[\"app.tenant\"])\nquery_query = honeycomb.Query(\"queryQuery\",\n    dataset=var[\"dataset\"],\n    query_json=query_get_query_specification.json)\nboard = honeycomb.Board(\"board\", queries=[honeycomb.BoardQueryArgs(\n    dataset=var[\"dataset\"],\n    query_id=query_query.id,\n)])\n```\n```csharp\nusing Pulumi;\nusing Honeycomb = Pulumi.Honeycomb;\n\nclass MyStack : Stack\n{\n    public MyStack()\n    {\n        var queryGetQuerySpecification = Output.Create(Honeycomb.GetQuerySpecification.InvokeAsync(new Honeycomb.GetQuerySpecificationArgs\n        {\n            Calculations = \n            {\n                new Honeycomb.Inputs.GetQuerySpecificationCalculationArgs\n                {\n                    Op = \"P99\",\n                    Column = \"duration_ms\",\n                },\n            },\n            Filters = \n            {\n                new Honeycomb.Inputs.GetQuerySpecificationFilterArgs\n                {\n                    Column = \"trace.parent_id\",\n                    Op = \"does-not-exist\",\n                },\n            },\n            Breakdowns = \n            {\n                \"app.tenant\",\n            },\n        }));\n        var queryQuery = new Honeycomb.Query(\"queryQuery\", new Honeycomb.QueryArgs\n        {\n            Dataset = @var.Dataset,\n            QueryJson = queryGetQuerySpecification.Apply(queryGetQuerySpecification =\u003e queryGetQuerySpecification.Json),\n        });\n        var board = new Honeycomb.Board(\"board\", new Honeycomb.BoardArgs\n        {\n            Queries = \n            {\n                new Honeycomb.Inputs.BoardQueryArgs\n                {\n                    Dataset = @var.Dataset,\n                    QueryId = queryQuery.Id,\n                },\n            },\n        });\n    }\n\n}\n```\n```go\npackage main\n\nimport (\n\t\"github.com/pulumi/pulumi-honeycomb/sdk/go/honeycomb\"\n\t\"github.com/pulumi/pulumi/sdk/v3/go/pulumi\"\n)\n\nfunc main() {\n\tpulumi.Run(func(ctx *pulumi.Context) error {\n\t\tqueryGetQuerySpecification, err := honeycomb.GetQuerySpecification(ctx, \u0026GetQuerySpecificationArgs{\n\t\t\tCalculations: []GetQuerySpecificationCalculation{\n\t\t\t\tGetQuerySpecificationCalculation{\n\t\t\t\t\tOp:     \"P99\",\n\t\t\t\t\tColumn: pulumi.StringRef(\"duration_ms\"),\n\t\t\t\t},\n\t\t\t},\n\t\t\tFilters: []GetQuerySpecificationFilter{\n\t\t\t\tGetQuerySpecificationFilter{\n\t\t\t\t\tColumn: \"trace.parent_id\",\n\t\t\t\t\tOp:     \"does-not-exist\",\n\t\t\t\t},\n\t\t\t},\n\t\t\tBreakdowns: []string{\n\t\t\t\t\"app.tenant\",\n\t\t\t},\n\t\t}, nil)\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\tqueryQuery, err := honeycomb.NewQuery(ctx, \"queryQuery\", \u0026honeycomb.QueryArgs{\n\t\t\tDataset:   pulumi.Any(_var.Dataset),\n\t\t\tQueryJson: pulumi.String(queryGetQuerySpecification.Json),\n\t\t})\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\t_, err = honeycomb.NewBoard(ctx, \"board\", \u0026honeycomb.BoardArgs{\n\t\t\tQueries: BoardQueryArray{\n\t\t\t\t\u0026BoardQueryArgs{\n\t\t\t\t\tDataset: pulumi.Any(_var.Dataset),\n\t\t\t\t\tQueryId: queryQuery.ID(),\n\t\t\t\t},\n\t\t\t},\n\t\t})\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\treturn nil\n\t})\n}\n```\n```java\npackage generated_program;\n\nimport java.util.*;\nimport java.io.*;\nimport java.nio.*;\nimport com.pulumi.*;\n\npublic class App {\n    public static void main(String[] args) {\n        Pulumi.run(App::stack);\n    }\n\n    public static void stack(Context ctx) {\n        final var queryGetQuerySpecification = HoneycombFunctions.GetQuerySpecification();\n\n        var queryQuery = new Query(\"queryQuery\", QueryArgs.builder()        \n            .dataset(var_.dataset())\n            .queryJson(queryGetQuerySpecification.json())\n            .build());\n\n        var board = new Board(\"board\", BoardArgs.builder()        \n            .queries(BoardQueryArgs.builder()\n                .dataset(var_.dataset())\n                .queryId(queryQuery.id())\n                .build())\n            .build());\n\n    }\n}\n```\n```yaml\nresources:\n  queryQuery:\n    type: honeycomb:Query\n    properties:\n      dataset: ${var.dataset}\n      queryJson: ${queryGetQuerySpecification.json}\n  board:\n    type: honeycomb:Board\n    properties:\n      queries:\n        - dataset: ${var.dataset}\n          queryId: ${queryQuery.id}\nvariables:\n  queryGetQuerySpecification:\n    Fn::Invoke:\n      Function: honeycomb:GetQuerySpecification\n      Arguments:\n        calculations:\n          - op: P99\n            column: duration_ms\n        filters:\n          - column: trace.parent_id\n            op: does-not-exist\n        breakdowns:\n          - app.tenant\n```\n{{% /example %}}\n{{% /examples %}}\n\n## Import\n\nBoards can be imported using their ID, e.g.\n\n```sh\n $ pulumi import honeycomb:index/board:Board my_board AobW9oAZX71\n```\n\n You can find the ID in the URL bar when visiting the board from the UI. ",
+            "description": "## # Resource: honeycomb.Board\n\nCreates a board. For more information about boards, check out [Collaborate with Boards](https://docs.honeycomb.io/working-with-your-data/collaborating/boards/#docs-sidebar).\n\n{{% examples %}}\n## Example Usage\n{{% example %}}\n### Simple Board\n\n```typescript\nimport * as pulumi from \"@pulumi/pulumi\";\nimport * as honeycomb from \"@pulumi/honeycomb\";\nimport * as pulumi_honeycomb from \"@materializeinc/pulumi-honeycomb\";\n\nconst queryGetQuerySpecification = honeycomb.GetQuerySpecification({\n    calculations: [{\n        op: \"P99\",\n        column: \"duration_ms\",\n    }],\n    filters: [{\n        column: \"trace.parent_id\",\n        op: \"does-not-exist\",\n    }],\n    breakdowns: [\"app.tenant\"],\n});\nconst queryQuery = new honeycomb.Query(\"queryQuery\", {\n    dataset: _var.dataset,\n    queryJson: queryGetQuerySpecification.then(queryGetQuerySpecification =\u003e queryGetQuerySpecification.json),\n});\nconst board = new honeycomb.Board(\"board\", {queries: [{\n    dataset: _var.dataset,\n    queryId: queryQuery.id,\n}]});\n```\n```python\nimport pulumi\nimport pulumi_honeycomb as honeycomb\n\nquery_get_query_specification = honeycomb.get_query_specification(calculations=[honeycomb.GetQuerySpecificationCalculationArgs(\n        op=\"P99\",\n        column=\"duration_ms\",\n    )],\n    filters=[honeycomb.GetQuerySpecificationFilterArgs(\n        column=\"trace.parent_id\",\n        op=\"does-not-exist\",\n    )],\n    breakdowns=[\"app.tenant\"])\nquery_query = honeycomb.Query(\"queryQuery\",\n    dataset=var[\"dataset\"],\n    query_json=query_get_query_specification.json)\nboard = honeycomb.Board(\"board\", queries=[honeycomb.BoardQueryArgs(\n    dataset=var[\"dataset\"],\n    query_id=query_query.id,\n)])\n```\n```csharp\nusing Pulumi;\nusing Honeycomb = Pulumi.Honeycomb;\n\nclass MyStack : Stack\n{\n    public MyStack()\n    {\n        var queryGetQuerySpecification = Output.Create(Honeycomb.GetQuerySpecification.InvokeAsync(new Honeycomb.GetQuerySpecificationArgs\n        {\n            Calculations = \n            {\n                new Honeycomb.Inputs.GetQuerySpecificationCalculationArgs\n                {\n                    Op = \"P99\",\n                    Column = \"duration_ms\",\n                },\n            },\n            Filters = \n            {\n                new Honeycomb.Inputs.GetQuerySpecificationFilterArgs\n                {\n                    Column = \"trace.parent_id\",\n                    Op = \"does-not-exist\",\n                },\n            },\n            Breakdowns = \n            {\n                \"app.tenant\",\n            },\n        }));\n        var queryQuery = new Honeycomb.Query(\"queryQuery\", new Honeycomb.QueryArgs\n        {\n            Dataset = @var.Dataset,\n            QueryJson = queryGetQuerySpecification.Apply(queryGetQuerySpecification =\u003e queryGetQuerySpecification.Json),\n        });\n        var board = new Honeycomb.Board(\"board\", new Honeycomb.BoardArgs\n        {\n            Queries = \n            {\n                new Honeycomb.Inputs.BoardQueryArgs\n                {\n                    Dataset = @var.Dataset,\n                    QueryId = queryQuery.Id,\n                },\n            },\n        });\n    }\n\n}\n```\n```go\npackage main\n\nimport (\n\t\"github.com/pulumi/pulumi-honeycomb/sdk/go/honeycomb\"\n\t\"github.com/pulumi/pulumi/sdk/v3/go/pulumi\"\n)\n\nfunc main() {\n\tpulumi.Run(func(ctx *pulumi.Context) error {\n\t\tqueryGetQuerySpecification, err := honeycomb.GetQuerySpecification(ctx, \u0026GetQuerySpecificationArgs{\n\t\t\tCalculations: []GetQuerySpecificationCalculation{\n\t\t\t\tGetQuerySpecificationCalculation{\n\t\t\t\t\tOp:     \"P99\",\n\t\t\t\t\tColumn: pulumi.StringRef(\"duration_ms\"),\n\t\t\t\t},\n\t\t\t},\n\t\t\tFilters: []GetQuerySpecificationFilter{\n\t\t\t\tGetQuerySpecificationFilter{\n\t\t\t\t\tColumn: \"trace.parent_id\",\n\t\t\t\t\tOp:     \"does-not-exist\",\n\t\t\t\t},\n\t\t\t},\n\t\t\tBreakdowns: []string{\n\t\t\t\t\"app.tenant\",\n\t\t\t},\n\t\t}, nil)\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\tqueryQuery, err := honeycomb.NewQuery(ctx, \"queryQuery\", \u0026honeycomb.QueryArgs{\n\t\t\tDataset:   pulumi.Any(_var.Dataset),\n\t\t\tQueryJson: pulumi.String(queryGetQuerySpecification.Json),\n\t\t})\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\t_, err = honeycomb.NewBoard(ctx, \"board\", \u0026honeycomb.BoardArgs{\n\t\t\tQueries: BoardQueryArray{\n\t\t\t\t\u0026BoardQueryArgs{\n\t\t\t\t\tDataset: pulumi.Any(_var.Dataset),\n\t\t\t\t\tQueryId: queryQuery.ID(),\n\t\t\t\t},\n\t\t\t},\n\t\t})\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\treturn nil\n\t})\n}\n```\n```java\npackage generated_program;\n\nimport java.util.*;\nimport java.io.*;\nimport java.nio.*;\nimport com.pulumi.*;\n\npublic class App {\n    public static void main(String[] args) {\n        Pulumi.run(App::stack);\n    }\n\n    public static void stack(Context ctx) {\n        final var queryGetQuerySpecification = HoneycombFunctions.GetQuerySpecification();\n\n        var queryQuery = new Query(\"queryQuery\", QueryArgs.builder()        \n            .dataset(var_.dataset())\n            .queryJson(queryGetQuerySpecification.json())\n            .build());\n\n        var board = new Board(\"board\", BoardArgs.builder()        \n            .queries(BoardQueryArgs.builder()\n                .dataset(var_.dataset())\n                .queryId(queryQuery.id())\n                .build())\n            .build());\n\n    }\n}\n```\n```yaml\nresources:\n  queryQuery:\n    type: honeycomb:Query\n    properties:\n      dataset: ${var.dataset}\n      queryJson: ${queryGetQuerySpecification.json}\n  board:\n    type: honeycomb:Board\n    properties:\n      queries:\n        - dataset: ${var.dataset}\n          queryId: ${queryQuery.id}\nvariables:\n  queryGetQuerySpecification:\n    Fn::Invoke:\n      Function: honeycomb:GetQuerySpecification\n      Arguments:\n        calculations:\n          - op: P99\n            column: duration_ms\n        filters:\n          - column: trace.parent_id\n            op: does-not-exist\n        breakdowns:\n          - app.tenant\n```\n{{% /example %}}\n{{% example %}}\n### Annotated Board\n\n```typescript\nimport * as pulumi from \"@pulumi/pulumi\";\nimport * as honeycomb from \"@pulumi/honeycomb\";\nimport * as pulumi_honeycomb from \"@materializeinc/pulumi-honeycomb\";\n\nconst latencyByUseridGetQuerySpecification = honeycomb.GetQuerySpecification({\n    timeRange: 86400,\n    breakdowns: [\"app.user_id\"],\n    calculations: [\n        {\n            op: \"HEATMAP\",\n            column: \"duration_ms\",\n        },\n        {\n            op: \"P99\",\n            column: \"duration_ms\",\n        },\n    ],\n    filters: [{\n        column: \"trace.parent_id\",\n        op: \"does-not-exist\",\n    }],\n    orders: [{\n        column: \"duration_ms\",\n        op: \"P99\",\n        order: \"descending\",\n    }],\n});\nconst latencyByUseridQuery = new honeycomb.Query(\"latencyByUseridQuery\", {\n    dataset: _var.dataset,\n    queryJson: latencyByUseridGetQuerySpecification.then(latencyByUseridGetQuerySpecification =\u003e latencyByUseridGetQuerySpecification.json),\n});\nconst latencyByUseridQueryAnnotation = new honeycomb.QueryAnnotation(\"latencyByUseridQueryAnnotation\", {\n    dataset: _var.dataset,\n    queryId: latencyByUseridQuery.id,\n    description: \"A breakdown of trace latency by User over the last 24 hours\",\n});\nconst overview = new honeycomb.Board(\"overview\", {\n    style: \"visual\",\n    queries: [{\n        dataset: _var.dataset,\n        caption: \"Latency by User\",\n        queryId: latencyByUseridQuery.id,\n        queryAnnotationId: latencyByUseridQueryAnnotation.id,\n    }],\n});\n```\n```python\nimport pulumi\nimport pulumi_honeycomb as honeycomb\n\nlatency_by_userid_get_query_specification = honeycomb.get_query_specification(time_range=86400,\n    breakdowns=[\"app.user_id\"],\n    calculations=[\n        honeycomb.GetQuerySpecificationCalculationArgs(\n            op=\"HEATMAP\",\n            column=\"duration_ms\",\n        ),\n        honeycomb.GetQuerySpecificationCalculationArgs(\n            op=\"P99\",\n            column=\"duration_ms\",\n        ),\n    ],\n    filters=[honeycomb.GetQuerySpecificationFilterArgs(\n        column=\"trace.parent_id\",\n        op=\"does-not-exist\",\n    )],\n    orders=[honeycomb.GetQuerySpecificationOrderArgs(\n        column=\"duration_ms\",\n        op=\"P99\",\n        order=\"descending\",\n    )])\nlatency_by_userid_query = honeycomb.Query(\"latencyByUseridQuery\",\n    dataset=var[\"dataset\"],\n    query_json=latency_by_userid_get_query_specification.json)\nlatency_by_userid_query_annotation = honeycomb.QueryAnnotation(\"latencyByUseridQueryAnnotation\",\n    dataset=var[\"dataset\"],\n    query_id=latency_by_userid_query.id,\n    description=\"A breakdown of trace latency by User over the last 24 hours\")\noverview = honeycomb.Board(\"overview\",\n    style=\"visual\",\n    queries=[honeycomb.BoardQueryArgs(\n        dataset=var[\"dataset\"],\n        caption=\"Latency by User\",\n        query_id=latency_by_userid_query.id,\n        query_annotation_id=latency_by_userid_query_annotation.id,\n    )])\n```\n```csharp\nusing Pulumi;\nusing Honeycomb = Pulumi.Honeycomb;\n\nclass MyStack : Stack\n{\n    public MyStack()\n    {\n        var latencyByUseridGetQuerySpecification = Output.Create(Honeycomb.GetQuerySpecification.InvokeAsync(new Honeycomb.GetQuerySpecificationArgs\n        {\n            TimeRange = 86400,\n            Breakdowns = \n            {\n                \"app.user_id\",\n            },\n            Calculations = \n            {\n                new Honeycomb.Inputs.GetQuerySpecificationCalculationArgs\n                {\n                    Op = \"HEATMAP\",\n                    Column = \"duration_ms\",\n                },\n                new Honeycomb.Inputs.GetQuerySpecificationCalculationArgs\n                {\n                    Op = \"P99\",\n                    Column = \"duration_ms\",\n                },\n            },\n            Filters = \n            {\n                new Honeycomb.Inputs.GetQuerySpecificationFilterArgs\n                {\n                    Column = \"trace.parent_id\",\n                    Op = \"does-not-exist\",\n                },\n            },\n            Orders = \n            {\n                new Honeycomb.Inputs.GetQuerySpecificationOrderArgs\n                {\n                    Column = \"duration_ms\",\n                    Op = \"P99\",\n                    Order = \"descending\",\n                },\n            },\n        }));\n        var latencyByUseridQuery = new Honeycomb.Query(\"latencyByUseridQuery\", new Honeycomb.QueryArgs\n        {\n            Dataset = @var.Dataset,\n            QueryJson = latencyByUseridGetQuerySpecification.Apply(latencyByUseridGetQuerySpecification =\u003e latencyByUseridGetQuerySpecification.Json),\n        });\n        var latencyByUseridQueryAnnotation = new Honeycomb.QueryAnnotation(\"latencyByUseridQueryAnnotation\", new Honeycomb.QueryAnnotationArgs\n        {\n            Dataset = @var.Dataset,\n            QueryId = latencyByUseridQuery.Id,\n            Description = \"A breakdown of trace latency by User over the last 24 hours\",\n        });\n        var overview = new Honeycomb.Board(\"overview\", new Honeycomb.BoardArgs\n        {\n            Style = \"visual\",\n            Queries = \n            {\n                new Honeycomb.Inputs.BoardQueryArgs\n                {\n                    Dataset = @var.Dataset,\n                    Caption = \"Latency by User\",\n                    QueryId = latencyByUseridQuery.Id,\n                    QueryAnnotationId = latencyByUseridQueryAnnotation.Id,\n                },\n            },\n        });\n    }\n\n}\n```\n```go\npackage main\n\nimport (\n\t\"github.com/pulumi/pulumi-honeycomb/sdk/go/honeycomb\"\n\t\"github.com/pulumi/pulumi/sdk/v3/go/pulumi\"\n)\n\nfunc main() {\n\tpulumi.Run(func(ctx *pulumi.Context) error {\n\t\tlatencyByUseridGetQuerySpecification, err := honeycomb.GetQuerySpecification(ctx, \u0026GetQuerySpecificationArgs{\n\t\t\tTimeRange: pulumi.IntRef(86400),\n\t\t\tBreakdowns: []string{\n\t\t\t\t\"app.user_id\",\n\t\t\t},\n\t\t\tCalculations: []GetQuerySpecificationCalculation{\n\t\t\t\tGetQuerySpecificationCalculation{\n\t\t\t\t\tOp:     \"HEATMAP\",\n\t\t\t\t\tColumn: pulumi.StringRef(\"duration_ms\"),\n\t\t\t\t},\n\t\t\t\tGetQuerySpecificationCalculation{\n\t\t\t\t\tOp:     \"P99\",\n\t\t\t\t\tColumn: pulumi.StringRef(\"duration_ms\"),\n\t\t\t\t},\n\t\t\t},\n\t\t\tFilters: []GetQuerySpecificationFilter{\n\t\t\t\tGetQuerySpecificationFilter{\n\t\t\t\t\tColumn: \"trace.parent_id\",\n\t\t\t\t\tOp:     \"does-not-exist\",\n\t\t\t\t},\n\t\t\t},\n\t\t\tOrders: []GetQuerySpecificationOrder{\n\t\t\t\tGetQuerySpecificationOrder{\n\t\t\t\t\tColumn: pulumi.StringRef(\"duration_ms\"),\n\t\t\t\t\tOp:     pulumi.StringRef(\"P99\"),\n\t\t\t\t\tOrder:  pulumi.StringRef(\"descending\"),\n\t\t\t\t},\n\t\t\t},\n\t\t}, nil)\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\tlatencyByUseridQuery, err := honeycomb.NewQuery(ctx, \"latencyByUseridQuery\", \u0026honeycomb.QueryArgs{\n\t\t\tDataset:   pulumi.Any(_var.Dataset),\n\t\t\tQueryJson: pulumi.String(latencyByUseridGetQuerySpecification.Json),\n\t\t})\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\tlatencyByUseridQueryAnnotation, err := honeycomb.NewQueryAnnotation(ctx, \"latencyByUseridQueryAnnotation\", \u0026honeycomb.QueryAnnotationArgs{\n\t\t\tDataset:     pulumi.Any(_var.Dataset),\n\t\t\tQueryId:     latencyByUseridQuery.ID(),\n\t\t\tDescription: pulumi.String(\"A breakdown of trace latency by User over the last 24 hours\"),\n\t\t})\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\t_, err = honeycomb.NewBoard(ctx, \"overview\", \u0026honeycomb.BoardArgs{\n\t\t\tStyle: pulumi.String(\"visual\"),\n\t\t\tQueries: BoardQueryArray{\n\t\t\t\t\u0026BoardQueryArgs{\n\t\t\t\t\tDataset:           pulumi.Any(_var.Dataset),\n\t\t\t\t\tCaption:           pulumi.String(\"Latency by User\"),\n\t\t\t\t\tQueryId:           latencyByUseridQuery.ID(),\n\t\t\t\t\tQueryAnnotationId: latencyByUseridQueryAnnotation.ID(),\n\t\t\t\t},\n\t\t\t},\n\t\t})\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\treturn nil\n\t})\n}\n```\n```java\npackage generated_program;\n\nimport java.util.*;\nimport java.io.*;\nimport java.nio.*;\nimport com.pulumi.*;\n\npublic class App {\n    public static void main(String[] args) {\n        Pulumi.run(App::stack);\n    }\n\n    public static void stack(Context ctx) {\n        final var latencyByUseridGetQuerySpecification = HoneycombFunctions.GetQuerySpecification();\n\n        var latencyByUseridQuery = new Query(\"latencyByUseridQuery\", QueryArgs.builder()        \n            .dataset(var_.dataset())\n            .queryJson(latencyByUseridGetQuerySpecification.json())\n            .build());\n\n        var latencyByUseridQueryAnnotation = new QueryAnnotation(\"latencyByUseridQueryAnnotation\", QueryAnnotationArgs.builder()        \n            .dataset(var_.dataset())\n            .queryId(latencyByUseridQuery.id())\n            .description(\"A breakdown of trace latency by User over the last 24 hours\")\n            .build());\n\n        var overview = new Board(\"overview\", BoardArgs.builder()        \n            .style(\"visual\")\n            .queries(BoardQueryArgs.builder()\n                .dataset(var_.dataset())\n                .caption(\"Latency by User\")\n                .queryId(latencyByUseridQuery.id())\n                .queryAnnotationId(latencyByUseridQueryAnnotation.id())\n                .build())\n            .build());\n\n    }\n}\n```\n```yaml\nresources:\n  latencyByUseridQuery:\n    type: honeycomb:Query\n    properties:\n      dataset: ${var.dataset}\n      queryJson: ${latencyByUseridGetQuerySpecification.json}\n  latencyByUseridQueryAnnotation:\n    type: honeycomb:QueryAnnotation\n    properties:\n      dataset: ${var.dataset}\n      queryId: ${latencyByUseridQuery.id}\n      description: A breakdown of trace latency by User over the last 24 hours\n  overview:\n    type: honeycomb:Board\n    properties:\n      style: visual\n      queries:\n        - dataset: ${var.dataset}\n          caption: Latency by User\n          queryId: ${latencyByUseridQuery.id}\n          queryAnnotationId: ${latencyByUseridQueryAnnotation.id}\nvariables:\n  latencyByUseridGetQuerySpecification:\n    Fn::Invoke:\n      Function: honeycomb:GetQuerySpecification\n      Arguments:\n        timeRange: 86400\n        breakdowns:\n          - app.user_id\n        calculations:\n          - op: HEATMAP\n            column: duration_ms\n          - op: P99\n            column: duration_ms\n        filters:\n          - column: trace.parent_id\n            op: does-not-exist\n        orders:\n          - column: duration_ms\n            op: P99\n            order: descending\n```\n{{% /example %}}\n{{% /examples %}}\n\n## Import\n\nBoards can be imported using their ID, e.g.\n\n```sh\n $ pulumi import honeycomb:index/board:Board my_board AobW9oAZX71\n```\n\n You can find the ID in the URL bar when visiting the board from the UI. ",
             "properties": {
                 "description": {
                     "type": "string",
@@ -450,6 +491,92 @@
                     "style": {
                         "type": "string",
                         "description": "How the board should be displayed in the UI, either `list` (the default) or `visual`.\n"
+                    }
+                },
+                "type": "object"
+            }
+        },
+        "honeycomb:index/burnAlert:BurnAlert": {
+            "description": "## # Resource: honeycomb.BurnAlert\n\nCreates a burn alert. For more information about burn alerts, check out [Define Burn Alerts](https://docs.honeycomb.io/working-with-your-data/slos/slo-process/#define-burn-alerts).\n\n{{% examples %}}\n## Example Usage\n{{% example %}}\n\n```typescript\nimport * as pulumi from \"@pulumi/pulumi\";\nimport * as pulumi_honeycomb from \"@materializeinc/pulumi-honeycomb\";\n\nconst config = new pulumi.Config();\nconst dataset = config.require(\"dataset\");\nconst sloId = config.require(\"sloId\");\nconst exampleAlert = new honeycomb.BurnAlert(\"exampleAlert\", {\n    dataset: dataset,\n    sloId: sloId,\n    exhaustionMinutes: 480,\n    recipients: [\n        {\n            type: \"email\",\n            target: \"hello@example.com\",\n        },\n        {\n            type: \"slack\",\n            target: \"#example-channel\",\n        },\n    ],\n});\n```\n```python\nimport pulumi\nimport pulumi_honeycomb as honeycomb\n\nconfig = pulumi.Config()\ndataset = config.require(\"dataset\")\nslo_id = config.require(\"sloId\")\nexample_alert = honeycomb.BurnAlert(\"exampleAlert\",\n    dataset=dataset,\n    slo_id=slo_id,\n    exhaustion_minutes=480,\n    recipients=[\n        honeycomb.BurnAlertRecipientArgs(\n            type=\"email\",\n            target=\"hello@example.com\",\n        ),\n        honeycomb.BurnAlertRecipientArgs(\n            type=\"slack\",\n            target=\"#example-channel\",\n        ),\n    ])\n```\n```csharp\nusing Pulumi;\nusing Honeycomb = Pulumi.Honeycomb;\n\nclass MyStack : Stack\n{\n    public MyStack()\n    {\n        var config = new Config();\n        var dataset = config.Require(\"dataset\");\n        var sloId = config.Require(\"sloId\");\n        var exampleAlert = new Honeycomb.BurnAlert(\"exampleAlert\", new Honeycomb.BurnAlertArgs\n        {\n            Dataset = dataset,\n            SloId = sloId,\n            ExhaustionMinutes = 480,\n            Recipients = \n            {\n                new Honeycomb.Inputs.BurnAlertRecipientArgs\n                {\n                    Type = \"email\",\n                    Target = \"hello@example.com\",\n                },\n                new Honeycomb.Inputs.BurnAlertRecipientArgs\n                {\n                    Type = \"slack\",\n                    Target = \"#example-channel\",\n                },\n            },\n        });\n    }\n\n}\n```\n```go\npackage main\n\nimport (\n\t\"github.com/pulumi/pulumi-honeycomb/sdk/go/honeycomb\"\n\t\"github.com/pulumi/pulumi/sdk/v3/go/pulumi\"\n\t\"github.com/pulumi/pulumi/sdk/v3/go/pulumi/config\"\n)\n\nfunc main() {\n\tpulumi.Run(func(ctx *pulumi.Context) error {\n\t\tcfg := config.New(ctx, \"\")\n\t\tdataset := cfg.Require(\"dataset\")\n\t\tsloId := cfg.Require(\"sloId\")\n\t\t_, err := honeycomb.NewBurnAlert(ctx, \"exampleAlert\", \u0026honeycomb.BurnAlertArgs{\n\t\t\tDataset:           pulumi.String(dataset),\n\t\t\tSloId:             pulumi.String(sloId),\n\t\t\tExhaustionMinutes: pulumi.Int(480),\n\t\t\tRecipients: BurnAlertRecipientArray{\n\t\t\t\t\u0026BurnAlertRecipientArgs{\n\t\t\t\t\tType:   pulumi.String(\"email\"),\n\t\t\t\t\tTarget: pulumi.String(\"hello@example.com\"),\n\t\t\t\t},\n\t\t\t\t\u0026BurnAlertRecipientArgs{\n\t\t\t\t\tType:   pulumi.String(\"slack\"),\n\t\t\t\t\tTarget: pulumi.String(\"#example-channel\"),\n\t\t\t\t},\n\t\t\t},\n\t\t})\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\treturn nil\n\t})\n}\n```\n```java\npackage generated_program;\n\nimport java.util.*;\nimport java.io.*;\nimport java.nio.*;\nimport com.pulumi.*;\n\npublic class App {\n    public static void main(String[] args) {\n        Pulumi.run(App::stack);\n    }\n\n    public static void stack(Context ctx) {\n        final var config = ctx.config();\n        final var dataset = config.get(\"dataset\");\n        final var sloId = config.get(\"sloId\");\n        var exampleAlert = new BurnAlert(\"exampleAlert\", BurnAlertArgs.builder()        \n            .dataset(dataset)\n            .sloId(sloId)\n            .exhaustionMinutes(480)\n            .recipients(            \n                BurnAlertRecipientArgs.builder()\n                    .type(\"email\")\n                    .target(\"hello@example.com\")\n                    .build(),\n                BurnAlertRecipientArgs.builder()\n                    .type(\"slack\")\n                    .target(\"#example-channel\")\n                    .build())\n            .build());\n\n    }\n}\n```\n```yaml\nconfiguration:\n  dataset:\n    type: string\n  sloId:\n    type: string\nresources:\n  exampleAlert:\n    type: honeycomb:BurnAlert\n    properties:\n      dataset: ${dataset}\n      sloId: ${sloId}\n      exhaustionMinutes: 480\n      recipients:\n        - type: email\n          target: hello@example.com\n        - type: slack\n          target: '#example-channel'\n```\n{{% /example %}}\n{{% /examples %}}\n\n## Import\n\nBurn Alerts can be imported using a combination of the dataset name and their ID, e.g.\n\n```sh\n $ pulumi import honeycomb:index/burnAlert:BurnAlert my_alert my-dataset/bj9BwOb1uKz\n```\n\n ",
+            "properties": {
+                "dataset": {
+                    "type": "string",
+                    "description": "The dataset this burn alert is associated with.\n"
+                },
+                "exhaustionMinutes": {
+                    "type": "integer",
+                    "description": "The amount of time, in minutes, remaining before the SLO's error budget will be exhausted and the alert will fire.\n"
+                },
+                "recipients": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/types/honeycomb:index/BurnAlertRecipient:BurnAlertRecipient"
+                    },
+                    "description": "Zero or more configuration blocks (described below) with the recipients to notify when the alert fires.\n"
+                },
+                "sloId": {
+                    "type": "string",
+                    "description": "ID of the SLO this burn alert is associated with.\n"
+                }
+            },
+            "required": [
+                "dataset",
+                "exhaustionMinutes",
+                "recipients",
+                "sloId"
+            ],
+            "inputProperties": {
+                "dataset": {
+                    "type": "string",
+                    "description": "The dataset this burn alert is associated with.\n",
+                    "willReplaceOnChanges": true
+                },
+                "exhaustionMinutes": {
+                    "type": "integer",
+                    "description": "The amount of time, in minutes, remaining before the SLO's error budget will be exhausted and the alert will fire.\n"
+                },
+                "recipients": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/types/honeycomb:index/BurnAlertRecipient:BurnAlertRecipient"
+                    },
+                    "description": "Zero or more configuration blocks (described below) with the recipients to notify when the alert fires.\n"
+                },
+                "sloId": {
+                    "type": "string",
+                    "description": "ID of the SLO this burn alert is associated with.\n",
+                    "willReplaceOnChanges": true
+                }
+            },
+            "requiredInputs": [
+                "dataset",
+                "exhaustionMinutes",
+                "recipients",
+                "sloId"
+            ],
+            "stateInputs": {
+                "description": "Input properties used for looking up and filtering BurnAlert resources.\n",
+                "properties": {
+                    "dataset": {
+                        "type": "string",
+                        "description": "The dataset this burn alert is associated with.\n",
+                        "willReplaceOnChanges": true
+                    },
+                    "exhaustionMinutes": {
+                        "type": "integer",
+                        "description": "The amount of time, in minutes, remaining before the SLO's error budget will be exhausted and the alert will fire.\n"
+                    },
+                    "recipients": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/types/honeycomb:index/BurnAlertRecipient:BurnAlertRecipient"
+                        },
+                        "description": "Zero or more configuration blocks (described below) with the recipients to notify when the alert fires.\n"
+                    },
+                    "sloId": {
+                        "type": "string",
+                        "description": "ID of the SLO this burn alert is associated with.\n",
+                        "willReplaceOnChanges": true
                     }
                 },
                 "type": "object"
@@ -852,9 +979,113 @@
                 "type": "object"
             }
         },
-        "honeycomb:index/trigger:Trigger": {
-            "description": "## # Resource: honeycomb.Trigger\n\nCreates a trigger. For more information about triggers, check out [Alert with Triggers](https://docs.honeycomb.io/working-with-your-data/triggers/).\n\n{{% examples %}}\n## Example Usage\n{{% example %}}\n\n```typescript\nimport * as pulumi from \"@pulumi/pulumi\";\nimport * as honeycomb from \"@pulumi/honeycomb\";\nimport * as pulumi_honeycomb from \"@materializeinc/pulumi-honeycomb\";\n\nconst config = new pulumi.Config();\nconst dataset = config.require(\"dataset\");\nconst exampleGetQuerySpecification = honeycomb.GetQuerySpecification({\n    calculations: [{\n        op: \"AVG\",\n        column: \"duration_ms\",\n    }],\n    filters: [{\n        column: \"trace.parent_id\",\n        op: \"does-not-exist\",\n    }],\n});\nconst exampleQuery = new honeycomb.Query(\"exampleQuery\", {\n    dataset: dataset,\n    queryJson: exampleGetQuerySpecification.then(exampleGetQuerySpecification =\u003e exampleGetQuerySpecification.json),\n});\nconst exampleTrigger = new honeycomb.Trigger(\"exampleTrigger\", {\n    description: \"Average duration of all requests for the last 10 minutes.\",\n    queryId: exampleQuery.id,\n    dataset: dataset,\n    frequency: 600,\n    threshold: {\n        op: \"\u003e\",\n        value: 1000,\n    },\n    recipients: [\n        {\n            type: \"email\",\n            target: \"hello@example.com\",\n        },\n        {\n            type: \"marker\",\n            target: \"Trigger - requests are slow\",\n        },\n    ],\n});\n```\n```python\nimport pulumi\nimport pulumi_honeycomb as honeycomb\n\nconfig = pulumi.Config()\ndataset = config.require(\"dataset\")\nexample_get_query_specification = honeycomb.get_query_specification(calculations=[honeycomb.GetQuerySpecificationCalculationArgs(\n        op=\"AVG\",\n        column=\"duration_ms\",\n    )],\n    filters=[honeycomb.GetQuerySpecificationFilterArgs(\n        column=\"trace.parent_id\",\n        op=\"does-not-exist\",\n    )])\nexample_query = honeycomb.Query(\"exampleQuery\",\n    dataset=dataset,\n    query_json=example_get_query_specification.json)\nexample_trigger = honeycomb.Trigger(\"exampleTrigger\",\n    description=\"Average duration of all requests for the last 10 minutes.\",\n    query_id=example_query.id,\n    dataset=dataset,\n    frequency=600,\n    threshold=honeycomb.TriggerThresholdArgs(\n        op=\"\u003e\",\n        value=1000,\n    ),\n    recipients=[\n        honeycomb.TriggerRecipientArgs(\n            type=\"email\",\n            target=\"hello@example.com\",\n        ),\n        honeycomb.TriggerRecipientArgs(\n            type=\"marker\",\n            target=\"Trigger - requests are slow\",\n        ),\n    ])\n```\n```csharp\nusing Pulumi;\nusing Honeycomb = Pulumi.Honeycomb;\n\nclass MyStack : Stack\n{\n    public MyStack()\n    {\n        var config = new Config();\n        var dataset = config.Require(\"dataset\");\n        var exampleGetQuerySpecification = Output.Create(Honeycomb.GetQuerySpecification.InvokeAsync(new Honeycomb.GetQuerySpecificationArgs\n        {\n            Calculations = \n            {\n                new Honeycomb.Inputs.GetQuerySpecificationCalculationArgs\n                {\n                    Op = \"AVG\",\n                    Column = \"duration_ms\",\n                },\n            },\n            Filters = \n            {\n                new Honeycomb.Inputs.GetQuerySpecificationFilterArgs\n                {\n                    Column = \"trace.parent_id\",\n                    Op = \"does-not-exist\",\n                },\n            },\n        }));\n        var exampleQuery = new Honeycomb.Query(\"exampleQuery\", new Honeycomb.QueryArgs\n        {\n            Dataset = dataset,\n            QueryJson = exampleGetQuerySpecification.Apply(exampleGetQuerySpecification =\u003e exampleGetQuerySpecification.Json),\n        });\n        var exampleTrigger = new Honeycomb.Trigger(\"exampleTrigger\", new Honeycomb.TriggerArgs\n        {\n            Description = \"Average duration of all requests for the last 10 minutes.\",\n            QueryId = exampleQuery.Id,\n            Dataset = dataset,\n            Frequency = 600,\n            Threshold = new Honeycomb.Inputs.TriggerThresholdArgs\n            {\n                Op = \"\u003e\",\n                Value = 1000,\n            },\n            Recipients = \n            {\n                new Honeycomb.Inputs.TriggerRecipientArgs\n                {\n                    Type = \"email\",\n                    Target = \"hello@example.com\",\n                },\n                new Honeycomb.Inputs.TriggerRecipientArgs\n                {\n                    Type = \"marker\",\n                    Target = \"Trigger - requests are slow\",\n                },\n            },\n        });\n    }\n\n}\n```\n```go\npackage main\n\nimport (\n\t\"github.com/pulumi/pulumi-honeycomb/sdk/go/honeycomb\"\n\t\"github.com/pulumi/pulumi/sdk/v3/go/pulumi\"\n\t\"github.com/pulumi/pulumi/sdk/v3/go/pulumi/config\"\n)\n\nfunc main() {\n\tpulumi.Run(func(ctx *pulumi.Context) error {\n\t\tcfg := config.New(ctx, \"\")\n\t\tdataset := cfg.Require(\"dataset\")\n\t\texampleGetQuerySpecification, err := honeycomb.GetQuerySpecification(ctx, \u0026GetQuerySpecificationArgs{\n\t\t\tCalculations: []GetQuerySpecificationCalculation{\n\t\t\t\tGetQuerySpecificationCalculation{\n\t\t\t\t\tOp:     \"AVG\",\n\t\t\t\t\tColumn: pulumi.StringRef(\"duration_ms\"),\n\t\t\t\t},\n\t\t\t},\n\t\t\tFilters: []GetQuerySpecificationFilter{\n\t\t\t\tGetQuerySpecificationFilter{\n\t\t\t\t\tColumn: \"trace.parent_id\",\n\t\t\t\t\tOp:     \"does-not-exist\",\n\t\t\t\t},\n\t\t\t},\n\t\t}, nil)\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\texampleQuery, err := honeycomb.NewQuery(ctx, \"exampleQuery\", \u0026honeycomb.QueryArgs{\n\t\t\tDataset:   pulumi.String(dataset),\n\t\t\tQueryJson: pulumi.String(exampleGetQuerySpecification.Json),\n\t\t})\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\t_, err = honeycomb.NewTrigger(ctx, \"exampleTrigger\", \u0026honeycomb.TriggerArgs{\n\t\t\tDescription: pulumi.String(\"Average duration of all requests for the last 10 minutes.\"),\n\t\t\tQueryId:     exampleQuery.ID(),\n\t\t\tDataset:     pulumi.String(dataset),\n\t\t\tFrequency:   pulumi.Int(600),\n\t\t\tThreshold: \u0026TriggerThresholdArgs{\n\t\t\t\tOp:    pulumi.String(\"\u003e\"),\n\t\t\t\tValue: pulumi.Float64(1000),\n\t\t\t},\n\t\t\tRecipients: TriggerRecipientArray{\n\t\t\t\t\u0026TriggerRecipientArgs{\n\t\t\t\t\tType:   pulumi.String(\"email\"),\n\t\t\t\t\tTarget: pulumi.String(\"hello@example.com\"),\n\t\t\t\t},\n\t\t\t\t\u0026TriggerRecipientArgs{\n\t\t\t\t\tType:   pulumi.String(\"marker\"),\n\t\t\t\t\tTarget: pulumi.String(\"Trigger - requests are slow\"),\n\t\t\t\t},\n\t\t\t},\n\t\t})\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\treturn nil\n\t})\n}\n```\n```java\npackage generated_program;\n\nimport java.util.*;\nimport java.io.*;\nimport java.nio.*;\nimport com.pulumi.*;\n\npublic class App {\n    public static void main(String[] args) {\n        Pulumi.run(App::stack);\n    }\n\n    public static void stack(Context ctx) {\n        final var config = ctx.config();\n        final var dataset = config.get(\"dataset\");\n        final var exampleGetQuerySpecification = HoneycombFunctions.GetQuerySpecification();\n\n        var exampleQuery = new Query(\"exampleQuery\", QueryArgs.builder()        \n            .dataset(dataset)\n            .queryJson(exampleGetQuerySpecification.json())\n            .build());\n\n        var exampleTrigger = new Trigger(\"exampleTrigger\", TriggerArgs.builder()        \n            .description(\"Average duration of all requests for the last 10 minutes.\")\n            .queryId(exampleQuery.id())\n            .dataset(dataset)\n            .frequency(600)\n            .threshold(TriggerThresholdArgs.builder()\n                .op(\"\u003e\")\n                .value(1000)\n                .build())\n            .recipients(            \n                TriggerRecipientArgs.builder()\n                    .type(\"email\")\n                    .target(\"hello@example.com\")\n                    .build(),\n                TriggerRecipientArgs.builder()\n                    .type(\"marker\")\n                    .target(\"Trigger - requests are slow\")\n                    .build())\n            .build());\n\n    }\n}\n```\n```yaml\nconfiguration:\n  dataset:\n    type: string\nresources:\n  exampleQuery:\n    type: honeycomb:Query\n    properties:\n      dataset: ${dataset}\n      queryJson: ${exampleGetQuerySpecification.json}\n  exampleTrigger:\n    type: honeycomb:Trigger\n    properties:\n      description: Average duration of all requests for the last 10 minutes.\n      queryId: ${exampleQuery.id}\n      dataset: ${dataset}\n      frequency: 600\n      threshold:\n        op: '\u003e'\n        value: 1000\n      recipients:\n        - type: email\n          target: hello@example.com\n        - type: marker\n          target: Trigger - requests are slow\nvariables:\n  exampleGetQuerySpecification:\n    Fn::Invoke:\n      Function: honeycomb:GetQuerySpecification\n      Arguments:\n        calculations:\n          - op: AVG\n            column: duration_ms\n        filters:\n          - column: trace.parent_id\n            op: does-not-exist\n```\n{{% /example %}}\n{{% /examples %}}\n\n## Import\n\nTriggers can be imported using a combination of the dataset name and their ID, e.g.\n\n```sh\n $ pulumi import honeycomb:index/trigger:Trigger my_trigger my-dataset/AeZzSoWws9G\n```\n\n You can find the ID in the URL bar when visiting the trigger from the UI. ",
+        "honeycomb:index/sLO:SLO": {
+            "description": "## # Resource: honeycomb.SLO\n\nCreates a service level objective (SLO). For more information about SLOs, check out [Set Service Level Objectives (SLOs)](https://docs.honeycomb.io/working-with-your-data/slos/).\n\n\n## Import\n\nSLOs can be imported using a combination of the dataset name and their ID, e.g.\n\n```sh\n $ pulumi import honeycomb:index/sLO:SLO my_slo my-dataset/bj9BwOb1uKz\n```\n\n You can find the ID in the URL bar when visiting the SLO from the UI. ",
             "properties": {
+                "dataset": {
+                    "type": "string",
+                    "description": "The dataset this SLO is created in. Must be the same dataset as the SLI.\n"
+                },
+                "description": {
+                    "type": "string",
+                    "description": "A description of the SLO's intent and context.\n"
+                },
+                "name": {
+                    "type": "string",
+                    "description": "The name of the SLO.\n"
+                },
+                "sli": {
+                    "type": "string",
+                    "description": "The alias of the Derived Column that will be used as the SLI to indicate event success.\nThe derived column used as the SLI must be in the same dataset as the SLO. Additionally,\nthe column evaluation should consistently return nil, true, or false, as these are the only valid values for an SLI.\n"
+                },
+                "targetPercentage": {
+                    "type": "number",
+                    "description": "The percentage of qualified events that you expect to succeed during the `time_period`.\n"
+                },
+                "timePeriod": {
+                    "type": "integer",
+                    "description": "The time period, in days, over which your SLO will be evaluated.\n"
+                }
+            },
+            "required": [
+                "dataset",
+                "name",
+                "sli",
+                "targetPercentage",
+                "timePeriod"
+            ],
+            "inputProperties": {
+                "dataset": {
+                    "type": "string",
+                    "description": "The dataset this SLO is created in. Must be the same dataset as the SLI.\n",
+                    "willReplaceOnChanges": true
+                },
+                "description": {
+                    "type": "string",
+                    "description": "A description of the SLO's intent and context.\n"
+                },
+                "name": {
+                    "type": "string",
+                    "description": "The name of the SLO.\n"
+                },
+                "sli": {
+                    "type": "string",
+                    "description": "The alias of the Derived Column that will be used as the SLI to indicate event success.\nThe derived column used as the SLI must be in the same dataset as the SLO. Additionally,\nthe column evaluation should consistently return nil, true, or false, as these are the only valid values for an SLI.\n"
+                },
+                "targetPercentage": {
+                    "type": "number",
+                    "description": "The percentage of qualified events that you expect to succeed during the `time_period`.\n"
+                },
+                "timePeriod": {
+                    "type": "integer",
+                    "description": "The time period, in days, over which your SLO will be evaluated.\n"
+                }
+            },
+            "requiredInputs": [
+                "dataset",
+                "sli",
+                "targetPercentage",
+                "timePeriod"
+            ],
+            "stateInputs": {
+                "description": "Input properties used for looking up and filtering SLO resources.\n",
+                "properties": {
+                    "dataset": {
+                        "type": "string",
+                        "description": "The dataset this SLO is created in. Must be the same dataset as the SLI.\n",
+                        "willReplaceOnChanges": true
+                    },
+                    "description": {
+                        "type": "string",
+                        "description": "A description of the SLO's intent and context.\n"
+                    },
+                    "name": {
+                        "type": "string",
+                        "description": "The name of the SLO.\n"
+                    },
+                    "sli": {
+                        "type": "string",
+                        "description": "The alias of the Derived Column that will be used as the SLI to indicate event success.\nThe derived column used as the SLI must be in the same dataset as the SLO. Additionally,\nthe column evaluation should consistently return nil, true, or false, as these are the only valid values for an SLI.\n"
+                    },
+                    "targetPercentage": {
+                        "type": "number",
+                        "description": "The percentage of qualified events that you expect to succeed during the `time_period`.\n"
+                    },
+                    "timePeriod": {
+                        "type": "integer",
+                        "description": "The time period, in days, over which your SLO will be evaluated.\n"
+                    }
+                },
+                "type": "object"
+            }
+        },
+        "honeycomb:index/trigger:Trigger": {
+            "description": "## # Resource: honeycomb.Trigger\n\nCreates a trigger. For more information about triggers, check out [Alert with Triggers](https://docs.honeycomb.io/working-with-your-data/triggers/).\n\n{{% examples %}}\n## Example Usage\n{{% example %}}\n\n```typescript\nimport * as pulumi from \"@pulumi/pulumi\";\nimport * as honeycomb from \"@pulumi/honeycomb\";\nimport * as pulumi_honeycomb from \"@materializeinc/pulumi-honeycomb\";\n\nconst config = new pulumi.Config();\nconst dataset = config.require(\"dataset\");\nconst exampleGetQuerySpecification = honeycomb.GetQuerySpecification({\n    calculations: [{\n        op: \"AVG\",\n        column: \"duration_ms\",\n    }],\n    filters: [{\n        column: \"trace.parent_id\",\n        op: \"does-not-exist\",\n    }],\n});\nconst exampleQuery = new honeycomb.Query(\"exampleQuery\", {\n    dataset: dataset,\n    queryJson: exampleGetQuerySpecification.then(exampleGetQuerySpecification =\u003e exampleGetQuerySpecification.json),\n});\nconst exampleTrigger = new honeycomb.Trigger(\"exampleTrigger\", {\n    description: \"Average duration of all requests for the last 10 minutes.\",\n    queryId: exampleQuery.id,\n    dataset: dataset,\n    frequency: 600,\n    alertType: \"on_change\",\n    threshold: {\n        op: \"\u003e\",\n        value: 1000,\n    },\n    recipients: [\n        {\n            type: \"email\",\n            target: \"hello@example.com\",\n        },\n        {\n            type: \"marker\",\n            target: \"Trigger - requests are slow\",\n        },\n    ],\n});\n```\n```python\nimport pulumi\nimport pulumi_honeycomb as honeycomb\n\nconfig = pulumi.Config()\ndataset = config.require(\"dataset\")\nexample_get_query_specification = honeycomb.get_query_specification(calculations=[honeycomb.GetQuerySpecificationCalculationArgs(\n        op=\"AVG\",\n        column=\"duration_ms\",\n    )],\n    filters=[honeycomb.GetQuerySpecificationFilterArgs(\n        column=\"trace.parent_id\",\n        op=\"does-not-exist\",\n    )])\nexample_query = honeycomb.Query(\"exampleQuery\",\n    dataset=dataset,\n    query_json=example_get_query_specification.json)\nexample_trigger = honeycomb.Trigger(\"exampleTrigger\",\n    description=\"Average duration of all requests for the last 10 minutes.\",\n    query_id=example_query.id,\n    dataset=dataset,\n    frequency=600,\n    alert_type=\"on_change\",\n    threshold=honeycomb.TriggerThresholdArgs(\n        op=\"\u003e\",\n        value=1000,\n    ),\n    recipients=[\n        honeycomb.TriggerRecipientArgs(\n            type=\"email\",\n            target=\"hello@example.com\",\n        ),\n        honeycomb.TriggerRecipientArgs(\n            type=\"marker\",\n            target=\"Trigger - requests are slow\",\n        ),\n    ])\n```\n```csharp\nusing Pulumi;\nusing Honeycomb = Pulumi.Honeycomb;\n\nclass MyStack : Stack\n{\n    public MyStack()\n    {\n        var config = new Config();\n        var dataset = config.Require(\"dataset\");\n        var exampleGetQuerySpecification = Output.Create(Honeycomb.GetQuerySpecification.InvokeAsync(new Honeycomb.GetQuerySpecificationArgs\n        {\n            Calculations = \n            {\n                new Honeycomb.Inputs.GetQuerySpecificationCalculationArgs\n                {\n                    Op = \"AVG\",\n                    Column = \"duration_ms\",\n                },\n            },\n            Filters = \n            {\n                new Honeycomb.Inputs.GetQuerySpecificationFilterArgs\n                {\n                    Column = \"trace.parent_id\",\n                    Op = \"does-not-exist\",\n                },\n            },\n        }));\n        var exampleQuery = new Honeycomb.Query(\"exampleQuery\", new Honeycomb.QueryArgs\n        {\n            Dataset = dataset,\n            QueryJson = exampleGetQuerySpecification.Apply(exampleGetQuerySpecification =\u003e exampleGetQuerySpecification.Json),\n        });\n        var exampleTrigger = new Honeycomb.Trigger(\"exampleTrigger\", new Honeycomb.TriggerArgs\n        {\n            Description = \"Average duration of all requests for the last 10 minutes.\",\n            QueryId = exampleQuery.Id,\n            Dataset = dataset,\n            Frequency = 600,\n            AlertType = \"on_change\",\n            Threshold = new Honeycomb.Inputs.TriggerThresholdArgs\n            {\n                Op = \"\u003e\",\n                Value = 1000,\n            },\n            Recipients = \n            {\n                new Honeycomb.Inputs.TriggerRecipientArgs\n                {\n                    Type = \"email\",\n                    Target = \"hello@example.com\",\n                },\n                new Honeycomb.Inputs.TriggerRecipientArgs\n                {\n                    Type = \"marker\",\n                    Target = \"Trigger - requests are slow\",\n                },\n            },\n        });\n    }\n\n}\n```\n```go\npackage main\n\nimport (\n\t\"github.com/pulumi/pulumi-honeycomb/sdk/go/honeycomb\"\n\t\"github.com/pulumi/pulumi/sdk/v3/go/pulumi\"\n\t\"github.com/pulumi/pulumi/sdk/v3/go/pulumi/config\"\n)\n\nfunc main() {\n\tpulumi.Run(func(ctx *pulumi.Context) error {\n\t\tcfg := config.New(ctx, \"\")\n\t\tdataset := cfg.Require(\"dataset\")\n\t\texampleGetQuerySpecification, err := honeycomb.GetQuerySpecification(ctx, \u0026GetQuerySpecificationArgs{\n\t\t\tCalculations: []GetQuerySpecificationCalculation{\n\t\t\t\tGetQuerySpecificationCalculation{\n\t\t\t\t\tOp:     \"AVG\",\n\t\t\t\t\tColumn: pulumi.StringRef(\"duration_ms\"),\n\t\t\t\t},\n\t\t\t},\n\t\t\tFilters: []GetQuerySpecificationFilter{\n\t\t\t\tGetQuerySpecificationFilter{\n\t\t\t\t\tColumn: \"trace.parent_id\",\n\t\t\t\t\tOp:     \"does-not-exist\",\n\t\t\t\t},\n\t\t\t},\n\t\t}, nil)\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\texampleQuery, err := honeycomb.NewQuery(ctx, \"exampleQuery\", \u0026honeycomb.QueryArgs{\n\t\t\tDataset:   pulumi.String(dataset),\n\t\t\tQueryJson: pulumi.String(exampleGetQuerySpecification.Json),\n\t\t})\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\t_, err = honeycomb.NewTrigger(ctx, \"exampleTrigger\", \u0026honeycomb.TriggerArgs{\n\t\t\tDescription: pulumi.String(\"Average duration of all requests for the last 10 minutes.\"),\n\t\t\tQueryId:     exampleQuery.ID(),\n\t\t\tDataset:     pulumi.String(dataset),\n\t\t\tFrequency:   pulumi.Int(600),\n\t\t\tAlertType:   pulumi.String(\"on_change\"),\n\t\t\tThreshold: \u0026TriggerThresholdArgs{\n\t\t\t\tOp:    pulumi.String(\"\u003e\"),\n\t\t\t\tValue: pulumi.Float64(1000),\n\t\t\t},\n\t\t\tRecipients: TriggerRecipientArray{\n\t\t\t\t\u0026TriggerRecipientArgs{\n\t\t\t\t\tType:   pulumi.String(\"email\"),\n\t\t\t\t\tTarget: pulumi.String(\"hello@example.com\"),\n\t\t\t\t},\n\t\t\t\t\u0026TriggerRecipientArgs{\n\t\t\t\t\tType:   pulumi.String(\"marker\"),\n\t\t\t\t\tTarget: pulumi.String(\"Trigger - requests are slow\"),\n\t\t\t\t},\n\t\t\t},\n\t\t})\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\treturn nil\n\t})\n}\n```\n```java\npackage generated_program;\n\nimport java.util.*;\nimport java.io.*;\nimport java.nio.*;\nimport com.pulumi.*;\n\npublic class App {\n    public static void main(String[] args) {\n        Pulumi.run(App::stack);\n    }\n\n    public static void stack(Context ctx) {\n        final var config = ctx.config();\n        final var dataset = config.get(\"dataset\");\n        final var exampleGetQuerySpecification = HoneycombFunctions.GetQuerySpecification();\n\n        var exampleQuery = new Query(\"exampleQuery\", QueryArgs.builder()        \n            .dataset(dataset)\n            .queryJson(exampleGetQuerySpecification.json())\n            .build());\n\n        var exampleTrigger = new Trigger(\"exampleTrigger\", TriggerArgs.builder()        \n            .description(\"Average duration of all requests for the last 10 minutes.\")\n            .queryId(exampleQuery.id())\n            .dataset(dataset)\n            .frequency(600)\n            .alertType(\"on_change\")\n            .threshold(TriggerThresholdArgs.builder()\n                .op(\"\u003e\")\n                .value(1000)\n                .build())\n            .recipients(            \n                TriggerRecipientArgs.builder()\n                    .type(\"email\")\n                    .target(\"hello@example.com\")\n                    .build(),\n                TriggerRecipientArgs.builder()\n                    .type(\"marker\")\n                    .target(\"Trigger - requests are slow\")\n                    .build())\n            .build());\n\n    }\n}\n```\n```yaml\nconfiguration:\n  dataset:\n    type: string\nresources:\n  exampleQuery:\n    type: honeycomb:Query\n    properties:\n      dataset: ${dataset}\n      queryJson: ${exampleGetQuerySpecification.json}\n  exampleTrigger:\n    type: honeycomb:Trigger\n    properties:\n      description: Average duration of all requests for the last 10 minutes.\n      queryId: ${exampleQuery.id}\n      dataset: ${dataset}\n      frequency: 600\n      alertType: on_change\n      threshold:\n        op: '\u003e'\n        value: 1000\n      recipients:\n        - type: email\n          target: hello@example.com\n        - type: marker\n          target: Trigger - requests are slow\nvariables:\n  exampleGetQuerySpecification:\n    Fn::Invoke:\n      Function: honeycomb:GetQuerySpecification\n      Arguments:\n        calculations:\n          - op: AVG\n            column: duration_ms\n        filters:\n          - column: trace.parent_id\n            op: does-not-exist\n```\n{{% /example %}}\n{{% /examples %}}\n\n## Import\n\nTriggers can be imported using a combination of the dataset name and their ID, e.g.\n\n```sh\n $ pulumi import honeycomb:index/trigger:Trigger my_trigger my-dataset/AeZzSoWws9G\n```\n\n You can find the ID in the URL bar when visiting the trigger from the UI. ",
+            "properties": {
+                "alertType": {
+                    "type": "string",
+                    "description": "The frequency for the alert to trigger. (`on_change` is the default behavior, `on_true` can also be selected)\n"
+                },
                 "dataset": {
                     "type": "string",
                     "description": "The dataset this trigger is associated with.\n"
@@ -899,6 +1130,10 @@
                 "threshold"
             ],
             "inputProperties": {
+                "alertType": {
+                    "type": "string",
+                    "description": "The frequency for the alert to trigger. (`on_change` is the default behavior, `on_true` can also be selected)\n"
+                },
                 "dataset": {
                     "type": "string",
                     "description": "The dataset this trigger is associated with.\n",
@@ -944,6 +1179,10 @@
             "stateInputs": {
                 "description": "Input properties used for looking up and filtering Trigger resources.\n",
                 "properties": {
+                    "alertType": {
+                        "type": "string",
+                        "description": "The frequency for the alert to trigger. (`on_change` is the default behavior, `on_true` can also be selected)\n"
+                    },
                     "dataset": {
                         "type": "string",
                         "description": "The dataset this trigger is associated with.\n",
@@ -1039,15 +1278,15 @@
                         "type": "string",
                         "description": "The dataset this query is associated with.\n"
                     },
-                    "queryId": {
+                    "queryJson": {
                         "type": "string",
-                        "description": "The ID of the query that will be executed to obtain the result.\n"
+                        "description": "A JSON object describing the query according to the Query Specification. While the JSON can be constructed manually, it is easiest to use the honeycomb.GetQuerySpecification data source.\n"
                     }
                 },
                 "type": "object",
                 "required": [
                     "dataset",
-                    "queryId"
+                    "queryJson"
                 ]
             },
             "outputs": {
@@ -1064,6 +1303,10 @@
                         "description": "The provider-assigned unique ID for this managed resource.\n"
                     },
                     "queryId": {
+                        "type": "string",
+                        "description": "The ID of the Query created and executed to obtain the result.\n"
+                    },
+                    "queryJson": {
                         "type": "string"
                     },
                     "queryUrl": {
@@ -1085,6 +1328,7 @@
                     "dataset",
                     "graphImageUrl",
                     "queryId",
+                    "queryJson",
                     "queryUrl",
                     "results",
                     "id"
@@ -1225,8 +1469,57 @@
                 ]
             }
         },
+        "honeycomb:index/getRecipient:GetRecipient": {
+            "description": "## # Data Source: honeycomb.GetRecipient\n\nSearch the triggers or burn alerts of a dataset for a recipient. The ID of the existing recipient can be used when adding recipients to new triggers or burn alerts.\n\n{{% examples %}}\n## Example Usage\n{{% example %}}\n\n```java\npackage generated_program;\n\nimport java.util.*;\nimport java.io.*;\nimport java.nio.*;\nimport com.pulumi.*;\n\npublic class App {\n    public static void main(String[] args) {\n        Pulumi.run(App::stack);\n    }\n\n    public static void stack(Context ctx) {\n        final var config = ctx.config();\n        final var dataset = config.get(\"dataset\");\n        final var slack = HoneycombFunctions.GetRecipient();\n\n        final var exampleGetQuerySpecification = HoneycombFunctions.GetQuerySpecification();\n\n        var exampleTrigger = new Trigger(\"exampleTrigger\", TriggerArgs.builder()        \n            .queryJson(exampleGetQuerySpecification.json())\n            .dataset(dataset)\n            .threshold(TriggerThresholdArgs.builder()\n                .op(\"\u003e\")\n                .value(1000)\n                .build())\n            .recipients(            \n                TriggerRecipientArgs.builder()\n                    .type(\"email\")\n                    .target(\"hello@example.com\")\n                    .build(),\n                TriggerRecipientArgs.builder()\n                    .id(slack.id())\n                    .build())\n            .build());\n\n    }\n}\n```\n```yaml\nconfiguration:\n  dataset:\n    type: string\nresources:\n  exampleTrigger:\n    type: honeycomb:Trigger\n    properties:\n      queryJson: ${exampleGetQuerySpecification.json}\n      dataset: ${dataset}\n      threshold:\n        op: '\u003e'\n        value: 1000\n      recipients:\n        - type: email\n          target: hello@example.com\n        - id: ${slack.id}\nvariables:\n  slack:\n    Fn::Invoke:\n      Function: honeycomb:GetRecipient\n      Arguments:\n        dataset: ${dataset}\n        type: slack\n        target: honeycomb-triggers\n  exampleGetQuerySpecification:\n    Fn::Invoke:\n      Function: honeycomb:GetQuerySpecification\n      Arguments:\n        calculations:\n          - op: AVG\n            column: duration_ms\n```\n{{% /example %}}\n{{% /examples %}}",
+            "inputs": {
+                "description": "A collection of arguments for invoking GetRecipient.\n",
+                "properties": {
+                    "dataset": {
+                        "type": "string",
+                        "description": "The dataset this recipient is associated with.\n"
+                    },
+                    "target": {
+                        "type": "string",
+                        "description": "Target of the trigger or burn alert, this has another meaning depending on the type of recipient (see the table below).\n"
+                    },
+                    "type": {
+                        "type": "string",
+                        "description": "The type of recipient, allowed types are `email`, `marker`, `pagerduty`, `slack` and `webhook`.\n"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "dataset",
+                    "type"
+                ]
+            },
+            "outputs": {
+                "description": "A collection of values returned by GetRecipient.\n",
+                "properties": {
+                    "dataset": {
+                        "type": "string"
+                    },
+                    "id": {
+                        "type": "string",
+                        "description": "The provider-assigned unique ID for this managed resource.\n"
+                    },
+                    "target": {
+                        "type": "string"
+                    },
+                    "type": {
+                        "type": "string"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "dataset",
+                    "type",
+                    "id"
+                ]
+            }
+        },
         "honeycomb:index/getTriggerRecipient:GetTriggerRecipient": {
-            "description": "## # Data Source: honeycomb.GetTriggerRecipient\n\nSearch the triggers of a dataset for a trigger recipient. The ID of the existing trigger recipient can be used when adding trigger recipients to new triggers. Specifying a trigger recipient by its ID is necessary when adding Slack recipients, since these can not be created using the API.\n\n{{% examples %}}\n## Example Usage\n{{% example %}}\n\n```java\npackage generated_program;\n\nimport java.util.*;\nimport java.io.*;\nimport java.nio.*;\nimport com.pulumi.*;\n\npublic class App {\n    public static void main(String[] args) {\n        Pulumi.run(App::stack);\n    }\n\n    public static void stack(Context ctx) {\n        final var config = ctx.config();\n        final var dataset = config.get(\"dataset\");\n        final var slack = HoneycombFunctions.GetTriggerRecipient();\n\n        final var exampleGetQuerySpecification = HoneycombFunctions.GetQuerySpecification();\n\n        var exampleTrigger = new Trigger(\"exampleTrigger\", TriggerArgs.builder()        \n            .queryJson(exampleGetQuerySpecification.json())\n            .dataset(dataset)\n            .threshold(TriggerThresholdArgs.builder()\n                .op(\"\u003e\")\n                .value(1000)\n                .build())\n            .recipients(            \n                TriggerRecipientArgs.builder()\n                    .type(\"email\")\n                    .target(\"hello@example.com\")\n                    .build(),\n                TriggerRecipientArgs.builder()\n                    .id(slack.id())\n                    .build())\n            .build());\n\n    }\n}\n```\n```yaml\nconfiguration:\n  dataset:\n    type: string\nresources:\n  exampleTrigger:\n    type: honeycomb:Trigger\n    properties:\n      queryJson: ${exampleGetQuerySpecification.json}\n      dataset: ${dataset}\n      threshold:\n        op: '\u003e'\n        value: 1000\n      recipients:\n        - type: email\n          target: hello@example.com\n        - id: ${slack.id}\nvariables:\n  slack:\n    Fn::Invoke:\n      Function: honeycomb:GetTriggerRecipient\n      Arguments:\n        dataset: ${dataset}\n        type: slack\n        target: honeycomb-triggers\n  exampleGetQuerySpecification:\n    Fn::Invoke:\n      Function: honeycomb:GetQuerySpecification\n      Arguments:\n        calculations:\n          - op: AVG\n            column: duration_ms\n```\n{{% /example %}}\n{{% /examples %}}",
+            "description": "## # Data Source: honeycomb.GetTriggerRecipient\n\nSearch the triggers of a dataset for a trigger recipient. The ID of the existing trigger recipient can be used when adding trigger recipients to new triggers.\n\n\u003e **Deprecated** Use honeycomb.GetRecipient data source instead.\n\n{{% examples %}}\n## Example Usage\n{{% example %}}\n\n```java\npackage generated_program;\n\nimport java.util.*;\nimport java.io.*;\nimport java.nio.*;\nimport com.pulumi.*;\n\npublic class App {\n    public static void main(String[] args) {\n        Pulumi.run(App::stack);\n    }\n\n    public static void stack(Context ctx) {\n        final var config = ctx.config();\n        final var dataset = config.get(\"dataset\");\n        final var slack = HoneycombFunctions.GetTriggerRecipient();\n\n        final var exampleGetQuerySpecification = HoneycombFunctions.GetQuerySpecification();\n\n        var exampleTrigger = new Trigger(\"exampleTrigger\", TriggerArgs.builder()        \n            .queryJson(exampleGetQuerySpecification.json())\n            .dataset(dataset)\n            .threshold(TriggerThresholdArgs.builder()\n                .op(\"\u003e\")\n                .value(1000)\n                .build())\n            .recipients(            \n                TriggerRecipientArgs.builder()\n                    .type(\"email\")\n                    .target(\"hello@example.com\")\n                    .build(),\n                TriggerRecipientArgs.builder()\n                    .id(slack.id())\n                    .build())\n            .build());\n\n    }\n}\n```\n```yaml\nconfiguration:\n  dataset:\n    type: string\nresources:\n  exampleTrigger:\n    type: honeycomb:Trigger\n    properties:\n      queryJson: ${exampleGetQuerySpecification.json}\n      dataset: ${dataset}\n      threshold:\n        op: '\u003e'\n        value: 1000\n      recipients:\n        - type: email\n          target: hello@example.com\n        - id: ${slack.id}\nvariables:\n  slack:\n    Fn::Invoke:\n      Function: honeycomb:GetTriggerRecipient\n      Arguments:\n        dataset: ${dataset}\n        type: slack\n        target: honeycomb-triggers\n  exampleGetQuerySpecification:\n    Fn::Invoke:\n      Function: honeycomb:GetQuerySpecification\n      Arguments:\n        calculations:\n          - op: AVG\n            column: duration_ms\n```\n{{% /example %}}\n{{% /examples %}}",
             "inputs": {
                 "description": "A collection of arguments for invoking GetTriggerRecipient.\n",
                 "properties": {

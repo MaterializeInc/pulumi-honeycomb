@@ -22,6 +22,8 @@ func (m *module) Construct(ctx *pulumi.Context, name, typ, urn string) (r pulumi
 	switch typ {
 	case "honeycomb:index/board:Board":
 		r = &Board{}
+	case "honeycomb:index/burnAlert:BurnAlert":
+		r = &BurnAlert{}
 	case "honeycomb:index/column:Column":
 		r = &Column{}
 	case "honeycomb:index/dataset:Dataset":
@@ -34,6 +36,8 @@ func (m *module) Construct(ctx *pulumi.Context, name, typ, urn string) (r pulumi
 		r = &Query{}
 	case "honeycomb:index/queryAnnotation:QueryAnnotation":
 		r = &QueryAnnotation{}
+	case "honeycomb:index/sLO:SLO":
+		r = &SLO{}
 	case "honeycomb:index/trigger:Trigger":
 		r = &Trigger{}
 	default:
@@ -71,6 +75,11 @@ func init() {
 	)
 	pulumi.RegisterResourceModule(
 		"honeycomb",
+		"index/burnAlert",
+		&module{version},
+	)
+	pulumi.RegisterResourceModule(
+		"honeycomb",
 		"index/column",
 		&module{version},
 	)
@@ -97,6 +106,11 @@ func init() {
 	pulumi.RegisterResourceModule(
 		"honeycomb",
 		"index/queryAnnotation",
+		&module{version},
+	)
+	pulumi.RegisterResourceModule(
+		"honeycomb",
+		"index/sLO",
 		&module{version},
 	)
 	pulumi.RegisterResourceModule(
