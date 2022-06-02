@@ -12,7 +12,9 @@ import (
 
 // ## # Data Source: GetTriggerRecipient
 //
-// Search the triggers of a dataset for a trigger recipient. The ID of the existing trigger recipient can be used when adding trigger recipients to new triggers. Specifying a trigger recipient by its ID is necessary when adding Slack recipients, since these can not be created using the API.
+// Search the triggers of a dataset for a trigger recipient. The ID of the existing trigger recipient can be used when adding trigger recipients to new triggers.
+//
+// > **Deprecated** Use GetRecipient data source instead.
 func GetTriggerRecipient(ctx *pulumi.Context, args *GetTriggerRecipientArgs, opts ...pulumi.InvokeOption) (*GetTriggerRecipientResult, error) {
 	opts = pkgInvokeDefaultOpts(opts)
 	var rv GetTriggerRecipientResult

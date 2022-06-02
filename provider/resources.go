@@ -55,18 +55,21 @@ func Provider() tfbridge.ProviderInfo {
 		Config:            map[string]*tfbridge.SchemaInfo{},
 		Resources: map[string]*tfbridge.ResourceInfo{
 			"honeycombio_board":            {Tok: tfbridge.MakeResource(mainPkg, mainMod, "Board")},
+			"honeycombio_burn_alert":       {Tok: tfbridge.MakeResource(mainPkg, mainMod, "BurnAlert")},
 			"honeycombio_column":           {Tok: tfbridge.MakeResource(mainPkg, mainMod, "Column")},
 			"honeycombio_dataset":          {Tok: tfbridge.MakeResource(mainPkg, mainMod, "Dataset")},
 			"honeycombio_derived_column":   {Tok: tfbridge.MakeResource(mainPkg, mainMod, "DerivedColumn")},
 			"honeycombio_marker":           {Tok: tfbridge.MakeResource(mainPkg, mainMod, "Marker")},
 			"honeycombio_query":            {Tok: tfbridge.MakeResource(mainPkg, mainMod, "Query")},
 			"honeycombio_query_annotation": {Tok: tfbridge.MakeResource(mainPkg, mainMod, "QueryAnnotation")},
+			"honeycombio_slo":              {Tok: tfbridge.MakeResource(mainPkg, mainMod, "SLO")},
 			"honeycombio_trigger":          {Tok: tfbridge.MakeResource(mainPkg, mainMod, "Trigger")},
 		},
 		DataSources: map[string]*tfbridge.DataSourceInfo{
 			"honeycombio_datasets":            {Tok: tfbridge.MakeDataSource(mainPkg, mainMod, "GetDatasets")},
 			"honeycombio_query_result":        {Tok: tfbridge.MakeDataSource(mainPkg, mainMod, "GetQueryResult")},
 			"honeycombio_query_specification": {Tok: tfbridge.MakeDataSource(mainPkg, mainMod, "GetQuerySpecification")},
+			"honeycombio_recipient":           {Tok: tfbridge.MakeDataSource(mainPkg, mainMod, "GetRecipient")},
 			"honeycombio_trigger_recipient":   {Tok: tfbridge.MakeDataSource(mainPkg, mainMod, "GetTriggerRecipient")},
 		},
 		JavaScript: &tfbridge.JavaScriptInfo{

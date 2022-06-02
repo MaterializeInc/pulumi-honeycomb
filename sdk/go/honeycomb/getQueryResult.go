@@ -24,8 +24,8 @@ func GetQueryResult(ctx *pulumi.Context, args *GetQueryResultArgs, opts ...pulum
 type GetQueryResultArgs struct {
 	// The dataset this query is associated with.
 	Dataset string `pulumi:"dataset"`
-	// The ID of the query that will be executed to obtain the result.
-	QueryId string `pulumi:"queryId"`
+	// A JSON object describing the query according to the Query Specification. While the JSON can be constructed manually, it is easiest to use the GetQuerySpecification data source.
+	QueryJson string `pulumi:"queryJson"`
 }
 
 // A collection of values returned by GetQueryResult.
@@ -33,8 +33,10 @@ type GetQueryResultResult struct {
 	Dataset       string `pulumi:"dataset"`
 	GraphImageUrl string `pulumi:"graphImageUrl"`
 	// The provider-assigned unique ID for this managed resource.
-	Id      string `pulumi:"id"`
-	QueryId string `pulumi:"queryId"`
+	Id string `pulumi:"id"`
+	// The ID of the Query created and executed to obtain the result.
+	QueryId   string `pulumi:"queryId"`
+	QueryJson string `pulumi:"queryJson"`
 	// The permalink to the executed query's results.
 	QueryUrl string                   `pulumi:"queryUrl"`
 	Results  []map[string]interface{} `pulumi:"results"`
@@ -57,8 +59,8 @@ func GetQueryResultOutput(ctx *pulumi.Context, args GetQueryResultOutputArgs, op
 type GetQueryResultOutputArgs struct {
 	// The dataset this query is associated with.
 	Dataset pulumi.StringInput `pulumi:"dataset"`
-	// The ID of the query that will be executed to obtain the result.
-	QueryId pulumi.StringInput `pulumi:"queryId"`
+	// A JSON object describing the query according to the Query Specification. While the JSON can be constructed manually, it is easiest to use the GetQuerySpecification data source.
+	QueryJson pulumi.StringInput `pulumi:"queryJson"`
 }
 
 func (GetQueryResultOutputArgs) ElementType() reflect.Type {
@@ -93,8 +95,13 @@ func (o GetQueryResultResultOutput) Id() pulumi.StringOutput {
 	return o.ApplyT(func(v GetQueryResultResult) string { return v.Id }).(pulumi.StringOutput)
 }
 
+// The ID of the Query created and executed to obtain the result.
 func (o GetQueryResultResultOutput) QueryId() pulumi.StringOutput {
 	return o.ApplyT(func(v GetQueryResultResult) string { return v.QueryId }).(pulumi.StringOutput)
+}
+
+func (o GetQueryResultResultOutput) QueryJson() pulumi.StringOutput {
+	return o.ApplyT(func(v GetQueryResultResult) string { return v.QueryJson }).(pulumi.StringOutput)
 }
 
 // The permalink to the executed query's results.
