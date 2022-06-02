@@ -16,5 +16,6 @@ builds:
     binary: pulumi-resource-honeycomb
     ldflags:
       - -X github.com/MaterializeInc/pulumi-honeycomb/provider/pkg/version.Version={{.Version}}
+      - -X github.com/honeycombio/terraform-provider-honeycombio/honeycombio.providerVersion=pulumi-honeycomb/{{.Version}}
 changelog:
   skip: true
