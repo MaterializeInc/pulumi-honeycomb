@@ -14,7 +14,7 @@ import (
 //
 // Search the triggers of a dataset for a trigger recipient. The ID of the existing trigger recipient can be used when adding trigger recipients to new triggers.
 //
-// > **Deprecated** Use GetRecipient data source instead.
+// > **Deprecated** Use the `GetRecipient` data source instead.
 func GetTriggerRecipient(ctx *pulumi.Context, args *GetTriggerRecipientArgs, opts ...pulumi.InvokeOption) (*GetTriggerRecipientResult, error) {
 	opts = pkgInvokeDefaultOpts(opts)
 	var rv GetTriggerRecipientResult

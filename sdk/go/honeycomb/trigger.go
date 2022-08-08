@@ -16,6 +16,7 @@ import (
 // Creates a trigger. For more information about triggers, check out [Alert with Triggers](https://docs.honeycomb.io/working-with-your-data/triggers/).
 //
 // ## Example Usage
+// ### Basic Example
 //
 // ```go
 // package main
@@ -72,6 +73,79 @@ import (
 // 				&TriggerRecipientArgs{
 // 					Type:   pulumi.String("marker"),
 // 					Target: pulumi.String("Trigger - requests are slow"),
+// 				},
+// 			},
+// 		})
+// 		if err != nil {
+// 			return err
+// 		}
+// 		return nil
+// 	})
+// }
+// ```
+// ### Example with PagerDuty Recipient and Severity
+// ```go
+// package main
+//
+// import (
+// 	"github.com/pulumi/pulumi-honeycomb/sdk/go/honeycomb"
+// 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+// 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi/config"
+// )
+//
+// func main() {
+// 	pulumi.Run(func(ctx *pulumi.Context) error {
+// 		cfg := config.New(ctx, "")
+// 		dataset := cfg.Require("dataset")
+// 		pd_prod, err := honeycomb.GetRecipient(ctx, &GetRecipientArgs{
+// 			Type: "pagerduty",
+// 			DetailFilter: GetRecipientDetailFilter{
+// 				Name:  "integration_name",
+// 				Value: pulumi.StringRef("Prod On-Call"),
+// 			},
+// 		}, nil)
+// 		if err != nil {
+// 			return err
+// 		}
+// 		exampleGetQuerySpecification, err := honeycomb.GetQuerySpecification(ctx, &GetQuerySpecificationArgs{
+// 			Calculations: []GetQuerySpecificationCalculation{
+// 				GetQuerySpecificationCalculation{
+// 					Op:     "AVG",
+// 					Column: pulumi.StringRef("duration_ms"),
+// 				},
+// 			},
+// 			Filters: []GetQuerySpecificationFilter{
+// 				GetQuerySpecificationFilter{
+// 					Column: "trace.parent_id",
+// 					Op:     "does-not-exist",
+// 				},
+// 			},
+// 		}, nil)
+// 		if err != nil {
+// 			return err
+// 		}
+// 		exampleQuery, err := honeycomb.NewQuery(ctx, "exampleQuery", &honeycomb.QueryArgs{
+// 			Dataset:   pulumi.String(dataset),
+// 			QueryJson: pulumi.String(exampleGetQuerySpecification.Json),
+// 		})
+// 		if err != nil {
+// 			return err
+// 		}
+// 		_, err = honeycomb.NewTrigger(ctx, "exampleTrigger", &honeycomb.TriggerArgs{
+// 			Description: pulumi.String("Average duration of all requests for the last 10 minutes."),
+// 			QueryId:     exampleQuery.ID(),
+// 			Dataset:     pulumi.String(dataset),
+// 			Frequency:   pulumi.Int(600),
+// 			Threshold: &TriggerThresholdArgs{
+// 				Op:    pulumi.String(">"),
+// 				Value: pulumi.Float64(1000),
+// 			},
+// 			Recipients: TriggerRecipientArray{
+// 				&TriggerRecipientArgs{
+// 					Id: pulumi.String(pd_prod.Id),
+// 					NotificationDetails: &TriggerRecipientNotificationDetailsArgs{
+// 						PagerdutySeverity: pulumi.String("info"),
+// 					},
 // 				},
 // 			},
 // 		})

@@ -36,7 +36,7 @@ import (
 // 		dataset := cfg.Require("dataset")
 // 		appVersion := cfg.Require("appVersion")
 // 		_, err := honeycomb.NewMarker(ctx, "marker", &honeycomb.MarkerArgs{
-// 			Message: pulumi.String(fmt.Sprintf("%v%v", "deploy ", appVersion)),
+// 			Message: pulumi.String(fmt.Sprintf("deploy %v", appVersion)),
 // 			Type:    pulumi.String("deploy"),
 // 			Url:     pulumi.String("http://www.example.com/"),
 // 			Dataset: pulumi.String(dataset),

@@ -30,16 +30,24 @@ func (m *module) Construct(ctx *pulumi.Context, name, typ, urn string) (r pulumi
 		r = &Dataset{}
 	case "honeycomb:index/derivedColumn:DerivedColumn":
 		r = &DerivedColumn{}
+	case "honeycomb:index/emailRecipient:EmailRecipient":
+		r = &EmailRecipient{}
 	case "honeycomb:index/marker:Marker":
 		r = &Marker{}
+	case "honeycomb:index/pagerdutyRecipient:PagerdutyRecipient":
+		r = &PagerdutyRecipient{}
 	case "honeycomb:index/query:Query":
 		r = &Query{}
 	case "honeycomb:index/queryAnnotation:QueryAnnotation":
 		r = &QueryAnnotation{}
 	case "honeycomb:index/sLO:SLO":
 		r = &SLO{}
+	case "honeycomb:index/slackRecipient:SlackRecipient":
+		r = &SlackRecipient{}
 	case "honeycomb:index/trigger:Trigger":
 		r = &Trigger{}
+	case "honeycomb:index/webhookRecipient:WebhookRecipient":
+		r = &WebhookRecipient{}
 	default:
 		return nil, fmt.Errorf("unknown resource type: %s", typ)
 	}
@@ -95,7 +103,17 @@ func init() {
 	)
 	pulumi.RegisterResourceModule(
 		"honeycomb",
+		"index/emailRecipient",
+		&module{version},
+	)
+	pulumi.RegisterResourceModule(
+		"honeycomb",
 		"index/marker",
+		&module{version},
+	)
+	pulumi.RegisterResourceModule(
+		"honeycomb",
+		"index/pagerdutyRecipient",
 		&module{version},
 	)
 	pulumi.RegisterResourceModule(
@@ -115,7 +133,17 @@ func init() {
 	)
 	pulumi.RegisterResourceModule(
 		"honeycomb",
+		"index/slackRecipient",
+		&module{version},
+	)
+	pulumi.RegisterResourceModule(
+		"honeycomb",
 		"index/trigger",
+		&module{version},
+	)
+	pulumi.RegisterResourceModule(
+		"honeycomb",
+		"index/webhookRecipient",
 		&module{version},
 	)
 	pulumi.RegisterResourcePackage(

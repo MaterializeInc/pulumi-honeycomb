@@ -10,9 +10,6 @@ import (
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 )
 
-// ## # Data Source: GetRecipient
-//
-// Search the triggers or burn alerts of a dataset for a recipient. The ID of the existing recipient can be used when adding recipients to new triggers or burn alerts.
 func GetRecipient(ctx *pulumi.Context, args *GetRecipientArgs, opts ...pulumi.InvokeOption) (*GetRecipientResult, error) {
 	opts = pkgInvokeDefaultOpts(opts)
 	var rv GetRecipientResult
@@ -25,21 +22,44 @@ func GetRecipient(ctx *pulumi.Context, args *GetRecipientArgs, opts ...pulumi.In
 
 // A collection of arguments for invoking GetRecipient.
 type GetRecipientArgs struct {
-	// The dataset this recipient is associated with.
-	Dataset string `pulumi:"dataset"`
-	// Target of the trigger or burn alert, this has another meaning depending on the type of recipient (see the table below).
+	// Deprecated: recpients are now a Team-level construct. Any provided value will be ignored.
+	//
+	// Deprecated: Recpients are now a Team-level construct. The provided 'dataset' value is being ignored and should be removed.
+	Dataset *string `pulumi:"dataset"`
+	// a block to further filter recipients as described below.
+	DetailFilter *GetRecipientDetailFilter `pulumi:"detailFilter"`
+	// Deprecated: use `detailFilter` instead. The target of the recipient, this has another meaning depending on the type of recipient (see the table below).
+	//
+	// Deprecated: Use of 'target' has been replaced by 'detail_filter'.
 	Target *string `pulumi:"target"`
-	// The type of recipient, allowed types are `email`, `marker`, `pagerduty`, `slack` and `webhook`.
+	// The type of recipient, allowed types are `email`, `pagerduty`, `slack` and `webhook`.
 	Type string `pulumi:"type"`
 }
 
 // A collection of values returned by GetRecipient.
 type GetRecipientResult struct {
-	Dataset string `pulumi:"dataset"`
+	// The email recipient's address -- if of type `email`.
+	Address string `pulumi:"address"`
+	// The Slack recipient's channel -- if of type `slack`.
+	Channel string `pulumi:"channel"`
+	// Deprecated: Recpients are now a Team-level construct. The provided 'dataset' value is being ignored and should be removed.
+	Dataset      *string                   `pulumi:"dataset"`
+	DetailFilter *GetRecipientDetailFilter `pulumi:"detailFilter"`
 	// The provider-assigned unique ID for this managed resource.
-	Id     string  `pulumi:"id"`
+	Id string `pulumi:"id"`
+	// (Sensitive) The PagerDuty recipient's integration key -- if of type `pagerduty`.
+	IntegrationKey string `pulumi:"integrationKey"`
+	// The PagerDuty recipient's inregration name -- if of type `pagerduty`.
+	IntegrationName string `pulumi:"integrationName"`
+	// The webhook recipient's name -- if of type `webhook`.
+	Name string `pulumi:"name"`
+	// (Sensitive) The webhook recipient's secret -- if of type `webhook`.
+	Secret string `pulumi:"secret"`
+	// Deprecated: Use of 'target' has been replaced by 'detail_filter'.
 	Target *string `pulumi:"target"`
 	Type   string  `pulumi:"type"`
+	// The webhook recipient's URL - if of type `webhook`.
+	Url string `pulumi:"url"`
 }
 
 func GetRecipientOutput(ctx *pulumi.Context, args GetRecipientOutputArgs, opts ...pulumi.InvokeOption) GetRecipientResultOutput {
@@ -57,11 +77,17 @@ func GetRecipientOutput(ctx *pulumi.Context, args GetRecipientOutputArgs, opts .
 
 // A collection of arguments for invoking GetRecipient.
 type GetRecipientOutputArgs struct {
-	// The dataset this recipient is associated with.
-	Dataset pulumi.StringInput `pulumi:"dataset"`
-	// Target of the trigger or burn alert, this has another meaning depending on the type of recipient (see the table below).
+	// Deprecated: recpients are now a Team-level construct. Any provided value will be ignored.
+	//
+	// Deprecated: Recpients are now a Team-level construct. The provided 'dataset' value is being ignored and should be removed.
+	Dataset pulumi.StringPtrInput `pulumi:"dataset"`
+	// a block to further filter recipients as described below.
+	DetailFilter GetRecipientDetailFilterPtrInput `pulumi:"detailFilter"`
+	// Deprecated: use `detailFilter` instead. The target of the recipient, this has another meaning depending on the type of recipient (see the table below).
+	//
+	// Deprecated: Use of 'target' has been replaced by 'detail_filter'.
 	Target pulumi.StringPtrInput `pulumi:"target"`
-	// The type of recipient, allowed types are `email`, `marker`, `pagerduty`, `slack` and `webhook`.
+	// The type of recipient, allowed types are `email`, `pagerduty`, `slack` and `webhook`.
 	Type pulumi.StringInput `pulumi:"type"`
 }
 
@@ -84,8 +110,23 @@ func (o GetRecipientResultOutput) ToGetRecipientResultOutputWithContext(ctx cont
 	return o
 }
 
-func (o GetRecipientResultOutput) Dataset() pulumi.StringOutput {
-	return o.ApplyT(func(v GetRecipientResult) string { return v.Dataset }).(pulumi.StringOutput)
+// The email recipient's address -- if of type `email`.
+func (o GetRecipientResultOutput) Address() pulumi.StringOutput {
+	return o.ApplyT(func(v GetRecipientResult) string { return v.Address }).(pulumi.StringOutput)
+}
+
+// The Slack recipient's channel -- if of type `slack`.
+func (o GetRecipientResultOutput) Channel() pulumi.StringOutput {
+	return o.ApplyT(func(v GetRecipientResult) string { return v.Channel }).(pulumi.StringOutput)
+}
+
+// Deprecated: Recpients are now a Team-level construct. The provided 'dataset' value is being ignored and should be removed.
+func (o GetRecipientResultOutput) Dataset() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v GetRecipientResult) *string { return v.Dataset }).(pulumi.StringPtrOutput)
+}
+
+func (o GetRecipientResultOutput) DetailFilter() GetRecipientDetailFilterPtrOutput {
+	return o.ApplyT(func(v GetRecipientResult) *GetRecipientDetailFilter { return v.DetailFilter }).(GetRecipientDetailFilterPtrOutput)
 }
 
 // The provider-assigned unique ID for this managed resource.
@@ -93,12 +134,38 @@ func (o GetRecipientResultOutput) Id() pulumi.StringOutput {
 	return o.ApplyT(func(v GetRecipientResult) string { return v.Id }).(pulumi.StringOutput)
 }
 
+// (Sensitive) The PagerDuty recipient's integration key -- if of type `pagerduty`.
+func (o GetRecipientResultOutput) IntegrationKey() pulumi.StringOutput {
+	return o.ApplyT(func(v GetRecipientResult) string { return v.IntegrationKey }).(pulumi.StringOutput)
+}
+
+// The PagerDuty recipient's inregration name -- if of type `pagerduty`.
+func (o GetRecipientResultOutput) IntegrationName() pulumi.StringOutput {
+	return o.ApplyT(func(v GetRecipientResult) string { return v.IntegrationName }).(pulumi.StringOutput)
+}
+
+// The webhook recipient's name -- if of type `webhook`.
+func (o GetRecipientResultOutput) Name() pulumi.StringOutput {
+	return o.ApplyT(func(v GetRecipientResult) string { return v.Name }).(pulumi.StringOutput)
+}
+
+// (Sensitive) The webhook recipient's secret -- if of type `webhook`.
+func (o GetRecipientResultOutput) Secret() pulumi.StringOutput {
+	return o.ApplyT(func(v GetRecipientResult) string { return v.Secret }).(pulumi.StringOutput)
+}
+
+// Deprecated: Use of 'target' has been replaced by 'detail_filter'.
 func (o GetRecipientResultOutput) Target() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v GetRecipientResult) *string { return v.Target }).(pulumi.StringPtrOutput)
 }
 
 func (o GetRecipientResultOutput) Type() pulumi.StringOutput {
 	return o.ApplyT(func(v GetRecipientResult) string { return v.Type }).(pulumi.StringOutput)
+}
+
+// The webhook recipient's URL - if of type `webhook`.
+func (o GetRecipientResultOutput) Url() pulumi.StringOutput {
+	return o.ApplyT(func(v GetRecipientResult) string { return v.Url }).(pulumi.StringOutput)
 }
 
 func init() {

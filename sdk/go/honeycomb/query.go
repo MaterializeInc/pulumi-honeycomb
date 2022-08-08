@@ -55,7 +55,7 @@ import (
 // 			return err
 // 		}
 // 		_, err = honeycomb.NewQuery(ctx, "testQueryQuery", &honeycomb.QueryArgs{
-// 			Dataset:   pulumi.String(fmt.Sprintf("%v%v", "%", "s")),
+// 			Dataset:   pulumi.String(fmt.Sprintf("%vs", "%")),
 // 			QueryJson: pulumi.String(testQueryGetQuerySpecification.Json),
 // 		})
 // 		if err != nil {

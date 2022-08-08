@@ -16,6 +16,7 @@ import (
 // Creates a burn alert. For more information about burn alerts, check out [Define Burn Alerts](https://docs.honeycomb.io/working-with-your-data/slos/slo-process/#define-burn-alerts).
 //
 // ## Example Usage
+// ### Basic Example
 //
 // ```go
 // package main
@@ -43,6 +44,51 @@ import (
 // 				&BurnAlertRecipientArgs{
 // 					Type:   pulumi.String("slack"),
 // 					Target: pulumi.String("#example-channel"),
+// 				},
+// 			},
+// 		})
+// 		if err != nil {
+// 			return err
+// 		}
+// 		return nil
+// 	})
+// }
+// ```
+// ### Example with PagerDuty Recipient and Severity
+// ```go
+// package main
+//
+// import (
+// 	"github.com/pulumi/pulumi-honeycomb/sdk/go/honeycomb"
+// 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+// 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi/config"
+// )
+//
+// func main() {
+// 	pulumi.Run(func(ctx *pulumi.Context) error {
+// 		cfg := config.New(ctx, "")
+// 		dataset := cfg.Require("dataset")
+// 		sloId := cfg.Require("sloId")
+// 		pd_prod, err := honeycomb.GetRecipient(ctx, &GetRecipientArgs{
+// 			Type: "pagerduty",
+// 			DetailFilter: GetRecipientDetailFilter{
+// 				Name:  "integration_name",
+// 				Value: pulumi.StringRef("Prod On-Call"),
+// 			},
+// 		}, nil)
+// 		if err != nil {
+// 			return err
+// 		}
+// 		_, err = honeycomb.NewBurnAlert(ctx, "exampleAlert", &honeycomb.BurnAlertArgs{
+// 			Dataset:           pulumi.String(dataset),
+// 			SloId:             pulumi.String(sloId),
+// 			ExhaustionMinutes: pulumi.Int(60),
+// 			Recipients: BurnAlertRecipientArray{
+// 				&BurnAlertRecipientArgs{
+// 					Id: pulumi.String(pd_prod.Id),
+// 					NotificationDetails: &BurnAlertRecipientNotificationDetailsArgs{
+// 						PagerdutySeverity: pulumi.String("critical"),
+// 					},
 // 				},
 // 			},
 // 		})

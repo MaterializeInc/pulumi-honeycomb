@@ -15,6 +15,52 @@ import (
 //
 // Creates a service level objective (SLO). For more information about SLOs, check out [Set Service Level Objectives (SLOs)](https://docs.honeycomb.io/working-with-your-data/slos/).
 //
+// ## Example Usage
+//
+// ```go
+// package main
+//
+// import (
+// 	"io/ioutil"
+//
+// 	"github.com/pulumi/pulumi-honeycomb/sdk/go/honeycomb"
+// 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+// )
+//
+// func readFileOrPanic(path string) pulumi.StringPtrInput {
+// 	data, err := ioutil.ReadFile(path)
+// 	if err != nil {
+// 		panic(err.Error())
+// 	}
+// 	return pulumi.String(string(data))
+// }
+//
+// func main() {
+// 	pulumi.Run(func(ctx *pulumi.Context) error {
+// 		requestLatencySli, err := honeycomb.NewDerivedColumn(ctx, "requestLatencySli", &honeycomb.DerivedColumnArgs{
+// 			Alias:       pulumi.String("sli.request_latency"),
+// 			Description: pulumi.String("SLI: request latency less than 300ms"),
+// 			Dataset:     pulumi.Any(_var.Dataset),
+// 			Expression:  readFileOrPanic("../sli/sli.request_latency.honeycomb"),
+// 		})
+// 		if err != nil {
+// 			return err
+// 		}
+// 		_, err = honeycomb.NewSLO(ctx, "slo", &honeycomb.SLOArgs{
+// 			Description:      pulumi.String("example of an SLO"),
+// 			Dataset:          pulumi.Any(_var.Dataset),
+// 			Sli:              requestLatencySli.Alias,
+// 			TargetPercentage: pulumi.Float64(99.9),
+// 			TimePeriod:       pulumi.Int(30),
+// 		})
+// 		if err != nil {
+// 			return err
+// 		}
+// 		return nil
+// 	})
+// }
+// ```
+//
 // ## Import
 //
 // SLOs can be imported using a combination of the dataset name and their ID, e.g.

@@ -34,7 +34,7 @@ import (
 // 		dataset := cfg.Require("dataset")
 // 		_, err := honeycomb.NewDerivedColumn(ctx, "durationMsLog", &honeycomb.DerivedColumnArgs{
 // 			Alias:       pulumi.String("duration_ms_log10"),
-// 			Expression:  pulumi.String(fmt.Sprintf("%v%v%v", "LOG10(", "$", "duration_ms)")),
+// 			Expression:  pulumi.String(fmt.Sprintf("LOG10($duration_ms)")),
 // 			Description: pulumi.String("LOG10 of duration_ms"),
 // 			Dataset:     pulumi.String(dataset),
 // 		})
