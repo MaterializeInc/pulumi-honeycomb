@@ -8,7 +8,7 @@ replace (
 )
 
 require (
-	github.com/honeycombio/terraform-provider-honeycombio v0.7.0
+	github.com/honeycombio/terraform-provider-honeycombio v0.9.0
 	github.com/kr/pretty v0.3.0 // indirect
 	github.com/pulumi/pulumi-terraform-bridge/v3 v3.24.1
 )
