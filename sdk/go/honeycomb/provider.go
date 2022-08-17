@@ -44,14 +44,16 @@ func NewProvider(ctx *pulumi.Context,
 type providerArgs struct {
 	ApiKey string  `pulumi:"apiKey"`
 	ApiUrl *string `pulumi:"apiUrl"`
-	Debug  *bool   `pulumi:"debug"`
+	// Enable the API client's debug logs. By default, a `TF_LOG` setting of debug or higher will enable this.
+	Debug *bool `pulumi:"debug"`
 }
 
 // The set of arguments for constructing a Provider resource.
 type ProviderArgs struct {
 	ApiKey pulumi.StringInput
 	ApiUrl pulumi.StringPtrInput
-	Debug  pulumi.BoolPtrInput
+	// Enable the API client's debug logs. By default, a `TF_LOG` setting of debug or higher will enable this.
+	Debug pulumi.BoolPtrInput
 }
 
 func (ProviderArgs) ElementType() reflect.Type {

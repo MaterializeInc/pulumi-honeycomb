@@ -21,29 +21,32 @@ import (
 // package main
 //
 // import (
-// 	"fmt"
 //
-// 	"github.com/pulumi/pulumi-honeycomb/sdk/go/honeycomb"
-// 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
-// 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi/config"
+//	"fmt"
+//
+//	"github.com/pulumi/pulumi-honeycomb/sdk/go/honeycomb"
+//	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+//	"github.com/pulumi/pulumi/sdk/v3/go/pulumi/config"
+//
 // )
 //
-// func main() {
-// 	pulumi.Run(func(ctx *pulumi.Context) error {
-// 		cfg := config.New(ctx, "")
-// 		dataset := cfg.Require("dataset")
-// 		_, err := honeycomb.NewDerivedColumn(ctx, "durationMsLog", &honeycomb.DerivedColumnArgs{
-// 			Alias:       pulumi.String("duration_ms_log10"),
-// 			Expression:  pulumi.String(fmt.Sprintf("%v%v%v", "LOG10(", "$", "duration_ms)")),
-// 			Description: pulumi.String("LOG10 of duration_ms"),
-// 			Dataset:     pulumi.String(dataset),
-// 		})
-// 		if err != nil {
-// 			return err
-// 		}
-// 		return nil
-// 	})
-// }
+//	func main() {
+//		pulumi.Run(func(ctx *pulumi.Context) error {
+//			cfg := config.New(ctx, "")
+//			dataset := cfg.Require("dataset")
+//			_, err := honeycomb.NewDerivedColumn(ctx, "durationMsLog", &honeycomb.DerivedColumnArgs{
+//				Alias:       pulumi.String("duration_ms_log10"),
+//				Expression:  pulumi.String(fmt.Sprintf("LOG10($duration_ms)")),
+//				Description: pulumi.String("LOG10 of duration_ms"),
+//				Dataset:     pulumi.String(dataset),
+//			})
+//			if err != nil {
+//				return err
+//			}
+//			return nil
+//		})
+//	}
+//
 // ```
 //
 // ## Import
@@ -51,7 +54,9 @@ import (
 // Derived columns can be imported using a combination of the dataset name and their alias, e.g.
 //
 // ```sh
-//  $ pulumi import honeycomb:index/derivedColumn:DerivedColumn my_column my-dataset/duration_ms_log10
+//
+//	$ pulumi import honeycomb:index/derivedColumn:DerivedColumn my_column my-dataset/duration_ms_log10
+//
 // ```
 type DerivedColumn struct {
 	pulumi.CustomResourceState
@@ -179,7 +184,7 @@ func (i *DerivedColumn) ToDerivedColumnOutputWithContext(ctx context.Context) De
 // DerivedColumnArrayInput is an input type that accepts DerivedColumnArray and DerivedColumnArrayOutput values.
 // You can construct a concrete instance of `DerivedColumnArrayInput` via:
 //
-//          DerivedColumnArray{ DerivedColumnArgs{...} }
+//	DerivedColumnArray{ DerivedColumnArgs{...} }
 type DerivedColumnArrayInput interface {
 	pulumi.Input
 
@@ -204,7 +209,7 @@ func (i DerivedColumnArray) ToDerivedColumnArrayOutputWithContext(ctx context.Co
 // DerivedColumnMapInput is an input type that accepts DerivedColumnMap and DerivedColumnMapOutput values.
 // You can construct a concrete instance of `DerivedColumnMapInput` via:
 //
-//          DerivedColumnMap{ "key": DerivedColumnArgs{...} }
+//	DerivedColumnMap{ "key": DerivedColumnArgs{...} }
 type DerivedColumnMapInput interface {
 	pulumi.Input
 

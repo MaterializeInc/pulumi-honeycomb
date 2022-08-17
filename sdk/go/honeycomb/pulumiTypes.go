@@ -14,7 +14,18 @@ type BoardQuery struct {
 	// A description of the query that will be displayed on the board. Supports markdown.
 	Caption *string `pulumi:"caption"`
 	// The dataset this query is associated with.
-	Dataset string `pulumi:"dataset"`
+	//
+	// Deprecated: Board Queries no longer require the dataset as they rely on the provided Query ID's dataset.
+	Dataset *string `pulumi:"dataset"`
+	// A map of boolean toggles to manages the settings for this query's graph on the board.
+	// If a value is unspecified, it is assumed to be false.
+	// Currently supported toggles are:
+	// * `hideMarkers`
+	// * `logScale`
+	// * `omitMissingValues`
+	// * `stackedGraphs`
+	// * `utcXaxis`
+	GraphSettings *BoardQueryGraphSettings `pulumi:"graphSettings"`
 	// The ID of the Query Annotation to associate with this query.
 	QueryAnnotationId *string `pulumi:"queryAnnotationId"`
 	// The ID of the Query to run.
@@ -26,7 +37,7 @@ type BoardQuery struct {
 // BoardQueryInput is an input type that accepts BoardQueryArgs and BoardQueryOutput values.
 // You can construct a concrete instance of `BoardQueryInput` via:
 //
-//          BoardQueryArgs{...}
+//	BoardQueryArgs{...}
 type BoardQueryInput interface {
 	pulumi.Input
 
@@ -38,7 +49,18 @@ type BoardQueryArgs struct {
 	// A description of the query that will be displayed on the board. Supports markdown.
 	Caption pulumi.StringPtrInput `pulumi:"caption"`
 	// The dataset this query is associated with.
-	Dataset pulumi.StringInput `pulumi:"dataset"`
+	//
+	// Deprecated: Board Queries no longer require the dataset as they rely on the provided Query ID's dataset.
+	Dataset pulumi.StringPtrInput `pulumi:"dataset"`
+	// A map of boolean toggles to manages the settings for this query's graph on the board.
+	// If a value is unspecified, it is assumed to be false.
+	// Currently supported toggles are:
+	// * `hideMarkers`
+	// * `logScale`
+	// * `omitMissingValues`
+	// * `stackedGraphs`
+	// * `utcXaxis`
+	GraphSettings BoardQueryGraphSettingsPtrInput `pulumi:"graphSettings"`
 	// The ID of the Query Annotation to associate with this query.
 	QueryAnnotationId pulumi.StringPtrInput `pulumi:"queryAnnotationId"`
 	// The ID of the Query to run.
@@ -62,7 +84,7 @@ func (i BoardQueryArgs) ToBoardQueryOutputWithContext(ctx context.Context) Board
 // BoardQueryArrayInput is an input type that accepts BoardQueryArray and BoardQueryArrayOutput values.
 // You can construct a concrete instance of `BoardQueryArrayInput` via:
 //
-//          BoardQueryArray{ BoardQueryArgs{...} }
+//	BoardQueryArray{ BoardQueryArgs{...} }
 type BoardQueryArrayInput interface {
 	pulumi.Input
 
@@ -104,8 +126,22 @@ func (o BoardQueryOutput) Caption() pulumi.StringPtrOutput {
 }
 
 // The dataset this query is associated with.
-func (o BoardQueryOutput) Dataset() pulumi.StringOutput {
-	return o.ApplyT(func(v BoardQuery) string { return v.Dataset }).(pulumi.StringOutput)
+//
+// Deprecated: Board Queries no longer require the dataset as they rely on the provided Query ID's dataset.
+func (o BoardQueryOutput) Dataset() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v BoardQuery) *string { return v.Dataset }).(pulumi.StringPtrOutput)
+}
+
+// A map of boolean toggles to manages the settings for this query's graph on the board.
+// If a value is unspecified, it is assumed to be false.
+// Currently supported toggles are:
+// * `hideMarkers`
+// * `logScale`
+// * `omitMissingValues`
+// * `stackedGraphs`
+// * `utcXaxis`
+func (o BoardQueryOutput) GraphSettings() BoardQueryGraphSettingsPtrOutput {
+	return o.ApplyT(func(v BoardQuery) *BoardQueryGraphSettings { return v.GraphSettings }).(BoardQueryGraphSettingsPtrOutput)
 }
 
 // The ID of the Query Annotation to associate with this query.
@@ -143,9 +179,204 @@ func (o BoardQueryArrayOutput) Index(i pulumi.IntInput) BoardQueryOutput {
 	}).(BoardQueryOutput)
 }
 
+type BoardQueryGraphSettings struct {
+	HideMarkers       *bool `pulumi:"hideMarkers"`
+	LogScale          *bool `pulumi:"logScale"`
+	OmitMissingValues *bool `pulumi:"omitMissingValues"`
+	StackedGraphs     *bool `pulumi:"stackedGraphs"`
+	UtcXaxis          *bool `pulumi:"utcXaxis"`
+}
+
+// BoardQueryGraphSettingsInput is an input type that accepts BoardQueryGraphSettingsArgs and BoardQueryGraphSettingsOutput values.
+// You can construct a concrete instance of `BoardQueryGraphSettingsInput` via:
+//
+//	BoardQueryGraphSettingsArgs{...}
+type BoardQueryGraphSettingsInput interface {
+	pulumi.Input
+
+	ToBoardQueryGraphSettingsOutput() BoardQueryGraphSettingsOutput
+	ToBoardQueryGraphSettingsOutputWithContext(context.Context) BoardQueryGraphSettingsOutput
+}
+
+type BoardQueryGraphSettingsArgs struct {
+	HideMarkers       pulumi.BoolPtrInput `pulumi:"hideMarkers"`
+	LogScale          pulumi.BoolPtrInput `pulumi:"logScale"`
+	OmitMissingValues pulumi.BoolPtrInput `pulumi:"omitMissingValues"`
+	StackedGraphs     pulumi.BoolPtrInput `pulumi:"stackedGraphs"`
+	UtcXaxis          pulumi.BoolPtrInput `pulumi:"utcXaxis"`
+}
+
+func (BoardQueryGraphSettingsArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*BoardQueryGraphSettings)(nil)).Elem()
+}
+
+func (i BoardQueryGraphSettingsArgs) ToBoardQueryGraphSettingsOutput() BoardQueryGraphSettingsOutput {
+	return i.ToBoardQueryGraphSettingsOutputWithContext(context.Background())
+}
+
+func (i BoardQueryGraphSettingsArgs) ToBoardQueryGraphSettingsOutputWithContext(ctx context.Context) BoardQueryGraphSettingsOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(BoardQueryGraphSettingsOutput)
+}
+
+func (i BoardQueryGraphSettingsArgs) ToBoardQueryGraphSettingsPtrOutput() BoardQueryGraphSettingsPtrOutput {
+	return i.ToBoardQueryGraphSettingsPtrOutputWithContext(context.Background())
+}
+
+func (i BoardQueryGraphSettingsArgs) ToBoardQueryGraphSettingsPtrOutputWithContext(ctx context.Context) BoardQueryGraphSettingsPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(BoardQueryGraphSettingsOutput).ToBoardQueryGraphSettingsPtrOutputWithContext(ctx)
+}
+
+// BoardQueryGraphSettingsPtrInput is an input type that accepts BoardQueryGraphSettingsArgs, BoardQueryGraphSettingsPtr and BoardQueryGraphSettingsPtrOutput values.
+// You can construct a concrete instance of `BoardQueryGraphSettingsPtrInput` via:
+//
+//	        BoardQueryGraphSettingsArgs{...}
+//
+//	or:
+//
+//	        nil
+type BoardQueryGraphSettingsPtrInput interface {
+	pulumi.Input
+
+	ToBoardQueryGraphSettingsPtrOutput() BoardQueryGraphSettingsPtrOutput
+	ToBoardQueryGraphSettingsPtrOutputWithContext(context.Context) BoardQueryGraphSettingsPtrOutput
+}
+
+type boardQueryGraphSettingsPtrType BoardQueryGraphSettingsArgs
+
+func BoardQueryGraphSettingsPtr(v *BoardQueryGraphSettingsArgs) BoardQueryGraphSettingsPtrInput {
+	return (*boardQueryGraphSettingsPtrType)(v)
+}
+
+func (*boardQueryGraphSettingsPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**BoardQueryGraphSettings)(nil)).Elem()
+}
+
+func (i *boardQueryGraphSettingsPtrType) ToBoardQueryGraphSettingsPtrOutput() BoardQueryGraphSettingsPtrOutput {
+	return i.ToBoardQueryGraphSettingsPtrOutputWithContext(context.Background())
+}
+
+func (i *boardQueryGraphSettingsPtrType) ToBoardQueryGraphSettingsPtrOutputWithContext(ctx context.Context) BoardQueryGraphSettingsPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(BoardQueryGraphSettingsPtrOutput)
+}
+
+type BoardQueryGraphSettingsOutput struct{ *pulumi.OutputState }
+
+func (BoardQueryGraphSettingsOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*BoardQueryGraphSettings)(nil)).Elem()
+}
+
+func (o BoardQueryGraphSettingsOutput) ToBoardQueryGraphSettingsOutput() BoardQueryGraphSettingsOutput {
+	return o
+}
+
+func (o BoardQueryGraphSettingsOutput) ToBoardQueryGraphSettingsOutputWithContext(ctx context.Context) BoardQueryGraphSettingsOutput {
+	return o
+}
+
+func (o BoardQueryGraphSettingsOutput) ToBoardQueryGraphSettingsPtrOutput() BoardQueryGraphSettingsPtrOutput {
+	return o.ToBoardQueryGraphSettingsPtrOutputWithContext(context.Background())
+}
+
+func (o BoardQueryGraphSettingsOutput) ToBoardQueryGraphSettingsPtrOutputWithContext(ctx context.Context) BoardQueryGraphSettingsPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v BoardQueryGraphSettings) *BoardQueryGraphSettings {
+		return &v
+	}).(BoardQueryGraphSettingsPtrOutput)
+}
+
+func (o BoardQueryGraphSettingsOutput) HideMarkers() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v BoardQueryGraphSettings) *bool { return v.HideMarkers }).(pulumi.BoolPtrOutput)
+}
+
+func (o BoardQueryGraphSettingsOutput) LogScale() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v BoardQueryGraphSettings) *bool { return v.LogScale }).(pulumi.BoolPtrOutput)
+}
+
+func (o BoardQueryGraphSettingsOutput) OmitMissingValues() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v BoardQueryGraphSettings) *bool { return v.OmitMissingValues }).(pulumi.BoolPtrOutput)
+}
+
+func (o BoardQueryGraphSettingsOutput) StackedGraphs() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v BoardQueryGraphSettings) *bool { return v.StackedGraphs }).(pulumi.BoolPtrOutput)
+}
+
+func (o BoardQueryGraphSettingsOutput) UtcXaxis() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v BoardQueryGraphSettings) *bool { return v.UtcXaxis }).(pulumi.BoolPtrOutput)
+}
+
+type BoardQueryGraphSettingsPtrOutput struct{ *pulumi.OutputState }
+
+func (BoardQueryGraphSettingsPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**BoardQueryGraphSettings)(nil)).Elem()
+}
+
+func (o BoardQueryGraphSettingsPtrOutput) ToBoardQueryGraphSettingsPtrOutput() BoardQueryGraphSettingsPtrOutput {
+	return o
+}
+
+func (o BoardQueryGraphSettingsPtrOutput) ToBoardQueryGraphSettingsPtrOutputWithContext(ctx context.Context) BoardQueryGraphSettingsPtrOutput {
+	return o
+}
+
+func (o BoardQueryGraphSettingsPtrOutput) Elem() BoardQueryGraphSettingsOutput {
+	return o.ApplyT(func(v *BoardQueryGraphSettings) BoardQueryGraphSettings {
+		if v != nil {
+			return *v
+		}
+		var ret BoardQueryGraphSettings
+		return ret
+	}).(BoardQueryGraphSettingsOutput)
+}
+
+func (o BoardQueryGraphSettingsPtrOutput) HideMarkers() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v *BoardQueryGraphSettings) *bool {
+		if v == nil {
+			return nil
+		}
+		return v.HideMarkers
+	}).(pulumi.BoolPtrOutput)
+}
+
+func (o BoardQueryGraphSettingsPtrOutput) LogScale() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v *BoardQueryGraphSettings) *bool {
+		if v == nil {
+			return nil
+		}
+		return v.LogScale
+	}).(pulumi.BoolPtrOutput)
+}
+
+func (o BoardQueryGraphSettingsPtrOutput) OmitMissingValues() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v *BoardQueryGraphSettings) *bool {
+		if v == nil {
+			return nil
+		}
+		return v.OmitMissingValues
+	}).(pulumi.BoolPtrOutput)
+}
+
+func (o BoardQueryGraphSettingsPtrOutput) StackedGraphs() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v *BoardQueryGraphSettings) *bool {
+		if v == nil {
+			return nil
+		}
+		return v.StackedGraphs
+	}).(pulumi.BoolPtrOutput)
+}
+
+func (o BoardQueryGraphSettingsPtrOutput) UtcXaxis() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v *BoardQueryGraphSettings) *bool {
+		if v == nil {
+			return nil
+		}
+		return v.UtcXaxis
+	}).(pulumi.BoolPtrOutput)
+}
+
 type BurnAlertRecipient struct {
 	// The ID of an already existing recipient. Should not be used in combination with `type` and `target`.
 	Id *string `pulumi:"id"`
+	// a block of additional details to send along with the notification. The only supported option currently is `pagerdutySeverity` which has a default value of `critical` but can be set to one of `info`, `warning`, `error`, or `critical` and must be used in combination with a PagerDuty recipient.
+	NotificationDetails *BurnAlertRecipientNotificationDetails `pulumi:"notificationDetails"`
 	// Target of the recipient, this has another meaning depending on the type of recipient (see the table below). Should not be used in combination with `id`.
 	Target *string `pulumi:"target"`
 	// The type of the recipient, allowed types are `email`, `pagerduty`, `slack` and `webhook`. Should not be used in combination with `id`.
@@ -155,7 +386,7 @@ type BurnAlertRecipient struct {
 // BurnAlertRecipientInput is an input type that accepts BurnAlertRecipientArgs and BurnAlertRecipientOutput values.
 // You can construct a concrete instance of `BurnAlertRecipientInput` via:
 //
-//          BurnAlertRecipientArgs{...}
+//	BurnAlertRecipientArgs{...}
 type BurnAlertRecipientInput interface {
 	pulumi.Input
 
@@ -166,6 +397,8 @@ type BurnAlertRecipientInput interface {
 type BurnAlertRecipientArgs struct {
 	// The ID of an already existing recipient. Should not be used in combination with `type` and `target`.
 	Id pulumi.StringPtrInput `pulumi:"id"`
+	// a block of additional details to send along with the notification. The only supported option currently is `pagerdutySeverity` which has a default value of `critical` but can be set to one of `info`, `warning`, `error`, or `critical` and must be used in combination with a PagerDuty recipient.
+	NotificationDetails BurnAlertRecipientNotificationDetailsPtrInput `pulumi:"notificationDetails"`
 	// Target of the recipient, this has another meaning depending on the type of recipient (see the table below). Should not be used in combination with `id`.
 	Target pulumi.StringPtrInput `pulumi:"target"`
 	// The type of the recipient, allowed types are `email`, `pagerduty`, `slack` and `webhook`. Should not be used in combination with `id`.
@@ -187,7 +420,7 @@ func (i BurnAlertRecipientArgs) ToBurnAlertRecipientOutputWithContext(ctx contex
 // BurnAlertRecipientArrayInput is an input type that accepts BurnAlertRecipientArray and BurnAlertRecipientArrayOutput values.
 // You can construct a concrete instance of `BurnAlertRecipientArrayInput` via:
 //
-//          BurnAlertRecipientArray{ BurnAlertRecipientArgs{...} }
+//	BurnAlertRecipientArray{ BurnAlertRecipientArgs{...} }
 type BurnAlertRecipientArrayInput interface {
 	pulumi.Input
 
@@ -228,6 +461,11 @@ func (o BurnAlertRecipientOutput) Id() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v BurnAlertRecipient) *string { return v.Id }).(pulumi.StringPtrOutput)
 }
 
+// a block of additional details to send along with the notification. The only supported option currently is `pagerdutySeverity` which has a default value of `critical` but can be set to one of `info`, `warning`, `error`, or `critical` and must be used in combination with a PagerDuty recipient.
+func (o BurnAlertRecipientOutput) NotificationDetails() BurnAlertRecipientNotificationDetailsPtrOutput {
+	return o.ApplyT(func(v BurnAlertRecipient) *BurnAlertRecipientNotificationDetails { return v.NotificationDetails }).(BurnAlertRecipientNotificationDetailsPtrOutput)
+}
+
 // Target of the recipient, this has another meaning depending on the type of recipient (see the table below). Should not be used in combination with `id`.
 func (o BurnAlertRecipientOutput) Target() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v BurnAlertRecipient) *string { return v.Target }).(pulumi.StringPtrOutput)
@@ -258,6 +496,139 @@ func (o BurnAlertRecipientArrayOutput) Index(i pulumi.IntInput) BurnAlertRecipie
 	}).(BurnAlertRecipientOutput)
 }
 
+type BurnAlertRecipientNotificationDetails struct {
+	PagerdutySeverity string `pulumi:"pagerdutySeverity"`
+}
+
+// BurnAlertRecipientNotificationDetailsInput is an input type that accepts BurnAlertRecipientNotificationDetailsArgs and BurnAlertRecipientNotificationDetailsOutput values.
+// You can construct a concrete instance of `BurnAlertRecipientNotificationDetailsInput` via:
+//
+//	BurnAlertRecipientNotificationDetailsArgs{...}
+type BurnAlertRecipientNotificationDetailsInput interface {
+	pulumi.Input
+
+	ToBurnAlertRecipientNotificationDetailsOutput() BurnAlertRecipientNotificationDetailsOutput
+	ToBurnAlertRecipientNotificationDetailsOutputWithContext(context.Context) BurnAlertRecipientNotificationDetailsOutput
+}
+
+type BurnAlertRecipientNotificationDetailsArgs struct {
+	PagerdutySeverity pulumi.StringInput `pulumi:"pagerdutySeverity"`
+}
+
+func (BurnAlertRecipientNotificationDetailsArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*BurnAlertRecipientNotificationDetails)(nil)).Elem()
+}
+
+func (i BurnAlertRecipientNotificationDetailsArgs) ToBurnAlertRecipientNotificationDetailsOutput() BurnAlertRecipientNotificationDetailsOutput {
+	return i.ToBurnAlertRecipientNotificationDetailsOutputWithContext(context.Background())
+}
+
+func (i BurnAlertRecipientNotificationDetailsArgs) ToBurnAlertRecipientNotificationDetailsOutputWithContext(ctx context.Context) BurnAlertRecipientNotificationDetailsOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(BurnAlertRecipientNotificationDetailsOutput)
+}
+
+func (i BurnAlertRecipientNotificationDetailsArgs) ToBurnAlertRecipientNotificationDetailsPtrOutput() BurnAlertRecipientNotificationDetailsPtrOutput {
+	return i.ToBurnAlertRecipientNotificationDetailsPtrOutputWithContext(context.Background())
+}
+
+func (i BurnAlertRecipientNotificationDetailsArgs) ToBurnAlertRecipientNotificationDetailsPtrOutputWithContext(ctx context.Context) BurnAlertRecipientNotificationDetailsPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(BurnAlertRecipientNotificationDetailsOutput).ToBurnAlertRecipientNotificationDetailsPtrOutputWithContext(ctx)
+}
+
+// BurnAlertRecipientNotificationDetailsPtrInput is an input type that accepts BurnAlertRecipientNotificationDetailsArgs, BurnAlertRecipientNotificationDetailsPtr and BurnAlertRecipientNotificationDetailsPtrOutput values.
+// You can construct a concrete instance of `BurnAlertRecipientNotificationDetailsPtrInput` via:
+//
+//	        BurnAlertRecipientNotificationDetailsArgs{...}
+//
+//	or:
+//
+//	        nil
+type BurnAlertRecipientNotificationDetailsPtrInput interface {
+	pulumi.Input
+
+	ToBurnAlertRecipientNotificationDetailsPtrOutput() BurnAlertRecipientNotificationDetailsPtrOutput
+	ToBurnAlertRecipientNotificationDetailsPtrOutputWithContext(context.Context) BurnAlertRecipientNotificationDetailsPtrOutput
+}
+
+type burnAlertRecipientNotificationDetailsPtrType BurnAlertRecipientNotificationDetailsArgs
+
+func BurnAlertRecipientNotificationDetailsPtr(v *BurnAlertRecipientNotificationDetailsArgs) BurnAlertRecipientNotificationDetailsPtrInput {
+	return (*burnAlertRecipientNotificationDetailsPtrType)(v)
+}
+
+func (*burnAlertRecipientNotificationDetailsPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**BurnAlertRecipientNotificationDetails)(nil)).Elem()
+}
+
+func (i *burnAlertRecipientNotificationDetailsPtrType) ToBurnAlertRecipientNotificationDetailsPtrOutput() BurnAlertRecipientNotificationDetailsPtrOutput {
+	return i.ToBurnAlertRecipientNotificationDetailsPtrOutputWithContext(context.Background())
+}
+
+func (i *burnAlertRecipientNotificationDetailsPtrType) ToBurnAlertRecipientNotificationDetailsPtrOutputWithContext(ctx context.Context) BurnAlertRecipientNotificationDetailsPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(BurnAlertRecipientNotificationDetailsPtrOutput)
+}
+
+type BurnAlertRecipientNotificationDetailsOutput struct{ *pulumi.OutputState }
+
+func (BurnAlertRecipientNotificationDetailsOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*BurnAlertRecipientNotificationDetails)(nil)).Elem()
+}
+
+func (o BurnAlertRecipientNotificationDetailsOutput) ToBurnAlertRecipientNotificationDetailsOutput() BurnAlertRecipientNotificationDetailsOutput {
+	return o
+}
+
+func (o BurnAlertRecipientNotificationDetailsOutput) ToBurnAlertRecipientNotificationDetailsOutputWithContext(ctx context.Context) BurnAlertRecipientNotificationDetailsOutput {
+	return o
+}
+
+func (o BurnAlertRecipientNotificationDetailsOutput) ToBurnAlertRecipientNotificationDetailsPtrOutput() BurnAlertRecipientNotificationDetailsPtrOutput {
+	return o.ToBurnAlertRecipientNotificationDetailsPtrOutputWithContext(context.Background())
+}
+
+func (o BurnAlertRecipientNotificationDetailsOutput) ToBurnAlertRecipientNotificationDetailsPtrOutputWithContext(ctx context.Context) BurnAlertRecipientNotificationDetailsPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v BurnAlertRecipientNotificationDetails) *BurnAlertRecipientNotificationDetails {
+		return &v
+	}).(BurnAlertRecipientNotificationDetailsPtrOutput)
+}
+
+func (o BurnAlertRecipientNotificationDetailsOutput) PagerdutySeverity() pulumi.StringOutput {
+	return o.ApplyT(func(v BurnAlertRecipientNotificationDetails) string { return v.PagerdutySeverity }).(pulumi.StringOutput)
+}
+
+type BurnAlertRecipientNotificationDetailsPtrOutput struct{ *pulumi.OutputState }
+
+func (BurnAlertRecipientNotificationDetailsPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**BurnAlertRecipientNotificationDetails)(nil)).Elem()
+}
+
+func (o BurnAlertRecipientNotificationDetailsPtrOutput) ToBurnAlertRecipientNotificationDetailsPtrOutput() BurnAlertRecipientNotificationDetailsPtrOutput {
+	return o
+}
+
+func (o BurnAlertRecipientNotificationDetailsPtrOutput) ToBurnAlertRecipientNotificationDetailsPtrOutputWithContext(ctx context.Context) BurnAlertRecipientNotificationDetailsPtrOutput {
+	return o
+}
+
+func (o BurnAlertRecipientNotificationDetailsPtrOutput) Elem() BurnAlertRecipientNotificationDetailsOutput {
+	return o.ApplyT(func(v *BurnAlertRecipientNotificationDetails) BurnAlertRecipientNotificationDetails {
+		if v != nil {
+			return *v
+		}
+		var ret BurnAlertRecipientNotificationDetails
+		return ret
+	}).(BurnAlertRecipientNotificationDetailsOutput)
+}
+
+func (o BurnAlertRecipientNotificationDetailsPtrOutput) PagerdutySeverity() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *BurnAlertRecipientNotificationDetails) *string {
+		if v == nil {
+			return nil
+		}
+		return &v.PagerdutySeverity
+	}).(pulumi.StringPtrOutput)
+}
+
 type GetQuerySpecificationCalculation struct {
 	// The column to apply the operator to, not needed with `COUNT` or `CONCURRENCY`.
 	Column *string `pulumi:"column"`
@@ -268,7 +639,7 @@ type GetQuerySpecificationCalculation struct {
 // GetQuerySpecificationCalculationInput is an input type that accepts GetQuerySpecificationCalculationArgs and GetQuerySpecificationCalculationOutput values.
 // You can construct a concrete instance of `GetQuerySpecificationCalculationInput` via:
 //
-//          GetQuerySpecificationCalculationArgs{...}
+//	GetQuerySpecificationCalculationArgs{...}
 type GetQuerySpecificationCalculationInput interface {
 	pulumi.Input
 
@@ -298,7 +669,7 @@ func (i GetQuerySpecificationCalculationArgs) ToGetQuerySpecificationCalculation
 // GetQuerySpecificationCalculationArrayInput is an input type that accepts GetQuerySpecificationCalculationArray and GetQuerySpecificationCalculationArrayOutput values.
 // You can construct a concrete instance of `GetQuerySpecificationCalculationArrayInput` via:
 //
-//          GetQuerySpecificationCalculationArray{ GetQuerySpecificationCalculationArgs{...} }
+//	GetQuerySpecificationCalculationArray{ GetQuerySpecificationCalculationArgs{...} }
 type GetQuerySpecificationCalculationArrayInput interface {
 	pulumi.Input
 
@@ -392,7 +763,7 @@ type GetQuerySpecificationFilter struct {
 // GetQuerySpecificationFilterInput is an input type that accepts GetQuerySpecificationFilterArgs and GetQuerySpecificationFilterOutput values.
 // You can construct a concrete instance of `GetQuerySpecificationFilterInput` via:
 //
-//          GetQuerySpecificationFilterArgs{...}
+//	GetQuerySpecificationFilterArgs{...}
 type GetQuerySpecificationFilterInput interface {
 	pulumi.Input
 
@@ -440,7 +811,7 @@ func (i GetQuerySpecificationFilterArgs) ToGetQuerySpecificationFilterOutputWith
 // GetQuerySpecificationFilterArrayInput is an input type that accepts GetQuerySpecificationFilterArray and GetQuerySpecificationFilterArrayOutput values.
 // You can construct a concrete instance of `GetQuerySpecificationFilterArrayInput` via:
 //
-//          GetQuerySpecificationFilterArray{ GetQuerySpecificationFilterArgs{...} }
+//	GetQuerySpecificationFilterArray{ GetQuerySpecificationFilterArgs{...} }
 type GetQuerySpecificationFilterArrayInput interface {
 	pulumi.Input
 
@@ -553,7 +924,7 @@ type GetQuerySpecificationHaving struct {
 // GetQuerySpecificationHavingInput is an input type that accepts GetQuerySpecificationHavingArgs and GetQuerySpecificationHavingOutput values.
 // You can construct a concrete instance of `GetQuerySpecificationHavingInput` via:
 //
-//          GetQuerySpecificationHavingArgs{...}
+//	GetQuerySpecificationHavingArgs{...}
 type GetQuerySpecificationHavingInput interface {
 	pulumi.Input
 
@@ -587,7 +958,7 @@ func (i GetQuerySpecificationHavingArgs) ToGetQuerySpecificationHavingOutputWith
 // GetQuerySpecificationHavingArrayInput is an input type that accepts GetQuerySpecificationHavingArray and GetQuerySpecificationHavingArrayOutput values.
 // You can construct a concrete instance of `GetQuerySpecificationHavingArrayInput` via:
 //
-//          GetQuerySpecificationHavingArray{ GetQuerySpecificationHavingArgs{...} }
+//	GetQuerySpecificationHavingArray{ GetQuerySpecificationHavingArgs{...} }
 type GetQuerySpecificationHavingArrayInput interface {
 	pulumi.Input
 
@@ -675,7 +1046,7 @@ type GetQuerySpecificationOrder struct {
 // GetQuerySpecificationOrderInput is an input type that accepts GetQuerySpecificationOrderArgs and GetQuerySpecificationOrderOutput values.
 // You can construct a concrete instance of `GetQuerySpecificationOrderInput` via:
 //
-//          GetQuerySpecificationOrderArgs{...}
+//	GetQuerySpecificationOrderArgs{...}
 type GetQuerySpecificationOrderInput interface {
 	pulumi.Input
 
@@ -707,7 +1078,7 @@ func (i GetQuerySpecificationOrderArgs) ToGetQuerySpecificationOrderOutputWithCo
 // GetQuerySpecificationOrderArrayInput is an input type that accepts GetQuerySpecificationOrderArray and GetQuerySpecificationOrderArrayOutput values.
 // You can construct a concrete instance of `GetQuerySpecificationOrderArrayInput` via:
 //
-//          GetQuerySpecificationOrderArray{ GetQuerySpecificationOrderArgs{...} }
+//	GetQuerySpecificationOrderArray{ GetQuerySpecificationOrderArgs{...} }
 type GetQuerySpecificationOrderArrayInput interface {
 	pulumi.Input
 
@@ -778,9 +1149,186 @@ func (o GetQuerySpecificationOrderArrayOutput) Index(i pulumi.IntInput) GetQuery
 	}).(GetQuerySpecificationOrderOutput)
 }
 
+type GetRecipientDetailFilter struct {
+	// The name of the detail field to filter by. Allowed values are `address`, `channel`, `name`, `integrationName`, and `url`.
+	Name string `pulumi:"name"`
+	// The value of the detail field to match on.
+	Value *string `pulumi:"value"`
+	// A regular expression string to apply to the value of the detail field to match on.
+	ValueRegex *string `pulumi:"valueRegex"`
+}
+
+// GetRecipientDetailFilterInput is an input type that accepts GetRecipientDetailFilterArgs and GetRecipientDetailFilterOutput values.
+// You can construct a concrete instance of `GetRecipientDetailFilterInput` via:
+//
+//	GetRecipientDetailFilterArgs{...}
+type GetRecipientDetailFilterInput interface {
+	pulumi.Input
+
+	ToGetRecipientDetailFilterOutput() GetRecipientDetailFilterOutput
+	ToGetRecipientDetailFilterOutputWithContext(context.Context) GetRecipientDetailFilterOutput
+}
+
+type GetRecipientDetailFilterArgs struct {
+	// The name of the detail field to filter by. Allowed values are `address`, `channel`, `name`, `integrationName`, and `url`.
+	Name pulumi.StringInput `pulumi:"name"`
+	// The value of the detail field to match on.
+	Value pulumi.StringPtrInput `pulumi:"value"`
+	// A regular expression string to apply to the value of the detail field to match on.
+	ValueRegex pulumi.StringPtrInput `pulumi:"valueRegex"`
+}
+
+func (GetRecipientDetailFilterArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetRecipientDetailFilter)(nil)).Elem()
+}
+
+func (i GetRecipientDetailFilterArgs) ToGetRecipientDetailFilterOutput() GetRecipientDetailFilterOutput {
+	return i.ToGetRecipientDetailFilterOutputWithContext(context.Background())
+}
+
+func (i GetRecipientDetailFilterArgs) ToGetRecipientDetailFilterOutputWithContext(ctx context.Context) GetRecipientDetailFilterOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetRecipientDetailFilterOutput)
+}
+
+func (i GetRecipientDetailFilterArgs) ToGetRecipientDetailFilterPtrOutput() GetRecipientDetailFilterPtrOutput {
+	return i.ToGetRecipientDetailFilterPtrOutputWithContext(context.Background())
+}
+
+func (i GetRecipientDetailFilterArgs) ToGetRecipientDetailFilterPtrOutputWithContext(ctx context.Context) GetRecipientDetailFilterPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetRecipientDetailFilterOutput).ToGetRecipientDetailFilterPtrOutputWithContext(ctx)
+}
+
+// GetRecipientDetailFilterPtrInput is an input type that accepts GetRecipientDetailFilterArgs, GetRecipientDetailFilterPtr and GetRecipientDetailFilterPtrOutput values.
+// You can construct a concrete instance of `GetRecipientDetailFilterPtrInput` via:
+//
+//	        GetRecipientDetailFilterArgs{...}
+//
+//	or:
+//
+//	        nil
+type GetRecipientDetailFilterPtrInput interface {
+	pulumi.Input
+
+	ToGetRecipientDetailFilterPtrOutput() GetRecipientDetailFilterPtrOutput
+	ToGetRecipientDetailFilterPtrOutputWithContext(context.Context) GetRecipientDetailFilterPtrOutput
+}
+
+type getRecipientDetailFilterPtrType GetRecipientDetailFilterArgs
+
+func GetRecipientDetailFilterPtr(v *GetRecipientDetailFilterArgs) GetRecipientDetailFilterPtrInput {
+	return (*getRecipientDetailFilterPtrType)(v)
+}
+
+func (*getRecipientDetailFilterPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**GetRecipientDetailFilter)(nil)).Elem()
+}
+
+func (i *getRecipientDetailFilterPtrType) ToGetRecipientDetailFilterPtrOutput() GetRecipientDetailFilterPtrOutput {
+	return i.ToGetRecipientDetailFilterPtrOutputWithContext(context.Background())
+}
+
+func (i *getRecipientDetailFilterPtrType) ToGetRecipientDetailFilterPtrOutputWithContext(ctx context.Context) GetRecipientDetailFilterPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetRecipientDetailFilterPtrOutput)
+}
+
+type GetRecipientDetailFilterOutput struct{ *pulumi.OutputState }
+
+func (GetRecipientDetailFilterOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetRecipientDetailFilter)(nil)).Elem()
+}
+
+func (o GetRecipientDetailFilterOutput) ToGetRecipientDetailFilterOutput() GetRecipientDetailFilterOutput {
+	return o
+}
+
+func (o GetRecipientDetailFilterOutput) ToGetRecipientDetailFilterOutputWithContext(ctx context.Context) GetRecipientDetailFilterOutput {
+	return o
+}
+
+func (o GetRecipientDetailFilterOutput) ToGetRecipientDetailFilterPtrOutput() GetRecipientDetailFilterPtrOutput {
+	return o.ToGetRecipientDetailFilterPtrOutputWithContext(context.Background())
+}
+
+func (o GetRecipientDetailFilterOutput) ToGetRecipientDetailFilterPtrOutputWithContext(ctx context.Context) GetRecipientDetailFilterPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v GetRecipientDetailFilter) *GetRecipientDetailFilter {
+		return &v
+	}).(GetRecipientDetailFilterPtrOutput)
+}
+
+// The name of the detail field to filter by. Allowed values are `address`, `channel`, `name`, `integrationName`, and `url`.
+func (o GetRecipientDetailFilterOutput) Name() pulumi.StringOutput {
+	return o.ApplyT(func(v GetRecipientDetailFilter) string { return v.Name }).(pulumi.StringOutput)
+}
+
+// The value of the detail field to match on.
+func (o GetRecipientDetailFilterOutput) Value() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v GetRecipientDetailFilter) *string { return v.Value }).(pulumi.StringPtrOutput)
+}
+
+// A regular expression string to apply to the value of the detail field to match on.
+func (o GetRecipientDetailFilterOutput) ValueRegex() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v GetRecipientDetailFilter) *string { return v.ValueRegex }).(pulumi.StringPtrOutput)
+}
+
+type GetRecipientDetailFilterPtrOutput struct{ *pulumi.OutputState }
+
+func (GetRecipientDetailFilterPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**GetRecipientDetailFilter)(nil)).Elem()
+}
+
+func (o GetRecipientDetailFilterPtrOutput) ToGetRecipientDetailFilterPtrOutput() GetRecipientDetailFilterPtrOutput {
+	return o
+}
+
+func (o GetRecipientDetailFilterPtrOutput) ToGetRecipientDetailFilterPtrOutputWithContext(ctx context.Context) GetRecipientDetailFilterPtrOutput {
+	return o
+}
+
+func (o GetRecipientDetailFilterPtrOutput) Elem() GetRecipientDetailFilterOutput {
+	return o.ApplyT(func(v *GetRecipientDetailFilter) GetRecipientDetailFilter {
+		if v != nil {
+			return *v
+		}
+		var ret GetRecipientDetailFilter
+		return ret
+	}).(GetRecipientDetailFilterOutput)
+}
+
+// The name of the detail field to filter by. Allowed values are `address`, `channel`, `name`, `integrationName`, and `url`.
+func (o GetRecipientDetailFilterPtrOutput) Name() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *GetRecipientDetailFilter) *string {
+		if v == nil {
+			return nil
+		}
+		return &v.Name
+	}).(pulumi.StringPtrOutput)
+}
+
+// The value of the detail field to match on.
+func (o GetRecipientDetailFilterPtrOutput) Value() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *GetRecipientDetailFilter) *string {
+		if v == nil {
+			return nil
+		}
+		return v.Value
+	}).(pulumi.StringPtrOutput)
+}
+
+// A regular expression string to apply to the value of the detail field to match on.
+func (o GetRecipientDetailFilterPtrOutput) ValueRegex() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *GetRecipientDetailFilter) *string {
+		if v == nil {
+			return nil
+		}
+		return v.ValueRegex
+	}).(pulumi.StringPtrOutput)
+}
+
 type TriggerRecipient struct {
 	// The ID of an already existing recipient. Should not be used in combination with `type` and `target`.
 	Id *string `pulumi:"id"`
+	// a block of additional details to send along with the notification. The only supported option currently is `pagerdutySeverity` which has a default value of `critical` but can be set to one of `info`, `warning`, `error`, or `critical` and must be used in combination with a PagerDuty recipient.
+	NotificationDetails *TriggerRecipientNotificationDetails `pulumi:"notificationDetails"`
 	// Target of the trigger recipient, this has another meaning depending on the type of recipient (see the table below). Should not be used in combination with `id`.
 	Target *string `pulumi:"target"`
 	// The type of the trigger recipient, allowed types are `email`, `marker`, `pagerduty`, `slack` and `webhook`. Should not be used in combination with `id`.
@@ -790,7 +1338,7 @@ type TriggerRecipient struct {
 // TriggerRecipientInput is an input type that accepts TriggerRecipientArgs and TriggerRecipientOutput values.
 // You can construct a concrete instance of `TriggerRecipientInput` via:
 //
-//          TriggerRecipientArgs{...}
+//	TriggerRecipientArgs{...}
 type TriggerRecipientInput interface {
 	pulumi.Input
 
@@ -801,6 +1349,8 @@ type TriggerRecipientInput interface {
 type TriggerRecipientArgs struct {
 	// The ID of an already existing recipient. Should not be used in combination with `type` and `target`.
 	Id pulumi.StringPtrInput `pulumi:"id"`
+	// a block of additional details to send along with the notification. The only supported option currently is `pagerdutySeverity` which has a default value of `critical` but can be set to one of `info`, `warning`, `error`, or `critical` and must be used in combination with a PagerDuty recipient.
+	NotificationDetails TriggerRecipientNotificationDetailsPtrInput `pulumi:"notificationDetails"`
 	// Target of the trigger recipient, this has another meaning depending on the type of recipient (see the table below). Should not be used in combination with `id`.
 	Target pulumi.StringPtrInput `pulumi:"target"`
 	// The type of the trigger recipient, allowed types are `email`, `marker`, `pagerduty`, `slack` and `webhook`. Should not be used in combination with `id`.
@@ -822,7 +1372,7 @@ func (i TriggerRecipientArgs) ToTriggerRecipientOutputWithContext(ctx context.Co
 // TriggerRecipientArrayInput is an input type that accepts TriggerRecipientArray and TriggerRecipientArrayOutput values.
 // You can construct a concrete instance of `TriggerRecipientArrayInput` via:
 //
-//          TriggerRecipientArray{ TriggerRecipientArgs{...} }
+//	TriggerRecipientArray{ TriggerRecipientArgs{...} }
 type TriggerRecipientArrayInput interface {
 	pulumi.Input
 
@@ -863,6 +1413,11 @@ func (o TriggerRecipientOutput) Id() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v TriggerRecipient) *string { return v.Id }).(pulumi.StringPtrOutput)
 }
 
+// a block of additional details to send along with the notification. The only supported option currently is `pagerdutySeverity` which has a default value of `critical` but can be set to one of `info`, `warning`, `error`, or `critical` and must be used in combination with a PagerDuty recipient.
+func (o TriggerRecipientOutput) NotificationDetails() TriggerRecipientNotificationDetailsPtrOutput {
+	return o.ApplyT(func(v TriggerRecipient) *TriggerRecipientNotificationDetails { return v.NotificationDetails }).(TriggerRecipientNotificationDetailsPtrOutput)
+}
+
 // Target of the trigger recipient, this has another meaning depending on the type of recipient (see the table below). Should not be used in combination with `id`.
 func (o TriggerRecipientOutput) Target() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v TriggerRecipient) *string { return v.Target }).(pulumi.StringPtrOutput)
@@ -893,6 +1448,139 @@ func (o TriggerRecipientArrayOutput) Index(i pulumi.IntInput) TriggerRecipientOu
 	}).(TriggerRecipientOutput)
 }
 
+type TriggerRecipientNotificationDetails struct {
+	PagerdutySeverity string `pulumi:"pagerdutySeverity"`
+}
+
+// TriggerRecipientNotificationDetailsInput is an input type that accepts TriggerRecipientNotificationDetailsArgs and TriggerRecipientNotificationDetailsOutput values.
+// You can construct a concrete instance of `TriggerRecipientNotificationDetailsInput` via:
+//
+//	TriggerRecipientNotificationDetailsArgs{...}
+type TriggerRecipientNotificationDetailsInput interface {
+	pulumi.Input
+
+	ToTriggerRecipientNotificationDetailsOutput() TriggerRecipientNotificationDetailsOutput
+	ToTriggerRecipientNotificationDetailsOutputWithContext(context.Context) TriggerRecipientNotificationDetailsOutput
+}
+
+type TriggerRecipientNotificationDetailsArgs struct {
+	PagerdutySeverity pulumi.StringInput `pulumi:"pagerdutySeverity"`
+}
+
+func (TriggerRecipientNotificationDetailsArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*TriggerRecipientNotificationDetails)(nil)).Elem()
+}
+
+func (i TriggerRecipientNotificationDetailsArgs) ToTriggerRecipientNotificationDetailsOutput() TriggerRecipientNotificationDetailsOutput {
+	return i.ToTriggerRecipientNotificationDetailsOutputWithContext(context.Background())
+}
+
+func (i TriggerRecipientNotificationDetailsArgs) ToTriggerRecipientNotificationDetailsOutputWithContext(ctx context.Context) TriggerRecipientNotificationDetailsOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(TriggerRecipientNotificationDetailsOutput)
+}
+
+func (i TriggerRecipientNotificationDetailsArgs) ToTriggerRecipientNotificationDetailsPtrOutput() TriggerRecipientNotificationDetailsPtrOutput {
+	return i.ToTriggerRecipientNotificationDetailsPtrOutputWithContext(context.Background())
+}
+
+func (i TriggerRecipientNotificationDetailsArgs) ToTriggerRecipientNotificationDetailsPtrOutputWithContext(ctx context.Context) TriggerRecipientNotificationDetailsPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(TriggerRecipientNotificationDetailsOutput).ToTriggerRecipientNotificationDetailsPtrOutputWithContext(ctx)
+}
+
+// TriggerRecipientNotificationDetailsPtrInput is an input type that accepts TriggerRecipientNotificationDetailsArgs, TriggerRecipientNotificationDetailsPtr and TriggerRecipientNotificationDetailsPtrOutput values.
+// You can construct a concrete instance of `TriggerRecipientNotificationDetailsPtrInput` via:
+//
+//	        TriggerRecipientNotificationDetailsArgs{...}
+//
+//	or:
+//
+//	        nil
+type TriggerRecipientNotificationDetailsPtrInput interface {
+	pulumi.Input
+
+	ToTriggerRecipientNotificationDetailsPtrOutput() TriggerRecipientNotificationDetailsPtrOutput
+	ToTriggerRecipientNotificationDetailsPtrOutputWithContext(context.Context) TriggerRecipientNotificationDetailsPtrOutput
+}
+
+type triggerRecipientNotificationDetailsPtrType TriggerRecipientNotificationDetailsArgs
+
+func TriggerRecipientNotificationDetailsPtr(v *TriggerRecipientNotificationDetailsArgs) TriggerRecipientNotificationDetailsPtrInput {
+	return (*triggerRecipientNotificationDetailsPtrType)(v)
+}
+
+func (*triggerRecipientNotificationDetailsPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**TriggerRecipientNotificationDetails)(nil)).Elem()
+}
+
+func (i *triggerRecipientNotificationDetailsPtrType) ToTriggerRecipientNotificationDetailsPtrOutput() TriggerRecipientNotificationDetailsPtrOutput {
+	return i.ToTriggerRecipientNotificationDetailsPtrOutputWithContext(context.Background())
+}
+
+func (i *triggerRecipientNotificationDetailsPtrType) ToTriggerRecipientNotificationDetailsPtrOutputWithContext(ctx context.Context) TriggerRecipientNotificationDetailsPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(TriggerRecipientNotificationDetailsPtrOutput)
+}
+
+type TriggerRecipientNotificationDetailsOutput struct{ *pulumi.OutputState }
+
+func (TriggerRecipientNotificationDetailsOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*TriggerRecipientNotificationDetails)(nil)).Elem()
+}
+
+func (o TriggerRecipientNotificationDetailsOutput) ToTriggerRecipientNotificationDetailsOutput() TriggerRecipientNotificationDetailsOutput {
+	return o
+}
+
+func (o TriggerRecipientNotificationDetailsOutput) ToTriggerRecipientNotificationDetailsOutputWithContext(ctx context.Context) TriggerRecipientNotificationDetailsOutput {
+	return o
+}
+
+func (o TriggerRecipientNotificationDetailsOutput) ToTriggerRecipientNotificationDetailsPtrOutput() TriggerRecipientNotificationDetailsPtrOutput {
+	return o.ToTriggerRecipientNotificationDetailsPtrOutputWithContext(context.Background())
+}
+
+func (o TriggerRecipientNotificationDetailsOutput) ToTriggerRecipientNotificationDetailsPtrOutputWithContext(ctx context.Context) TriggerRecipientNotificationDetailsPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v TriggerRecipientNotificationDetails) *TriggerRecipientNotificationDetails {
+		return &v
+	}).(TriggerRecipientNotificationDetailsPtrOutput)
+}
+
+func (o TriggerRecipientNotificationDetailsOutput) PagerdutySeverity() pulumi.StringOutput {
+	return o.ApplyT(func(v TriggerRecipientNotificationDetails) string { return v.PagerdutySeverity }).(pulumi.StringOutput)
+}
+
+type TriggerRecipientNotificationDetailsPtrOutput struct{ *pulumi.OutputState }
+
+func (TriggerRecipientNotificationDetailsPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**TriggerRecipientNotificationDetails)(nil)).Elem()
+}
+
+func (o TriggerRecipientNotificationDetailsPtrOutput) ToTriggerRecipientNotificationDetailsPtrOutput() TriggerRecipientNotificationDetailsPtrOutput {
+	return o
+}
+
+func (o TriggerRecipientNotificationDetailsPtrOutput) ToTriggerRecipientNotificationDetailsPtrOutputWithContext(ctx context.Context) TriggerRecipientNotificationDetailsPtrOutput {
+	return o
+}
+
+func (o TriggerRecipientNotificationDetailsPtrOutput) Elem() TriggerRecipientNotificationDetailsOutput {
+	return o.ApplyT(func(v *TriggerRecipientNotificationDetails) TriggerRecipientNotificationDetails {
+		if v != nil {
+			return *v
+		}
+		var ret TriggerRecipientNotificationDetails
+		return ret
+	}).(TriggerRecipientNotificationDetailsOutput)
+}
+
+func (o TriggerRecipientNotificationDetailsPtrOutput) PagerdutySeverity() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *TriggerRecipientNotificationDetails) *string {
+		if v == nil {
+			return nil
+		}
+		return &v.PagerdutySeverity
+	}).(pulumi.StringPtrOutput)
+}
+
 type TriggerThreshold struct {
 	// The operator to apply, allowed threshold operators are `>`, `>=`, `<`, and `<=`.
 	Op string `pulumi:"op"`
@@ -903,7 +1591,7 @@ type TriggerThreshold struct {
 // TriggerThresholdInput is an input type that accepts TriggerThresholdArgs and TriggerThresholdOutput values.
 // You can construct a concrete instance of `TriggerThresholdInput` via:
 //
-//          TriggerThresholdArgs{...}
+//	TriggerThresholdArgs{...}
 type TriggerThresholdInput interface {
 	pulumi.Input
 
@@ -941,11 +1629,11 @@ func (i TriggerThresholdArgs) ToTriggerThresholdPtrOutputWithContext(ctx context
 // TriggerThresholdPtrInput is an input type that accepts TriggerThresholdArgs, TriggerThresholdPtr and TriggerThresholdPtrOutput values.
 // You can construct a concrete instance of `TriggerThresholdPtrInput` via:
 //
-//          TriggerThresholdArgs{...}
+//	        TriggerThresholdArgs{...}
 //
-//  or:
+//	or:
 //
-//          nil
+//	        nil
 type TriggerThresholdPtrInput interface {
 	pulumi.Input
 
@@ -1052,8 +1740,12 @@ func (o TriggerThresholdPtrOutput) Value() pulumi.Float64PtrOutput {
 func init() {
 	pulumi.RegisterInputType(reflect.TypeOf((*BoardQueryInput)(nil)).Elem(), BoardQueryArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*BoardQueryArrayInput)(nil)).Elem(), BoardQueryArray{})
+	pulumi.RegisterInputType(reflect.TypeOf((*BoardQueryGraphSettingsInput)(nil)).Elem(), BoardQueryGraphSettingsArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*BoardQueryGraphSettingsPtrInput)(nil)).Elem(), BoardQueryGraphSettingsArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*BurnAlertRecipientInput)(nil)).Elem(), BurnAlertRecipientArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*BurnAlertRecipientArrayInput)(nil)).Elem(), BurnAlertRecipientArray{})
+	pulumi.RegisterInputType(reflect.TypeOf((*BurnAlertRecipientNotificationDetailsInput)(nil)).Elem(), BurnAlertRecipientNotificationDetailsArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*BurnAlertRecipientNotificationDetailsPtrInput)(nil)).Elem(), BurnAlertRecipientNotificationDetailsArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*GetQuerySpecificationCalculationInput)(nil)).Elem(), GetQuerySpecificationCalculationArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*GetQuerySpecificationCalculationArrayInput)(nil)).Elem(), GetQuerySpecificationCalculationArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*GetQuerySpecificationFilterInput)(nil)).Elem(), GetQuerySpecificationFilterArgs{})
@@ -1062,14 +1754,22 @@ func init() {
 	pulumi.RegisterInputType(reflect.TypeOf((*GetQuerySpecificationHavingArrayInput)(nil)).Elem(), GetQuerySpecificationHavingArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*GetQuerySpecificationOrderInput)(nil)).Elem(), GetQuerySpecificationOrderArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*GetQuerySpecificationOrderArrayInput)(nil)).Elem(), GetQuerySpecificationOrderArray{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetRecipientDetailFilterInput)(nil)).Elem(), GetRecipientDetailFilterArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetRecipientDetailFilterPtrInput)(nil)).Elem(), GetRecipientDetailFilterArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*TriggerRecipientInput)(nil)).Elem(), TriggerRecipientArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*TriggerRecipientArrayInput)(nil)).Elem(), TriggerRecipientArray{})
+	pulumi.RegisterInputType(reflect.TypeOf((*TriggerRecipientNotificationDetailsInput)(nil)).Elem(), TriggerRecipientNotificationDetailsArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*TriggerRecipientNotificationDetailsPtrInput)(nil)).Elem(), TriggerRecipientNotificationDetailsArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*TriggerThresholdInput)(nil)).Elem(), TriggerThresholdArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*TriggerThresholdPtrInput)(nil)).Elem(), TriggerThresholdArgs{})
 	pulumi.RegisterOutputType(BoardQueryOutput{})
 	pulumi.RegisterOutputType(BoardQueryArrayOutput{})
+	pulumi.RegisterOutputType(BoardQueryGraphSettingsOutput{})
+	pulumi.RegisterOutputType(BoardQueryGraphSettingsPtrOutput{})
 	pulumi.RegisterOutputType(BurnAlertRecipientOutput{})
 	pulumi.RegisterOutputType(BurnAlertRecipientArrayOutput{})
+	pulumi.RegisterOutputType(BurnAlertRecipientNotificationDetailsOutput{})
+	pulumi.RegisterOutputType(BurnAlertRecipientNotificationDetailsPtrOutput{})
 	pulumi.RegisterOutputType(GetQuerySpecificationCalculationOutput{})
 	pulumi.RegisterOutputType(GetQuerySpecificationCalculationArrayOutput{})
 	pulumi.RegisterOutputType(GetQuerySpecificationFilterOutput{})
@@ -1078,8 +1778,12 @@ func init() {
 	pulumi.RegisterOutputType(GetQuerySpecificationHavingArrayOutput{})
 	pulumi.RegisterOutputType(GetQuerySpecificationOrderOutput{})
 	pulumi.RegisterOutputType(GetQuerySpecificationOrderArrayOutput{})
+	pulumi.RegisterOutputType(GetRecipientDetailFilterOutput{})
+	pulumi.RegisterOutputType(GetRecipientDetailFilterPtrOutput{})
 	pulumi.RegisterOutputType(TriggerRecipientOutput{})
 	pulumi.RegisterOutputType(TriggerRecipientArrayOutput{})
+	pulumi.RegisterOutputType(TriggerRecipientNotificationDetailsOutput{})
+	pulumi.RegisterOutputType(TriggerRecipientNotificationDetailsPtrOutput{})
 	pulumi.RegisterOutputType(TriggerThresholdOutput{})
 	pulumi.RegisterOutputType(TriggerThresholdPtrOutput{})
 }

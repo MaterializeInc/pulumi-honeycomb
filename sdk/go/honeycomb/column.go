@@ -17,27 +17,30 @@ import (
 // package main
 //
 // import (
-// 	"github.com/pulumi/pulumi-honeycomb/sdk/go/honeycomb"
-// 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
-// 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi/config"
+//
+//	"github.com/pulumi/pulumi-honeycomb/sdk/go/honeycomb"
+//	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+//	"github.com/pulumi/pulumi/sdk/v3/go/pulumi/config"
+//
 // )
 //
-// func main() {
-// 	pulumi.Run(func(ctx *pulumi.Context) error {
-// 		cfg := config.New(ctx, "")
-// 		dataset := cfg.Require("dataset")
-// 		_, err := honeycomb.NewColumn(ctx, "durationMs", &honeycomb.ColumnArgs{
-// 			KeyName:     pulumi.String("duration_ms_log10"),
-// 			Type:        pulumi.String("float"),
-// 			Description: pulumi.String("Duration of the trace"),
-// 			Dataset:     pulumi.String(dataset),
-// 		})
-// 		if err != nil {
-// 			return err
-// 		}
-// 		return nil
-// 	})
-// }
+//	func main() {
+//		pulumi.Run(func(ctx *pulumi.Context) error {
+//			cfg := config.New(ctx, "")
+//			dataset := cfg.Require("dataset")
+//			_, err := honeycomb.NewColumn(ctx, "durationMs", &honeycomb.ColumnArgs{
+//				KeyName:     pulumi.String("duration_ms_log10"),
+//				Type:        pulumi.String("float"),
+//				Description: pulumi.String("Duration of the trace"),
+//				Dataset:     pulumi.String(dataset),
+//			})
+//			if err != nil {
+//				return err
+//			}
+//			return nil
+//		})
+//	}
+//
 // ```
 //
 // ## Import
@@ -45,11 +48,15 @@ import (
 // Columns can be imported using a combination of the dataset name and their key name, e.g.
 //
 // ```sh
-//  $ pulumi import honeycomb:index/column:Column my_column my-dataset/duration_ms
+//
+//	$ pulumi import honeycomb:index/column:Column my_column my-dataset/duration_ms
+//
 // ```
 type Column struct {
 	pulumi.CustomResourceState
 
+	// ISO8601 formatted time the column was created
+	CreatedAt pulumi.StringOutput `pulumi:"createdAt"`
 	// The dataset this column is added to.
 	Dataset pulumi.StringOutput `pulumi:"dataset"`
 	// A description that is shown in the UI.
@@ -58,8 +65,12 @@ type Column struct {
 	Hidden pulumi.BoolPtrOutput `pulumi:"hidden"`
 	// The name of the column. Must be unique per dataset.
 	KeyName pulumi.StringOutput `pulumi:"keyName"`
+	// ISO8601 formatted time the column was last written to (received event data)
+	LastWrittenAt pulumi.StringOutput `pulumi:"lastWrittenAt"`
 	// The type of the column, allowed values are `string`, `float`, `integer` and `boolean`. Defaults to `string`.
 	Type pulumi.StringPtrOutput `pulumi:"type"`
+	// ISO8601 formatted time the column was updated
+	UpdatedAt pulumi.StringOutput `pulumi:"updatedAt"`
 }
 
 // NewColumn registers a new resource with the given unique name, arguments, and options.
@@ -98,6 +109,8 @@ func GetColumn(ctx *pulumi.Context,
 
 // Input properties used for looking up and filtering Column resources.
 type columnState struct {
+	// ISO8601 formatted time the column was created
+	CreatedAt *string `pulumi:"createdAt"`
 	// The dataset this column is added to.
 	Dataset *string `pulumi:"dataset"`
 	// A description that is shown in the UI.
@@ -106,11 +119,17 @@ type columnState struct {
 	Hidden *bool `pulumi:"hidden"`
 	// The name of the column. Must be unique per dataset.
 	KeyName *string `pulumi:"keyName"`
+	// ISO8601 formatted time the column was last written to (received event data)
+	LastWrittenAt *string `pulumi:"lastWrittenAt"`
 	// The type of the column, allowed values are `string`, `float`, `integer` and `boolean`. Defaults to `string`.
 	Type *string `pulumi:"type"`
+	// ISO8601 formatted time the column was updated
+	UpdatedAt *string `pulumi:"updatedAt"`
 }
 
 type ColumnState struct {
+	// ISO8601 formatted time the column was created
+	CreatedAt pulumi.StringPtrInput
 	// The dataset this column is added to.
 	Dataset pulumi.StringPtrInput
 	// A description that is shown in the UI.
@@ -119,8 +138,12 @@ type ColumnState struct {
 	Hidden pulumi.BoolPtrInput
 	// The name of the column. Must be unique per dataset.
 	KeyName pulumi.StringPtrInput
+	// ISO8601 formatted time the column was last written to (received event data)
+	LastWrittenAt pulumi.StringPtrInput
 	// The type of the column, allowed values are `string`, `float`, `integer` and `boolean`. Defaults to `string`.
 	Type pulumi.StringPtrInput
+	// ISO8601 formatted time the column was updated
+	UpdatedAt pulumi.StringPtrInput
 }
 
 func (ColumnState) ElementType() reflect.Type {
@@ -180,7 +203,7 @@ func (i *Column) ToColumnOutputWithContext(ctx context.Context) ColumnOutput {
 // ColumnArrayInput is an input type that accepts ColumnArray and ColumnArrayOutput values.
 // You can construct a concrete instance of `ColumnArrayInput` via:
 //
-//          ColumnArray{ ColumnArgs{...} }
+//	ColumnArray{ ColumnArgs{...} }
 type ColumnArrayInput interface {
 	pulumi.Input
 
@@ -205,7 +228,7 @@ func (i ColumnArray) ToColumnArrayOutputWithContext(ctx context.Context) ColumnA
 // ColumnMapInput is an input type that accepts ColumnMap and ColumnMapOutput values.
 // You can construct a concrete instance of `ColumnMapInput` via:
 //
-//          ColumnMap{ "key": ColumnArgs{...} }
+//	ColumnMap{ "key": ColumnArgs{...} }
 type ColumnMapInput interface {
 	pulumi.Input
 
@@ -241,6 +264,11 @@ func (o ColumnOutput) ToColumnOutputWithContext(ctx context.Context) ColumnOutpu
 	return o
 }
 
+// ISO8601 formatted time the column was created
+func (o ColumnOutput) CreatedAt() pulumi.StringOutput {
+	return o.ApplyT(func(v *Column) pulumi.StringOutput { return v.CreatedAt }).(pulumi.StringOutput)
+}
+
 // The dataset this column is added to.
 func (o ColumnOutput) Dataset() pulumi.StringOutput {
 	return o.ApplyT(func(v *Column) pulumi.StringOutput { return v.Dataset }).(pulumi.StringOutput)
@@ -261,9 +289,19 @@ func (o ColumnOutput) KeyName() pulumi.StringOutput {
 	return o.ApplyT(func(v *Column) pulumi.StringOutput { return v.KeyName }).(pulumi.StringOutput)
 }
 
+// ISO8601 formatted time the column was last written to (received event data)
+func (o ColumnOutput) LastWrittenAt() pulumi.StringOutput {
+	return o.ApplyT(func(v *Column) pulumi.StringOutput { return v.LastWrittenAt }).(pulumi.StringOutput)
+}
+
 // The type of the column, allowed values are `string`, `float`, `integer` and `boolean`. Defaults to `string`.
 func (o ColumnOutput) Type() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *Column) pulumi.StringPtrOutput { return v.Type }).(pulumi.StringPtrOutput)
+}
+
+// ISO8601 formatted time the column was updated
+func (o ColumnOutput) UpdatedAt() pulumi.StringOutput {
+	return o.ApplyT(func(v *Column) pulumi.StringOutput { return v.UpdatedAt }).(pulumi.StringOutput)
 }
 
 type ColumnArrayOutput struct{ *pulumi.OutputState }

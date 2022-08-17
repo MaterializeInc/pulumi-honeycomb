@@ -22,43 +22,46 @@ import (
 // package main
 //
 // import (
-// 	"github.com/pulumi/pulumi-honeycomb/sdk/go/honeycomb"
-// 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+//
+//	"github.com/pulumi/pulumi-honeycomb/sdk/go/honeycomb"
+//	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+//
 // )
 //
-// func main() {
-// 	pulumi.Run(func(ctx *pulumi.Context) error {
-// 		example, err := honeycomb.GetQuerySpecification(ctx, &GetQuerySpecificationArgs{
-// 			Calculations: []GetQuerySpecificationCalculation{
-// 				GetQuerySpecificationCalculation{
-// 					Op:     "AVG",
-// 					Column: pulumi.StringRef("duration_ms"),
-// 				},
-// 			},
-// 			Filters: []GetQuerySpecificationFilter{
-// 				GetQuerySpecificationFilter{
-// 					Column: "trace.parent_id",
-// 					Op:     "does-not-exist",
-// 				},
-// 				GetQuerySpecificationFilter{
-// 					Column: "app.tenant",
-// 					Op:     "=",
-// 					Value:  pulumi.StringRef("ThatSpecialTenant"),
-// 				},
-// 			},
-// 			FilterCombination: pulumi.StringRef("AND"),
-// 			Breakdowns: []string{
-// 				"app.tenant",
-// 			},
-// 			TimeRange: pulumi.IntRef(28800),
-// 		}, nil)
-// 		if err != nil {
-// 			return err
-// 		}
-// 		ctx.Export("jsonQuery", example.Json)
-// 		return nil
-// 	})
-// }
+//	func main() {
+//		pulumi.Run(func(ctx *pulumi.Context) error {
+//			example, err := honeycomb.GetQuerySpecification(ctx, &GetQuerySpecificationArgs{
+//				Calculations: []GetQuerySpecificationCalculation{
+//					GetQuerySpecificationCalculation{
+//						Op:     "AVG",
+//						Column: pulumi.StringRef("duration_ms"),
+//					},
+//				},
+//				Filters: []GetQuerySpecificationFilter{
+//					GetQuerySpecificationFilter{
+//						Column: "trace.parent_id",
+//						Op:     "does-not-exist",
+//					},
+//					GetQuerySpecificationFilter{
+//						Column: "app.tenant",
+//						Op:     "=",
+//						Value:  pulumi.StringRef("ThatSpecialTenant"),
+//					},
+//				},
+//				FilterCombination: pulumi.StringRef("AND"),
+//				Breakdowns: []string{
+//					"app.tenant",
+//				},
+//				TimeRange: pulumi.IntRef(28800),
+//			}, nil)
+//			if err != nil {
+//				return err
+//			}
+//			ctx.Export("jsonQuery", example.Json)
+//			return nil
+//		})
+//	}
+//
 // ```
 func GetQuerySpecification(ctx *pulumi.Context, args *GetQuerySpecificationArgs, opts ...pulumi.InvokeOption) (*GetQuerySpecificationResult, error) {
 	opts = pkgInvokeDefaultOpts(opts)
