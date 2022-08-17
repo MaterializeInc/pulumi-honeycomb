@@ -23,30 +23,33 @@ import (
 // package main
 //
 // import (
-// 	"fmt"
 //
-// 	"github.com/pulumi/pulumi-honeycomb/sdk/go/honeycomb"
-// 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
-// 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi/config"
+//	"fmt"
+//
+//	"github.com/pulumi/pulumi-honeycomb/sdk/go/honeycomb"
+//	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+//	"github.com/pulumi/pulumi/sdk/v3/go/pulumi/config"
+//
 // )
 //
-// func main() {
-// 	pulumi.Run(func(ctx *pulumi.Context) error {
-// 		cfg := config.New(ctx, "")
-// 		dataset := cfg.Require("dataset")
-// 		appVersion := cfg.Require("appVersion")
-// 		_, err := honeycomb.NewMarker(ctx, "marker", &honeycomb.MarkerArgs{
-// 			Message: pulumi.String(fmt.Sprintf("%v%v", "deploy ", appVersion)),
-// 			Type:    pulumi.String("deploy"),
-// 			Url:     pulumi.String("http://www.example.com/"),
-// 			Dataset: pulumi.String(dataset),
-// 		})
-// 		if err != nil {
-// 			return err
-// 		}
-// 		return nil
-// 	})
-// }
+//	func main() {
+//		pulumi.Run(func(ctx *pulumi.Context) error {
+//			cfg := config.New(ctx, "")
+//			dataset := cfg.Require("dataset")
+//			appVersion := cfg.Require("appVersion")
+//			_, err := honeycomb.NewMarker(ctx, "marker", &honeycomb.MarkerArgs{
+//				Message: pulumi.String(fmt.Sprintf("deploy %v", appVersion)),
+//				Type:    pulumi.String("deploy"),
+//				Url:     pulumi.String("http://www.example.com/"),
+//				Dataset: pulumi.String(dataset),
+//			})
+//			if err != nil {
+//				return err
+//			}
+//			return nil
+//		})
+//	}
+//
 // ```
 type Marker struct {
 	pulumi.CustomResourceState
@@ -168,7 +171,7 @@ func (i *Marker) ToMarkerOutputWithContext(ctx context.Context) MarkerOutput {
 // MarkerArrayInput is an input type that accepts MarkerArray and MarkerArrayOutput values.
 // You can construct a concrete instance of `MarkerArrayInput` via:
 //
-//          MarkerArray{ MarkerArgs{...} }
+//	MarkerArray{ MarkerArgs{...} }
 type MarkerArrayInput interface {
 	pulumi.Input
 
@@ -193,7 +196,7 @@ func (i MarkerArray) ToMarkerArrayOutputWithContext(ctx context.Context) MarkerA
 // MarkerMapInput is an input type that accepts MarkerMap and MarkerMapOutput values.
 // You can construct a concrete instance of `MarkerMapInput` via:
 //
-//          MarkerMap{ "key": MarkerArgs{...} }
+//	MarkerMap{ "key": MarkerArgs{...} }
 type MarkerMapInput interface {
 	pulumi.Input
 

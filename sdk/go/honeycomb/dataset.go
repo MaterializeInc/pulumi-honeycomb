@@ -24,23 +24,36 @@ import (
 // package main
 //
 // import (
-// 	"github.com/pulumi/pulumi-honeycomb/sdk/go/honeycomb"
-// 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+//
+//	"github.com/pulumi/pulumi-honeycomb/sdk/go/honeycomb"
+//	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+//
 // )
 //
-// func main() {
-// 	pulumi.Run(func(ctx *pulumi.Context) error {
-// 		_, err := honeycomb.NewDataset(ctx, "myDataset", nil)
-// 		if err != nil {
-// 			return err
-// 		}
-// 		return nil
-// 	})
-// }
+//	func main() {
+//		pulumi.Run(func(ctx *pulumi.Context) error {
+//			_, err := honeycomb.NewDataset(ctx, "myDataset", &honeycomb.DatasetArgs{
+//				Description: pulumi.String("buzzing with data"),
+//			})
+//			if err != nil {
+//				return err
+//			}
+//			return nil
+//		})
+//	}
+//
 // ```
 type Dataset struct {
 	pulumi.CustomResourceState
 
+	// ISO8601 formatted time the column was created
+	CreatedAt pulumi.StringOutput `pulumi:"createdAt"`
+	// A longer description for dataset.
+	Description pulumi.StringPtrOutput `pulumi:"description"`
+	// The maximum unpacking depth of nested JSON fields.
+	ExpandJsonDepth pulumi.IntPtrOutput `pulumi:"expandJsonDepth"`
+	// ISO8601 formatted time the column was last written to (received event data)
+	LastWrittenAt pulumi.StringOutput `pulumi:"lastWrittenAt"`
 	// The name of the dataset.
 	Name pulumi.StringOutput `pulumi:"name"`
 	// The slug of the dataset.
@@ -77,6 +90,14 @@ func GetDataset(ctx *pulumi.Context,
 
 // Input properties used for looking up and filtering Dataset resources.
 type datasetState struct {
+	// ISO8601 formatted time the column was created
+	CreatedAt *string `pulumi:"createdAt"`
+	// A longer description for dataset.
+	Description *string `pulumi:"description"`
+	// The maximum unpacking depth of nested JSON fields.
+	ExpandJsonDepth *int `pulumi:"expandJsonDepth"`
+	// ISO8601 formatted time the column was last written to (received event data)
+	LastWrittenAt *string `pulumi:"lastWrittenAt"`
 	// The name of the dataset.
 	Name *string `pulumi:"name"`
 	// The slug of the dataset.
@@ -84,6 +105,14 @@ type datasetState struct {
 }
 
 type DatasetState struct {
+	// ISO8601 formatted time the column was created
+	CreatedAt pulumi.StringPtrInput
+	// A longer description for dataset.
+	Description pulumi.StringPtrInput
+	// The maximum unpacking depth of nested JSON fields.
+	ExpandJsonDepth pulumi.IntPtrInput
+	// ISO8601 formatted time the column was last written to (received event data)
+	LastWrittenAt pulumi.StringPtrInput
 	// The name of the dataset.
 	Name pulumi.StringPtrInput
 	// The slug of the dataset.
@@ -95,12 +124,20 @@ func (DatasetState) ElementType() reflect.Type {
 }
 
 type datasetArgs struct {
+	// A longer description for dataset.
+	Description *string `pulumi:"description"`
+	// The maximum unpacking depth of nested JSON fields.
+	ExpandJsonDepth *int `pulumi:"expandJsonDepth"`
 	// The name of the dataset.
 	Name *string `pulumi:"name"`
 }
 
 // The set of arguments for constructing a Dataset resource.
 type DatasetArgs struct {
+	// A longer description for dataset.
+	Description pulumi.StringPtrInput
+	// The maximum unpacking depth of nested JSON fields.
+	ExpandJsonDepth pulumi.IntPtrInput
 	// The name of the dataset.
 	Name pulumi.StringPtrInput
 }
@@ -131,7 +168,7 @@ func (i *Dataset) ToDatasetOutputWithContext(ctx context.Context) DatasetOutput 
 // DatasetArrayInput is an input type that accepts DatasetArray and DatasetArrayOutput values.
 // You can construct a concrete instance of `DatasetArrayInput` via:
 //
-//          DatasetArray{ DatasetArgs{...} }
+//	DatasetArray{ DatasetArgs{...} }
 type DatasetArrayInput interface {
 	pulumi.Input
 
@@ -156,7 +193,7 @@ func (i DatasetArray) ToDatasetArrayOutputWithContext(ctx context.Context) Datas
 // DatasetMapInput is an input type that accepts DatasetMap and DatasetMapOutput values.
 // You can construct a concrete instance of `DatasetMapInput` via:
 //
-//          DatasetMap{ "key": DatasetArgs{...} }
+//	DatasetMap{ "key": DatasetArgs{...} }
 type DatasetMapInput interface {
 	pulumi.Input
 
@@ -190,6 +227,26 @@ func (o DatasetOutput) ToDatasetOutput() DatasetOutput {
 
 func (o DatasetOutput) ToDatasetOutputWithContext(ctx context.Context) DatasetOutput {
 	return o
+}
+
+// ISO8601 formatted time the column was created
+func (o DatasetOutput) CreatedAt() pulumi.StringOutput {
+	return o.ApplyT(func(v *Dataset) pulumi.StringOutput { return v.CreatedAt }).(pulumi.StringOutput)
+}
+
+// A longer description for dataset.
+func (o DatasetOutput) Description() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *Dataset) pulumi.StringPtrOutput { return v.Description }).(pulumi.StringPtrOutput)
+}
+
+// The maximum unpacking depth of nested JSON fields.
+func (o DatasetOutput) ExpandJsonDepth() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v *Dataset) pulumi.IntPtrOutput { return v.ExpandJsonDepth }).(pulumi.IntPtrOutput)
+}
+
+// ISO8601 formatted time the column was last written to (received event data)
+func (o DatasetOutput) LastWrittenAt() pulumi.StringOutput {
+	return o.ApplyT(func(v *Dataset) pulumi.StringOutput { return v.LastWrittenAt }).(pulumi.StringOutput)
 }
 
 // The name of the dataset.

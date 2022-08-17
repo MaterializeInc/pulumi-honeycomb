@@ -14,6 +14,8 @@ func GetApiKey(ctx *pulumi.Context) string {
 func GetApiUrl(ctx *pulumi.Context) string {
 	return config.Get(ctx, "honeycomb:apiUrl")
 }
+
+// Enable the API client's debug logs. By default, a `TF_LOG` setting of debug or higher will enable this.
 func GetDebug(ctx *pulumi.Context) bool {
 	return config.GetBool(ctx, "honeycomb:debug")
 }

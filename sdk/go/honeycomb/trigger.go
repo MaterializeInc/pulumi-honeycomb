@@ -16,71 +16,151 @@ import (
 // Creates a trigger. For more information about triggers, check out [Alert with Triggers](https://docs.honeycomb.io/working-with-your-data/triggers/).
 //
 // ## Example Usage
+// ### Basic Example
 //
 // ```go
 // package main
 //
 // import (
-// 	"github.com/pulumi/pulumi-honeycomb/sdk/go/honeycomb"
-// 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
-// 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi/config"
+//
+//	"github.com/pulumi/pulumi-honeycomb/sdk/go/honeycomb"
+//	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+//	"github.com/pulumi/pulumi/sdk/v3/go/pulumi/config"
+//
 // )
 //
-// func main() {
-// 	pulumi.Run(func(ctx *pulumi.Context) error {
-// 		cfg := config.New(ctx, "")
-// 		dataset := cfg.Require("dataset")
-// 		exampleGetQuerySpecification, err := honeycomb.GetQuerySpecification(ctx, &GetQuerySpecificationArgs{
-// 			Calculations: []GetQuerySpecificationCalculation{
-// 				GetQuerySpecificationCalculation{
-// 					Op:     "AVG",
-// 					Column: pulumi.StringRef("duration_ms"),
-// 				},
-// 			},
-// 			Filters: []GetQuerySpecificationFilter{
-// 				GetQuerySpecificationFilter{
-// 					Column: "trace.parent_id",
-// 					Op:     "does-not-exist",
-// 				},
-// 			},
-// 		}, nil)
-// 		if err != nil {
-// 			return err
-// 		}
-// 		exampleQuery, err := honeycomb.NewQuery(ctx, "exampleQuery", &honeycomb.QueryArgs{
-// 			Dataset:   pulumi.String(dataset),
-// 			QueryJson: pulumi.String(exampleGetQuerySpecification.Json),
-// 		})
-// 		if err != nil {
-// 			return err
-// 		}
-// 		_, err = honeycomb.NewTrigger(ctx, "exampleTrigger", &honeycomb.TriggerArgs{
-// 			Description: pulumi.String("Average duration of all requests for the last 10 minutes."),
-// 			QueryId:     exampleQuery.ID(),
-// 			Dataset:     pulumi.String(dataset),
-// 			Frequency:   pulumi.Int(600),
-// 			AlertType:   pulumi.String("on_change"),
-// 			Threshold: &TriggerThresholdArgs{
-// 				Op:    pulumi.String(">"),
-// 				Value: pulumi.Float64(1000),
-// 			},
-// 			Recipients: TriggerRecipientArray{
-// 				&TriggerRecipientArgs{
-// 					Type:   pulumi.String("email"),
-// 					Target: pulumi.String("hello@example.com"),
-// 				},
-// 				&TriggerRecipientArgs{
-// 					Type:   pulumi.String("marker"),
-// 					Target: pulumi.String("Trigger - requests are slow"),
-// 				},
-// 			},
-// 		})
-// 		if err != nil {
-// 			return err
-// 		}
-// 		return nil
-// 	})
-// }
+//	func main() {
+//		pulumi.Run(func(ctx *pulumi.Context) error {
+//			cfg := config.New(ctx, "")
+//			dataset := cfg.Require("dataset")
+//			exampleGetQuerySpecification, err := honeycomb.GetQuerySpecification(ctx, &GetQuerySpecificationArgs{
+//				Calculations: []GetQuerySpecificationCalculation{
+//					GetQuerySpecificationCalculation{
+//						Op:     "AVG",
+//						Column: pulumi.StringRef("duration_ms"),
+//					},
+//				},
+//				Filters: []GetQuerySpecificationFilter{
+//					GetQuerySpecificationFilter{
+//						Column: "trace.parent_id",
+//						Op:     "does-not-exist",
+//					},
+//				},
+//			}, nil)
+//			if err != nil {
+//				return err
+//			}
+//			exampleQuery, err := honeycomb.NewQuery(ctx, "exampleQuery", &honeycomb.QueryArgs{
+//				Dataset:   pulumi.String(dataset),
+//				QueryJson: pulumi.String(exampleGetQuerySpecification.Json),
+//			})
+//			if err != nil {
+//				return err
+//			}
+//			_, err = honeycomb.NewTrigger(ctx, "exampleTrigger", &honeycomb.TriggerArgs{
+//				Description: pulumi.String("Average duration of all requests for the last 10 minutes."),
+//				QueryId:     exampleQuery.ID(),
+//				Dataset:     pulumi.String(dataset),
+//				Frequency:   pulumi.Int(600),
+//				AlertType:   pulumi.String("on_change"),
+//				Threshold: &TriggerThresholdArgs{
+//					Op:    pulumi.String(">"),
+//					Value: pulumi.Float64(1000),
+//				},
+//				Recipients: TriggerRecipientArray{
+//					&TriggerRecipientArgs{
+//						Type:   pulumi.String("email"),
+//						Target: pulumi.String("hello@example.com"),
+//					},
+//					&TriggerRecipientArgs{
+//						Type:   pulumi.String("marker"),
+//						Target: pulumi.String("Trigger - requests are slow"),
+//					},
+//				},
+//			})
+//			if err != nil {
+//				return err
+//			}
+//			return nil
+//		})
+//	}
+//
+// ```
+// ### Example with PagerDuty Recipient and Severity
+// ```go
+// package main
+//
+// import (
+//
+//	"github.com/pulumi/pulumi-honeycomb/sdk/go/honeycomb"
+//	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+//	"github.com/pulumi/pulumi/sdk/v3/go/pulumi/config"
+//
+// )
+//
+//	func main() {
+//		pulumi.Run(func(ctx *pulumi.Context) error {
+//			cfg := config.New(ctx, "")
+//			dataset := cfg.Require("dataset")
+//			pd_prod, err := honeycomb.GetRecipient(ctx, &GetRecipientArgs{
+//				Type: "pagerduty",
+//				DetailFilter: GetRecipientDetailFilter{
+//					Name:  "integration_name",
+//					Value: pulumi.StringRef("Prod On-Call"),
+//				},
+//			}, nil)
+//			if err != nil {
+//				return err
+//			}
+//			exampleGetQuerySpecification, err := honeycomb.GetQuerySpecification(ctx, &GetQuerySpecificationArgs{
+//				Calculations: []GetQuerySpecificationCalculation{
+//					GetQuerySpecificationCalculation{
+//						Op:     "AVG",
+//						Column: pulumi.StringRef("duration_ms"),
+//					},
+//				},
+//				Filters: []GetQuerySpecificationFilter{
+//					GetQuerySpecificationFilter{
+//						Column: "trace.parent_id",
+//						Op:     "does-not-exist",
+//					},
+//				},
+//			}, nil)
+//			if err != nil {
+//				return err
+//			}
+//			exampleQuery, err := honeycomb.NewQuery(ctx, "exampleQuery", &honeycomb.QueryArgs{
+//				Dataset:   pulumi.String(dataset),
+//				QueryJson: pulumi.String(exampleGetQuerySpecification.Json),
+//			})
+//			if err != nil {
+//				return err
+//			}
+//			_, err = honeycomb.NewTrigger(ctx, "exampleTrigger", &honeycomb.TriggerArgs{
+//				Description: pulumi.String("Average duration of all requests for the last 10 minutes."),
+//				QueryId:     exampleQuery.ID(),
+//				Dataset:     pulumi.String(dataset),
+//				Frequency:   pulumi.Int(600),
+//				Threshold: &TriggerThresholdArgs{
+//					Op:    pulumi.String(">"),
+//					Value: pulumi.Float64(1000),
+//				},
+//				Recipients: TriggerRecipientArray{
+//					&TriggerRecipientArgs{
+//						Id: pulumi.String(pd_prod.Id),
+//						NotificationDetails: &TriggerRecipientNotificationDetailsArgs{
+//							PagerdutySeverity: pulumi.String("info"),
+//						},
+//					},
+//				},
+//			})
+//			if err != nil {
+//				return err
+//			}
+//			return nil
+//		})
+//	}
+//
 // ```
 //
 // ## Import
@@ -88,10 +168,12 @@ import (
 // Triggers can be imported using a combination of the dataset name and their ID, e.g.
 //
 // ```sh
-//  $ pulumi import honeycomb:index/trigger:Trigger my_trigger my-dataset/AeZzSoWws9G
+//
+//	$ pulumi import honeycomb:index/trigger:Trigger my_trigger my-dataset/AeZzSoWws9G
+//
 // ```
 //
-//  You can find the ID in the URL bar when visiting the trigger from the UI.
+//	You can find the ID in the URL bar when visiting the trigger from the UI.
 type Trigger struct {
 	pulumi.CustomResourceState
 
@@ -268,7 +350,7 @@ func (i *Trigger) ToTriggerOutputWithContext(ctx context.Context) TriggerOutput 
 // TriggerArrayInput is an input type that accepts TriggerArray and TriggerArrayOutput values.
 // You can construct a concrete instance of `TriggerArrayInput` via:
 //
-//          TriggerArray{ TriggerArgs{...} }
+//	TriggerArray{ TriggerArgs{...} }
 type TriggerArrayInput interface {
 	pulumi.Input
 
@@ -293,7 +375,7 @@ func (i TriggerArray) ToTriggerArrayOutputWithContext(ctx context.Context) Trigg
 // TriggerMapInput is an input type that accepts TriggerMap and TriggerMapOutput values.
 // You can construct a concrete instance of `TriggerMapInput` via:
 //
-//          TriggerMap{ "key": TriggerArgs{...} }
+//	TriggerMap{ "key": TriggerArgs{...} }
 type TriggerMapInput interface {
 	pulumi.Input
 
