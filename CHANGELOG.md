@@ -1,7 +1,7 @@
 CHANGELOG
 =========
 
-## 0.0.13 (unreleased)
+## 0.0.13
 
 * Add missing resource `SlackRecipient` and data source `GetRecipients`.
 
