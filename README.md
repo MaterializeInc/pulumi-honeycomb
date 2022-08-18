@@ -13,7 +13,8 @@ project layout:
     *   `bin/pulumi-resource-honeycomb` is the runtime plugin linking to the
         Terraform provider.
 *   `provider/resources.go` maps all the Terraform Provider metadata for use.
-*   `sdk` is generated code of the provider.
+*   `sdk` is generated code of the provider; the `sdk/go` directory is
+    generated but checked in.
 *   `examples/` example usage of `pulumi_honeycomb`.
 
 ## Building
