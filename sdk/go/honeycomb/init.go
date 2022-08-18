@@ -42,6 +42,8 @@ func (m *module) Construct(ctx *pulumi.Context, name, typ, urn string) (r pulumi
 		r = &QueryAnnotation{}
 	case "honeycomb:index/sLO:SLO":
 		r = &SLO{}
+	case "honeycomb:index/slackRecipient:SlackRecipient":
+		r = &SlackRecipient{}
 	case "honeycomb:index/trigger:Trigger":
 		r = &Trigger{}
 	case "honeycomb:index/webhookRecipient:WebhookRecipient":
@@ -127,6 +129,11 @@ func init() {
 	pulumi.RegisterResourceModule(
 		"honeycomb",
 		"index/sLO",
+		&module{version},
+	)
+	pulumi.RegisterResourceModule(
+		"honeycomb",
+		"index/slackRecipient",
 		&module{version},
 	)
 	pulumi.RegisterResourceModule(
