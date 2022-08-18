@@ -1,6 +1,12 @@
 CHANGELOG
 =========
 
+## 0.0.12
+
+* Upgraded the honeycomb terraform provider to 0.10.0. Thanks, [markfickett](https://github.com/markfickett)!
+* New resources `EmailRecipient`, `PagerdutyRecipient`, `WebhookRecipient`
+* Improved the README and added an example. Thanks, [markfickett](https://github.com/markfickett)!
+
 ## 0.0.11
 
 * Upgraded the terraform provider to 0.7.0
