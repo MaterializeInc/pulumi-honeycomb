@@ -1324,6 +1324,181 @@ func (o GetRecipientDetailFilterPtrOutput) ValueRegex() pulumi.StringPtrOutput {
 	}).(pulumi.StringPtrOutput)
 }
 
+type GetRecipientsDetailFilter struct {
+	// The name of the detail field to filter by. Allowed values are `address`, `channel`, `name`, `integrationName`, and `url`.
+	Name string `pulumi:"name"`
+	// The value of the detail field to match on.
+	Value *string `pulumi:"value"`
+	// A regular expression string to apply to the value of the detail field to match on.
+	ValueRegex *string `pulumi:"valueRegex"`
+}
+
+// GetRecipientsDetailFilterInput is an input type that accepts GetRecipientsDetailFilterArgs and GetRecipientsDetailFilterOutput values.
+// You can construct a concrete instance of `GetRecipientsDetailFilterInput` via:
+//
+//          GetRecipientsDetailFilterArgs{...}
+type GetRecipientsDetailFilterInput interface {
+	pulumi.Input
+
+	ToGetRecipientsDetailFilterOutput() GetRecipientsDetailFilterOutput
+	ToGetRecipientsDetailFilterOutputWithContext(context.Context) GetRecipientsDetailFilterOutput
+}
+
+type GetRecipientsDetailFilterArgs struct {
+	// The name of the detail field to filter by. Allowed values are `address`, `channel`, `name`, `integrationName`, and `url`.
+	Name pulumi.StringInput `pulumi:"name"`
+	// The value of the detail field to match on.
+	Value pulumi.StringPtrInput `pulumi:"value"`
+	// A regular expression string to apply to the value of the detail field to match on.
+	ValueRegex pulumi.StringPtrInput `pulumi:"valueRegex"`
+}
+
+func (GetRecipientsDetailFilterArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetRecipientsDetailFilter)(nil)).Elem()
+}
+
+func (i GetRecipientsDetailFilterArgs) ToGetRecipientsDetailFilterOutput() GetRecipientsDetailFilterOutput {
+	return i.ToGetRecipientsDetailFilterOutputWithContext(context.Background())
+}
+
+func (i GetRecipientsDetailFilterArgs) ToGetRecipientsDetailFilterOutputWithContext(ctx context.Context) GetRecipientsDetailFilterOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetRecipientsDetailFilterOutput)
+}
+
+func (i GetRecipientsDetailFilterArgs) ToGetRecipientsDetailFilterPtrOutput() GetRecipientsDetailFilterPtrOutput {
+	return i.ToGetRecipientsDetailFilterPtrOutputWithContext(context.Background())
+}
+
+func (i GetRecipientsDetailFilterArgs) ToGetRecipientsDetailFilterPtrOutputWithContext(ctx context.Context) GetRecipientsDetailFilterPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetRecipientsDetailFilterOutput).ToGetRecipientsDetailFilterPtrOutputWithContext(ctx)
+}
+
+// GetRecipientsDetailFilterPtrInput is an input type that accepts GetRecipientsDetailFilterArgs, GetRecipientsDetailFilterPtr and GetRecipientsDetailFilterPtrOutput values.
+// You can construct a concrete instance of `GetRecipientsDetailFilterPtrInput` via:
+//
+//          GetRecipientsDetailFilterArgs{...}
+//
+//  or:
+//
+//          nil
+type GetRecipientsDetailFilterPtrInput interface {
+	pulumi.Input
+
+	ToGetRecipientsDetailFilterPtrOutput() GetRecipientsDetailFilterPtrOutput
+	ToGetRecipientsDetailFilterPtrOutputWithContext(context.Context) GetRecipientsDetailFilterPtrOutput
+}
+
+type getRecipientsDetailFilterPtrType GetRecipientsDetailFilterArgs
+
+func GetRecipientsDetailFilterPtr(v *GetRecipientsDetailFilterArgs) GetRecipientsDetailFilterPtrInput {
+	return (*getRecipientsDetailFilterPtrType)(v)
+}
+
+func (*getRecipientsDetailFilterPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**GetRecipientsDetailFilter)(nil)).Elem()
+}
+
+func (i *getRecipientsDetailFilterPtrType) ToGetRecipientsDetailFilterPtrOutput() GetRecipientsDetailFilterPtrOutput {
+	return i.ToGetRecipientsDetailFilterPtrOutputWithContext(context.Background())
+}
+
+func (i *getRecipientsDetailFilterPtrType) ToGetRecipientsDetailFilterPtrOutputWithContext(ctx context.Context) GetRecipientsDetailFilterPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetRecipientsDetailFilterPtrOutput)
+}
+
+type GetRecipientsDetailFilterOutput struct{ *pulumi.OutputState }
+
+func (GetRecipientsDetailFilterOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetRecipientsDetailFilter)(nil)).Elem()
+}
+
+func (o GetRecipientsDetailFilterOutput) ToGetRecipientsDetailFilterOutput() GetRecipientsDetailFilterOutput {
+	return o
+}
+
+func (o GetRecipientsDetailFilterOutput) ToGetRecipientsDetailFilterOutputWithContext(ctx context.Context) GetRecipientsDetailFilterOutput {
+	return o
+}
+
+func (o GetRecipientsDetailFilterOutput) ToGetRecipientsDetailFilterPtrOutput() GetRecipientsDetailFilterPtrOutput {
+	return o.ToGetRecipientsDetailFilterPtrOutputWithContext(context.Background())
+}
+
+func (o GetRecipientsDetailFilterOutput) ToGetRecipientsDetailFilterPtrOutputWithContext(ctx context.Context) GetRecipientsDetailFilterPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v GetRecipientsDetailFilter) *GetRecipientsDetailFilter {
+		return &v
+	}).(GetRecipientsDetailFilterPtrOutput)
+}
+
+// The name of the detail field to filter by. Allowed values are `address`, `channel`, `name`, `integrationName`, and `url`.
+func (o GetRecipientsDetailFilterOutput) Name() pulumi.StringOutput {
+	return o.ApplyT(func(v GetRecipientsDetailFilter) string { return v.Name }).(pulumi.StringOutput)
+}
+
+// The value of the detail field to match on.
+func (o GetRecipientsDetailFilterOutput) Value() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v GetRecipientsDetailFilter) *string { return v.Value }).(pulumi.StringPtrOutput)
+}
+
+// A regular expression string to apply to the value of the detail field to match on.
+func (o GetRecipientsDetailFilterOutput) ValueRegex() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v GetRecipientsDetailFilter) *string { return v.ValueRegex }).(pulumi.StringPtrOutput)
+}
+
+type GetRecipientsDetailFilterPtrOutput struct{ *pulumi.OutputState }
+
+func (GetRecipientsDetailFilterPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**GetRecipientsDetailFilter)(nil)).Elem()
+}
+
+func (o GetRecipientsDetailFilterPtrOutput) ToGetRecipientsDetailFilterPtrOutput() GetRecipientsDetailFilterPtrOutput {
+	return o
+}
+
+func (o GetRecipientsDetailFilterPtrOutput) ToGetRecipientsDetailFilterPtrOutputWithContext(ctx context.Context) GetRecipientsDetailFilterPtrOutput {
+	return o
+}
+
+func (o GetRecipientsDetailFilterPtrOutput) Elem() GetRecipientsDetailFilterOutput {
+	return o.ApplyT(func(v *GetRecipientsDetailFilter) GetRecipientsDetailFilter {
+		if v != nil {
+			return *v
+		}
+		var ret GetRecipientsDetailFilter
+		return ret
+	}).(GetRecipientsDetailFilterOutput)
+}
+
+// The name of the detail field to filter by. Allowed values are `address`, `channel`, `name`, `integrationName`, and `url`.
+func (o GetRecipientsDetailFilterPtrOutput) Name() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *GetRecipientsDetailFilter) *string {
+		if v == nil {
+			return nil
+		}
+		return &v.Name
+	}).(pulumi.StringPtrOutput)
+}
+
+// The value of the detail field to match on.
+func (o GetRecipientsDetailFilterPtrOutput) Value() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *GetRecipientsDetailFilter) *string {
+		if v == nil {
+			return nil
+		}
+		return v.Value
+	}).(pulumi.StringPtrOutput)
+}
+
+// A regular expression string to apply to the value of the detail field to match on.
+func (o GetRecipientsDetailFilterPtrOutput) ValueRegex() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *GetRecipientsDetailFilter) *string {
+		if v == nil {
+			return nil
+		}
+		return v.ValueRegex
+	}).(pulumi.StringPtrOutput)
+}
+
 type TriggerRecipient struct {
 	// The ID of an already existing recipient. Should not be used in combination with `type` and `target`.
 	Id *string `pulumi:"id"`
@@ -1756,6 +1931,8 @@ func init() {
 	pulumi.RegisterInputType(reflect.TypeOf((*GetQuerySpecificationOrderArrayInput)(nil)).Elem(), GetQuerySpecificationOrderArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*GetRecipientDetailFilterInput)(nil)).Elem(), GetRecipientDetailFilterArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*GetRecipientDetailFilterPtrInput)(nil)).Elem(), GetRecipientDetailFilterArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetRecipientsDetailFilterInput)(nil)).Elem(), GetRecipientsDetailFilterArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetRecipientsDetailFilterPtrInput)(nil)).Elem(), GetRecipientsDetailFilterArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*TriggerRecipientInput)(nil)).Elem(), TriggerRecipientArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*TriggerRecipientArrayInput)(nil)).Elem(), TriggerRecipientArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*TriggerRecipientNotificationDetailsInput)(nil)).Elem(), TriggerRecipientNotificationDetailsArgs{})
@@ -1780,6 +1957,8 @@ func init() {
 	pulumi.RegisterOutputType(GetQuerySpecificationOrderArrayOutput{})
 	pulumi.RegisterOutputType(GetRecipientDetailFilterOutput{})
 	pulumi.RegisterOutputType(GetRecipientDetailFilterPtrOutput{})
+	pulumi.RegisterOutputType(GetRecipientsDetailFilterOutput{})
+	pulumi.RegisterOutputType(GetRecipientsDetailFilterPtrOutput{})
 	pulumi.RegisterOutputType(TriggerRecipientOutput{})
 	pulumi.RegisterOutputType(TriggerRecipientArrayOutput{})
 	pulumi.RegisterOutputType(TriggerRecipientNotificationDetailsOutput{})

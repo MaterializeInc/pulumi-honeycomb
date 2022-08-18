@@ -1,6 +1,10 @@
 CHANGELOG
 =========
 
+## 0.0.13 (unreleased)
+
+* Add missing resource `SlackRecipient` and data source `GetRecipients`.
+
 ## 0.0.12
 
 * Upgraded the honeycomb terraform provider to 0.10.0. Thanks, [markfickett](https://github.com/markfickett)!
