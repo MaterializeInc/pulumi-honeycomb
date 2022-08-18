@@ -21,25 +21,22 @@ import (
 // package main
 //
 // import (
-//
-//	"github.com/pulumi/pulumi-honeycomb/sdk/go/honeycomb"
-//	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
-//
+// 	"github.com/pulumi/pulumi-honeycomb/sdk/go/honeycomb"
+// 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 // )
 //
-//	func main() {
-//		pulumi.Run(func(ctx *pulumi.Context) error {
-//			_, err := honeycomb.NewWebhookRecipient(ctx, "prod", &honeycomb.WebhookRecipientArgs{
-//				Secret: pulumi.String("a63dab148496ecbe04a1a802ca9b95b8"),
-//				Url:    pulumi.String("https://my.url.corp.net"),
-//			})
-//			if err != nil {
-//				return err
-//			}
-//			return nil
-//		})
-//	}
-//
+// func main() {
+// 	pulumi.Run(func(ctx *pulumi.Context) error {
+// 		_, err := honeycomb.NewWebhookRecipient(ctx, "prod", &honeycomb.WebhookRecipientArgs{
+// 			Secret: pulumi.String("a63dab148496ecbe04a1a802ca9b95b8"),
+// 			Url:    pulumi.String("https://my.url.corp.net"),
+// 		})
+// 		if err != nil {
+// 			return err
+// 		}
+// 		return nil
+// 	})
+// }
 // ```
 //
 // ## Import
@@ -47,9 +44,7 @@ import (
 // Webhook Recipients can be imported by their ID, e.g.
 //
 // ```sh
-//
-//	$ pulumi import honeycomb:index/webhookRecipient:WebhookRecipient my_recipient nx2zsegA0dZ
-//
+//  $ pulumi import honeycomb:index/webhookRecipient:WebhookRecipient my_recipient nx2zsegA0dZ
 // ```
 type WebhookRecipient struct {
 	pulumi.CustomResourceState
@@ -164,7 +159,7 @@ func (i *WebhookRecipient) ToWebhookRecipientOutputWithContext(ctx context.Conte
 // WebhookRecipientArrayInput is an input type that accepts WebhookRecipientArray and WebhookRecipientArrayOutput values.
 // You can construct a concrete instance of `WebhookRecipientArrayInput` via:
 //
-//	WebhookRecipientArray{ WebhookRecipientArgs{...} }
+//          WebhookRecipientArray{ WebhookRecipientArgs{...} }
 type WebhookRecipientArrayInput interface {
 	pulumi.Input
 
@@ -189,7 +184,7 @@ func (i WebhookRecipientArray) ToWebhookRecipientArrayOutputWithContext(ctx cont
 // WebhookRecipientMapInput is an input type that accepts WebhookRecipientMap and WebhookRecipientMapOutput values.
 // You can construct a concrete instance of `WebhookRecipientMapInput` via:
 //
-//	WebhookRecipientMap{ "key": WebhookRecipientArgs{...} }
+//          WebhookRecipientMap{ "key": WebhookRecipientArgs{...} }
 type WebhookRecipientMapInput interface {
 	pulumi.Input
 

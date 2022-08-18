@@ -21,56 +21,53 @@ import (
 // package main
 //
 // import (
-//
-//	"github.com/pulumi/pulumi-honeycomb/sdk/go/honeycomb"
-//	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
-//
+// 	"github.com/pulumi/pulumi-honeycomb/sdk/go/honeycomb"
+// 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 // )
 //
-//	func main() {
-//		pulumi.Run(func(ctx *pulumi.Context) error {
-//			queryGetQuerySpecification, err := honeycomb.GetQuerySpecification(ctx, &GetQuerySpecificationArgs{
-//				Calculations: []GetQuerySpecificationCalculation{
-//					GetQuerySpecificationCalculation{
-//						Op:     "P99",
-//						Column: pulumi.StringRef("duration_ms"),
-//					},
-//				},
-//				Filters: []GetQuerySpecificationFilter{
-//					GetQuerySpecificationFilter{
-//						Column: "trace.parent_id",
-//						Op:     "does-not-exist",
-//					},
-//				},
-//				Breakdowns: []string{
-//					"app.tenant",
-//				},
-//			}, nil)
-//			if err != nil {
-//				return err
-//			}
-//			queryQuery, err := honeycomb.NewQuery(ctx, "queryQuery", &honeycomb.QueryArgs{
-//				Dataset:   pulumi.Any(_var.Dataset),
-//				QueryJson: pulumi.String(queryGetQuerySpecification.Json),
-//			})
-//			if err != nil {
-//				return err
-//			}
-//			_, err = honeycomb.NewBoard(ctx, "board", &honeycomb.BoardArgs{
-//				Queries: BoardQueryArray{
-//					&BoardQueryArgs{
-//						Dataset: pulumi.Any(_var.Dataset),
-//						QueryId: queryQuery.ID(),
-//					},
-//				},
-//			})
-//			if err != nil {
-//				return err
-//			}
-//			return nil
-//		})
-//	}
-//
+// func main() {
+// 	pulumi.Run(func(ctx *pulumi.Context) error {
+// 		queryGetQuerySpecification, err := honeycomb.GetQuerySpecification(ctx, &GetQuerySpecificationArgs{
+// 			Calculations: []GetQuerySpecificationCalculation{
+// 				GetQuerySpecificationCalculation{
+// 					Op:     "P99",
+// 					Column: pulumi.StringRef("duration_ms"),
+// 				},
+// 			},
+// 			Filters: []GetQuerySpecificationFilter{
+// 				GetQuerySpecificationFilter{
+// 					Column: "trace.parent_id",
+// 					Op:     "does-not-exist",
+// 				},
+// 			},
+// 			Breakdowns: []string{
+// 				"app.tenant",
+// 			},
+// 		}, nil)
+// 		if err != nil {
+// 			return err
+// 		}
+// 		queryQuery, err := honeycomb.NewQuery(ctx, "queryQuery", &honeycomb.QueryArgs{
+// 			Dataset:   pulumi.Any(_var.Dataset),
+// 			QueryJson: pulumi.String(queryGetQuerySpecification.Json),
+// 		})
+// 		if err != nil {
+// 			return err
+// 		}
+// 		_, err = honeycomb.NewBoard(ctx, "board", &honeycomb.BoardArgs{
+// 			Queries: BoardQueryArray{
+// 				&BoardQueryArgs{
+// 					Dataset: pulumi.Any(_var.Dataset),
+// 					QueryId: queryQuery.ID(),
+// 				},
+// 			},
+// 		})
+// 		if err != nil {
+// 			return err
+// 		}
+// 		return nil
+// 	})
+// }
 // ```
 // ### Annotated Board
 //
@@ -78,81 +75,78 @@ import (
 // package main
 //
 // import (
-//
-//	"github.com/pulumi/pulumi-honeycomb/sdk/go/honeycomb"
-//	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
-//
+// 	"github.com/pulumi/pulumi-honeycomb/sdk/go/honeycomb"
+// 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 // )
 //
-//	func main() {
-//		pulumi.Run(func(ctx *pulumi.Context) error {
-//			latencyByUseridGetQuerySpecification, err := honeycomb.GetQuerySpecification(ctx, &GetQuerySpecificationArgs{
-//				TimeRange: pulumi.IntRef(86400),
-//				Breakdowns: []string{
-//					"app.user_id",
-//				},
-//				Calculations: []GetQuerySpecificationCalculation{
-//					GetQuerySpecificationCalculation{
-//						Op:     "HEATMAP",
-//						Column: pulumi.StringRef("duration_ms"),
-//					},
-//					GetQuerySpecificationCalculation{
-//						Op:     "P99",
-//						Column: pulumi.StringRef("duration_ms"),
-//					},
-//				},
-//				Filters: []GetQuerySpecificationFilter{
-//					GetQuerySpecificationFilter{
-//						Column: "trace.parent_id",
-//						Op:     "does-not-exist",
-//					},
-//				},
-//				Orders: []GetQuerySpecificationOrder{
-//					GetQuerySpecificationOrder{
-//						Column: pulumi.StringRef("duration_ms"),
-//						Op:     pulumi.StringRef("P99"),
-//						Order:  pulumi.StringRef("descending"),
-//					},
-//				},
-//			}, nil)
-//			if err != nil {
-//				return err
-//			}
-//			latencyByUseridQuery, err := honeycomb.NewQuery(ctx, "latencyByUseridQuery", &honeycomb.QueryArgs{
-//				Dataset:   pulumi.Any(_var.Dataset),
-//				QueryJson: pulumi.String(latencyByUseridGetQuerySpecification.Json),
-//			})
-//			if err != nil {
-//				return err
-//			}
-//			latencyByUseridQueryAnnotation, err := honeycomb.NewQueryAnnotation(ctx, "latencyByUseridQueryAnnotation", &honeycomb.QueryAnnotationArgs{
-//				Dataset:     pulumi.Any(_var.Dataset),
-//				QueryId:     latencyByUseridQuery.ID(),
-//				Description: pulumi.String("A breakdown of trace latency by User over the last 24 hours"),
-//			})
-//			if err != nil {
-//				return err
-//			}
-//			_, err = honeycomb.NewBoard(ctx, "overview", &honeycomb.BoardArgs{
-//				Style: pulumi.String("visual"),
-//				Queries: BoardQueryArray{
-//					&BoardQueryArgs{
-//						Caption:           pulumi.String("Latency by User"),
-//						QueryId:           latencyByUseridQuery.ID(),
-//						QueryAnnotationId: latencyByUseridQueryAnnotation.ID(),
-//						GraphSettings: &BoardQueryGraphSettingsArgs{
-//							UtcXaxis: pulumi.Bool(true),
-//						},
-//					},
-//				},
-//			})
-//			if err != nil {
-//				return err
-//			}
-//			return nil
-//		})
-//	}
-//
+// func main() {
+// 	pulumi.Run(func(ctx *pulumi.Context) error {
+// 		latencyByUseridGetQuerySpecification, err := honeycomb.GetQuerySpecification(ctx, &GetQuerySpecificationArgs{
+// 			TimeRange: pulumi.IntRef(86400),
+// 			Breakdowns: []string{
+// 				"app.user_id",
+// 			},
+// 			Calculations: []GetQuerySpecificationCalculation{
+// 				GetQuerySpecificationCalculation{
+// 					Op:     "HEATMAP",
+// 					Column: pulumi.StringRef("duration_ms"),
+// 				},
+// 				GetQuerySpecificationCalculation{
+// 					Op:     "P99",
+// 					Column: pulumi.StringRef("duration_ms"),
+// 				},
+// 			},
+// 			Filters: []GetQuerySpecificationFilter{
+// 				GetQuerySpecificationFilter{
+// 					Column: "trace.parent_id",
+// 					Op:     "does-not-exist",
+// 				},
+// 			},
+// 			Orders: []GetQuerySpecificationOrder{
+// 				GetQuerySpecificationOrder{
+// 					Column: pulumi.StringRef("duration_ms"),
+// 					Op:     pulumi.StringRef("P99"),
+// 					Order:  pulumi.StringRef("descending"),
+// 				},
+// 			},
+// 		}, nil)
+// 		if err != nil {
+// 			return err
+// 		}
+// 		latencyByUseridQuery, err := honeycomb.NewQuery(ctx, "latencyByUseridQuery", &honeycomb.QueryArgs{
+// 			Dataset:   pulumi.Any(_var.Dataset),
+// 			QueryJson: pulumi.String(latencyByUseridGetQuerySpecification.Json),
+// 		})
+// 		if err != nil {
+// 			return err
+// 		}
+// 		latencyByUseridQueryAnnotation, err := honeycomb.NewQueryAnnotation(ctx, "latencyByUseridQueryAnnotation", &honeycomb.QueryAnnotationArgs{
+// 			Dataset:     pulumi.Any(_var.Dataset),
+// 			QueryId:     latencyByUseridQuery.ID(),
+// 			Description: pulumi.String("A breakdown of trace latency by User over the last 24 hours"),
+// 		})
+// 		if err != nil {
+// 			return err
+// 		}
+// 		_, err = honeycomb.NewBoard(ctx, "overview", &honeycomb.BoardArgs{
+// 			Style: pulumi.String("visual"),
+// 			Queries: BoardQueryArray{
+// 				&BoardQueryArgs{
+// 					Caption:           pulumi.String("Latency by User"),
+// 					QueryId:           latencyByUseridQuery.ID(),
+// 					QueryAnnotationId: latencyByUseridQueryAnnotation.ID(),
+// 					GraphSettings: &BoardQueryGraphSettingsArgs{
+// 						UtcXaxis: pulumi.Bool(true),
+// 					},
+// 				},
+// 			},
+// 		})
+// 		if err != nil {
+// 			return err
+// 		}
+// 		return nil
+// 	})
+// }
 // ```
 //
 // ## Import
@@ -160,12 +154,10 @@ import (
 // Boards can be imported using their ID, e.g.
 //
 // ```sh
-//
-//	$ pulumi import honeycomb:index/board:Board my_board AobW9oAZX71
-//
+//  $ pulumi import honeycomb:index/board:Board my_board AobW9oAZX71
 // ```
 //
-//	You can find the ID in the URL bar when visiting the board from the UI.
+//  You can find the ID in the URL bar when visiting the board from the UI.
 type Board struct {
 	pulumi.CustomResourceState
 
@@ -293,7 +285,7 @@ func (i *Board) ToBoardOutputWithContext(ctx context.Context) BoardOutput {
 // BoardArrayInput is an input type that accepts BoardArray and BoardArrayOutput values.
 // You can construct a concrete instance of `BoardArrayInput` via:
 //
-//	BoardArray{ BoardArgs{...} }
+//          BoardArray{ BoardArgs{...} }
 type BoardArrayInput interface {
 	pulumi.Input
 
@@ -318,7 +310,7 @@ func (i BoardArray) ToBoardArrayOutputWithContext(ctx context.Context) BoardArra
 // BoardMapInput is an input type that accepts BoardMap and BoardMapOutput values.
 // You can construct a concrete instance of `BoardMapInput` via:
 //
-//	BoardMap{ "key": BoardArgs{...} }
+//          BoardMap{ "key": BoardArgs{...} }
 type BoardMapInput interface {
 	pulumi.Input
 

@@ -21,25 +21,22 @@ import (
 // package main
 //
 // import (
-//
-//	"github.com/pulumi/pulumi-honeycomb/sdk/go/honeycomb"
-//	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
-//
+// 	"github.com/pulumi/pulumi-honeycomb/sdk/go/honeycomb"
+// 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 // )
 //
-//	func main() {
-//		pulumi.Run(func(ctx *pulumi.Context) error {
-//			_, err := honeycomb.NewPagerdutyRecipient(ctx, "prod-oncall", &honeycomb.PagerdutyRecipientArgs{
-//				IntegrationKey:  pulumi.String("cd6e8de3c857aefc950e0d5ebcb79ac2"),
-//				IntegrationName: pulumi.String("Production on-call notifications"),
-//			})
-//			if err != nil {
-//				return err
-//			}
-//			return nil
-//		})
-//	}
-//
+// func main() {
+// 	pulumi.Run(func(ctx *pulumi.Context) error {
+// 		_, err := honeycomb.NewPagerdutyRecipient(ctx, "prod-oncall", &honeycomb.PagerdutyRecipientArgs{
+// 			IntegrationKey:  pulumi.String("cd6e8de3c857aefc950e0d5ebcb79ac2"),
+// 			IntegrationName: pulumi.String("Production on-call notifications"),
+// 		})
+// 		if err != nil {
+// 			return err
+// 		}
+// 		return nil
+// 	})
+// }
 // ```
 //
 // ## Import
@@ -47,9 +44,7 @@ import (
 // PagerDuty Recipients can be imported by their ID, e.g.
 //
 // ```sh
-//
-//	$ pulumi import honeycomb:index/pagerdutyRecipient:PagerdutyRecipient my_recipient nx2zsegA0dZ
-//
+//  $ pulumi import honeycomb:index/pagerdutyRecipient:PagerdutyRecipient my_recipient nx2zsegA0dZ
 // ```
 type PagerdutyRecipient struct {
 	pulumi.CustomResourceState
@@ -154,7 +149,7 @@ func (i *PagerdutyRecipient) ToPagerdutyRecipientOutputWithContext(ctx context.C
 // PagerdutyRecipientArrayInput is an input type that accepts PagerdutyRecipientArray and PagerdutyRecipientArrayOutput values.
 // You can construct a concrete instance of `PagerdutyRecipientArrayInput` via:
 //
-//	PagerdutyRecipientArray{ PagerdutyRecipientArgs{...} }
+//          PagerdutyRecipientArray{ PagerdutyRecipientArgs{...} }
 type PagerdutyRecipientArrayInput interface {
 	pulumi.Input
 
@@ -179,7 +174,7 @@ func (i PagerdutyRecipientArray) ToPagerdutyRecipientArrayOutputWithContext(ctx 
 // PagerdutyRecipientMapInput is an input type that accepts PagerdutyRecipientMap and PagerdutyRecipientMapOutput values.
 // You can construct a concrete instance of `PagerdutyRecipientMapInput` via:
 //
-//	PagerdutyRecipientMap{ "key": PagerdutyRecipientArgs{...} }
+//          PagerdutyRecipientMap{ "key": PagerdutyRecipientArgs{...} }
 type PagerdutyRecipientMapInput interface {
 	pulumi.Input
 

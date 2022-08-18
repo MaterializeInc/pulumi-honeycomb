@@ -25,48 +25,45 @@ import (
 // package main
 //
 // import (
+// 	"fmt"
 //
-//	"fmt"
-//
-//	"github.com/pulumi/pulumi-honeycomb/sdk/go/honeycomb"
-//	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
-//	"github.com/pulumi/pulumi/sdk/v3/go/pulumi/config"
-//
+// 	"github.com/pulumi/pulumi-honeycomb/sdk/go/honeycomb"
+// 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+// 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi/config"
 // )
 //
-//	func main() {
-//		pulumi.Run(func(ctx *pulumi.Context) error {
-//			cfg := config.New(ctx, "")
-//			dataset := cfg.Require("dataset")
-//			testQueryGetQuerySpecification, err := honeycomb.GetQuerySpecification(ctx, &GetQuerySpecificationArgs{
-//				Calculations: []GetQuerySpecificationCalculation{
-//					GetQuerySpecificationCalculation{
-//						Op:     "AVG",
-//						Column: pulumi.StringRef("duration_ms"),
-//					},
-//				},
-//				Filters: []GetQuerySpecificationFilter{
-//					GetQuerySpecificationFilter{
-//						Column: "duration_ms",
-//						Op:     ">",
-//						Value:  pulumi.StringRef("200"),
-//					},
-//				},
-//			}, nil)
-//			if err != nil {
-//				return err
-//			}
-//			_, err = honeycomb.NewQuery(ctx, "testQueryQuery", &honeycomb.QueryArgs{
-//				Dataset:   pulumi.String(fmt.Sprintf("%vs", "%")),
-//				QueryJson: pulumi.String(testQueryGetQuerySpecification.Json),
-//			})
-//			if err != nil {
-//				return err
-//			}
-//			return nil
-//		})
-//	}
-//
+// func main() {
+// 	pulumi.Run(func(ctx *pulumi.Context) error {
+// 		cfg := config.New(ctx, "")
+// 		dataset := cfg.Require("dataset")
+// 		testQueryGetQuerySpecification, err := honeycomb.GetQuerySpecification(ctx, &GetQuerySpecificationArgs{
+// 			Calculations: []GetQuerySpecificationCalculation{
+// 				GetQuerySpecificationCalculation{
+// 					Op:     "AVG",
+// 					Column: pulumi.StringRef("duration_ms"),
+// 				},
+// 			},
+// 			Filters: []GetQuerySpecificationFilter{
+// 				GetQuerySpecificationFilter{
+// 					Column: "duration_ms",
+// 					Op:     ">",
+// 					Value:  pulumi.StringRef("200"),
+// 				},
+// 			},
+// 		}, nil)
+// 		if err != nil {
+// 			return err
+// 		}
+// 		_, err = honeycomb.NewQuery(ctx, "testQueryQuery", &honeycomb.QueryArgs{
+// 			Dataset:   pulumi.String(fmt.Sprintf("%vs", "%")),
+// 			QueryJson: pulumi.String(testQueryGetQuerySpecification.Json),
+// 		})
+// 		if err != nil {
+// 			return err
+// 		}
+// 		return nil
+// 	})
+// }
 // ```
 //
 // ## Import
@@ -175,7 +172,7 @@ func (i *Query) ToQueryOutputWithContext(ctx context.Context) QueryOutput {
 // QueryArrayInput is an input type that accepts QueryArray and QueryArrayOutput values.
 // You can construct a concrete instance of `QueryArrayInput` via:
 //
-//	QueryArray{ QueryArgs{...} }
+//          QueryArray{ QueryArgs{...} }
 type QueryArrayInput interface {
 	pulumi.Input
 
@@ -200,7 +197,7 @@ func (i QueryArray) ToQueryArrayOutputWithContext(ctx context.Context) QueryArra
 // QueryMapInput is an input type that accepts QueryMap and QueryMapOutput values.
 // You can construct a concrete instance of `QueryMapInput` via:
 //
-//	QueryMap{ "key": QueryArgs{...} }
+//          QueryMap{ "key": QueryArgs{...} }
 type QueryMapInput interface {
 	pulumi.Input
 

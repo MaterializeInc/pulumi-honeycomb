@@ -37,7 +37,7 @@ type BoardQuery struct {
 // BoardQueryInput is an input type that accepts BoardQueryArgs and BoardQueryOutput values.
 // You can construct a concrete instance of `BoardQueryInput` via:
 //
-//	BoardQueryArgs{...}
+//          BoardQueryArgs{...}
 type BoardQueryInput interface {
 	pulumi.Input
 
@@ -84,7 +84,7 @@ func (i BoardQueryArgs) ToBoardQueryOutputWithContext(ctx context.Context) Board
 // BoardQueryArrayInput is an input type that accepts BoardQueryArray and BoardQueryArrayOutput values.
 // You can construct a concrete instance of `BoardQueryArrayInput` via:
 //
-//	BoardQueryArray{ BoardQueryArgs{...} }
+//          BoardQueryArray{ BoardQueryArgs{...} }
 type BoardQueryArrayInput interface {
 	pulumi.Input
 
@@ -190,7 +190,7 @@ type BoardQueryGraphSettings struct {
 // BoardQueryGraphSettingsInput is an input type that accepts BoardQueryGraphSettingsArgs and BoardQueryGraphSettingsOutput values.
 // You can construct a concrete instance of `BoardQueryGraphSettingsInput` via:
 //
-//	BoardQueryGraphSettingsArgs{...}
+//          BoardQueryGraphSettingsArgs{...}
 type BoardQueryGraphSettingsInput interface {
 	pulumi.Input
 
@@ -229,11 +229,11 @@ func (i BoardQueryGraphSettingsArgs) ToBoardQueryGraphSettingsPtrOutputWithConte
 // BoardQueryGraphSettingsPtrInput is an input type that accepts BoardQueryGraphSettingsArgs, BoardQueryGraphSettingsPtr and BoardQueryGraphSettingsPtrOutput values.
 // You can construct a concrete instance of `BoardQueryGraphSettingsPtrInput` via:
 //
-//	        BoardQueryGraphSettingsArgs{...}
+//          BoardQueryGraphSettingsArgs{...}
 //
-//	or:
+//  or:
 //
-//	        nil
+//          nil
 type BoardQueryGraphSettingsPtrInput interface {
 	pulumi.Input
 
@@ -386,7 +386,7 @@ type BurnAlertRecipient struct {
 // BurnAlertRecipientInput is an input type that accepts BurnAlertRecipientArgs and BurnAlertRecipientOutput values.
 // You can construct a concrete instance of `BurnAlertRecipientInput` via:
 //
-//	BurnAlertRecipientArgs{...}
+//          BurnAlertRecipientArgs{...}
 type BurnAlertRecipientInput interface {
 	pulumi.Input
 
@@ -420,7 +420,7 @@ func (i BurnAlertRecipientArgs) ToBurnAlertRecipientOutputWithContext(ctx contex
 // BurnAlertRecipientArrayInput is an input type that accepts BurnAlertRecipientArray and BurnAlertRecipientArrayOutput values.
 // You can construct a concrete instance of `BurnAlertRecipientArrayInput` via:
 //
-//	BurnAlertRecipientArray{ BurnAlertRecipientArgs{...} }
+//          BurnAlertRecipientArray{ BurnAlertRecipientArgs{...} }
 type BurnAlertRecipientArrayInput interface {
 	pulumi.Input
 
@@ -503,7 +503,7 @@ type BurnAlertRecipientNotificationDetails struct {
 // BurnAlertRecipientNotificationDetailsInput is an input type that accepts BurnAlertRecipientNotificationDetailsArgs and BurnAlertRecipientNotificationDetailsOutput values.
 // You can construct a concrete instance of `BurnAlertRecipientNotificationDetailsInput` via:
 //
-//	BurnAlertRecipientNotificationDetailsArgs{...}
+//          BurnAlertRecipientNotificationDetailsArgs{...}
 type BurnAlertRecipientNotificationDetailsInput interface {
 	pulumi.Input
 
@@ -538,11 +538,11 @@ func (i BurnAlertRecipientNotificationDetailsArgs) ToBurnAlertRecipientNotificat
 // BurnAlertRecipientNotificationDetailsPtrInput is an input type that accepts BurnAlertRecipientNotificationDetailsArgs, BurnAlertRecipientNotificationDetailsPtr and BurnAlertRecipientNotificationDetailsPtrOutput values.
 // You can construct a concrete instance of `BurnAlertRecipientNotificationDetailsPtrInput` via:
 //
-//	        BurnAlertRecipientNotificationDetailsArgs{...}
+//          BurnAlertRecipientNotificationDetailsArgs{...}
 //
-//	or:
+//  or:
 //
-//	        nil
+//          nil
 type BurnAlertRecipientNotificationDetailsPtrInput interface {
 	pulumi.Input
 
@@ -639,7 +639,7 @@ type GetQuerySpecificationCalculation struct {
 // GetQuerySpecificationCalculationInput is an input type that accepts GetQuerySpecificationCalculationArgs and GetQuerySpecificationCalculationOutput values.
 // You can construct a concrete instance of `GetQuerySpecificationCalculationInput` via:
 //
-//	GetQuerySpecificationCalculationArgs{...}
+//          GetQuerySpecificationCalculationArgs{...}
 type GetQuerySpecificationCalculationInput interface {
 	pulumi.Input
 
@@ -669,7 +669,7 @@ func (i GetQuerySpecificationCalculationArgs) ToGetQuerySpecificationCalculation
 // GetQuerySpecificationCalculationArrayInput is an input type that accepts GetQuerySpecificationCalculationArray and GetQuerySpecificationCalculationArrayOutput values.
 // You can construct a concrete instance of `GetQuerySpecificationCalculationArrayInput` via:
 //
-//	GetQuerySpecificationCalculationArray{ GetQuerySpecificationCalculationArgs{...} }
+//          GetQuerySpecificationCalculationArray{ GetQuerySpecificationCalculationArgs{...} }
 type GetQuerySpecificationCalculationArrayInput interface {
 	pulumi.Input
 
@@ -763,7 +763,7 @@ type GetQuerySpecificationFilter struct {
 // GetQuerySpecificationFilterInput is an input type that accepts GetQuerySpecificationFilterArgs and GetQuerySpecificationFilterOutput values.
 // You can construct a concrete instance of `GetQuerySpecificationFilterInput` via:
 //
-//	GetQuerySpecificationFilterArgs{...}
+//          GetQuerySpecificationFilterArgs{...}
 type GetQuerySpecificationFilterInput interface {
 	pulumi.Input
 
@@ -811,7 +811,7 @@ func (i GetQuerySpecificationFilterArgs) ToGetQuerySpecificationFilterOutputWith
 // GetQuerySpecificationFilterArrayInput is an input type that accepts GetQuerySpecificationFilterArray and GetQuerySpecificationFilterArrayOutput values.
 // You can construct a concrete instance of `GetQuerySpecificationFilterArrayInput` via:
 //
-//	GetQuerySpecificationFilterArray{ GetQuerySpecificationFilterArgs{...} }
+//          GetQuerySpecificationFilterArray{ GetQuerySpecificationFilterArgs{...} }
 type GetQuerySpecificationFilterArrayInput interface {
 	pulumi.Input
 
@@ -924,7 +924,7 @@ type GetQuerySpecificationHaving struct {
 // GetQuerySpecificationHavingInput is an input type that accepts GetQuerySpecificationHavingArgs and GetQuerySpecificationHavingOutput values.
 // You can construct a concrete instance of `GetQuerySpecificationHavingInput` via:
 //
-//	GetQuerySpecificationHavingArgs{...}
+//          GetQuerySpecificationHavingArgs{...}
 type GetQuerySpecificationHavingInput interface {
 	pulumi.Input
 
@@ -958,7 +958,7 @@ func (i GetQuerySpecificationHavingArgs) ToGetQuerySpecificationHavingOutputWith
 // GetQuerySpecificationHavingArrayInput is an input type that accepts GetQuerySpecificationHavingArray and GetQuerySpecificationHavingArrayOutput values.
 // You can construct a concrete instance of `GetQuerySpecificationHavingArrayInput` via:
 //
-//	GetQuerySpecificationHavingArray{ GetQuerySpecificationHavingArgs{...} }
+//          GetQuerySpecificationHavingArray{ GetQuerySpecificationHavingArgs{...} }
 type GetQuerySpecificationHavingArrayInput interface {
 	pulumi.Input
 
@@ -1046,7 +1046,7 @@ type GetQuerySpecificationOrder struct {
 // GetQuerySpecificationOrderInput is an input type that accepts GetQuerySpecificationOrderArgs and GetQuerySpecificationOrderOutput values.
 // You can construct a concrete instance of `GetQuerySpecificationOrderInput` via:
 //
-//	GetQuerySpecificationOrderArgs{...}
+//          GetQuerySpecificationOrderArgs{...}
 type GetQuerySpecificationOrderInput interface {
 	pulumi.Input
 
@@ -1078,7 +1078,7 @@ func (i GetQuerySpecificationOrderArgs) ToGetQuerySpecificationOrderOutputWithCo
 // GetQuerySpecificationOrderArrayInput is an input type that accepts GetQuerySpecificationOrderArray and GetQuerySpecificationOrderArrayOutput values.
 // You can construct a concrete instance of `GetQuerySpecificationOrderArrayInput` via:
 //
-//	GetQuerySpecificationOrderArray{ GetQuerySpecificationOrderArgs{...} }
+//          GetQuerySpecificationOrderArray{ GetQuerySpecificationOrderArgs{...} }
 type GetQuerySpecificationOrderArrayInput interface {
 	pulumi.Input
 
@@ -1161,7 +1161,7 @@ type GetRecipientDetailFilter struct {
 // GetRecipientDetailFilterInput is an input type that accepts GetRecipientDetailFilterArgs and GetRecipientDetailFilterOutput values.
 // You can construct a concrete instance of `GetRecipientDetailFilterInput` via:
 //
-//	GetRecipientDetailFilterArgs{...}
+//          GetRecipientDetailFilterArgs{...}
 type GetRecipientDetailFilterInput interface {
 	pulumi.Input
 
@@ -1201,11 +1201,11 @@ func (i GetRecipientDetailFilterArgs) ToGetRecipientDetailFilterPtrOutputWithCon
 // GetRecipientDetailFilterPtrInput is an input type that accepts GetRecipientDetailFilterArgs, GetRecipientDetailFilterPtr and GetRecipientDetailFilterPtrOutput values.
 // You can construct a concrete instance of `GetRecipientDetailFilterPtrInput` via:
 //
-//	        GetRecipientDetailFilterArgs{...}
+//          GetRecipientDetailFilterArgs{...}
 //
-//	or:
+//  or:
 //
-//	        nil
+//          nil
 type GetRecipientDetailFilterPtrInput interface {
 	pulumi.Input
 
@@ -1338,7 +1338,7 @@ type TriggerRecipient struct {
 // TriggerRecipientInput is an input type that accepts TriggerRecipientArgs and TriggerRecipientOutput values.
 // You can construct a concrete instance of `TriggerRecipientInput` via:
 //
-//	TriggerRecipientArgs{...}
+//          TriggerRecipientArgs{...}
 type TriggerRecipientInput interface {
 	pulumi.Input
 
@@ -1372,7 +1372,7 @@ func (i TriggerRecipientArgs) ToTriggerRecipientOutputWithContext(ctx context.Co
 // TriggerRecipientArrayInput is an input type that accepts TriggerRecipientArray and TriggerRecipientArrayOutput values.
 // You can construct a concrete instance of `TriggerRecipientArrayInput` via:
 //
-//	TriggerRecipientArray{ TriggerRecipientArgs{...} }
+//          TriggerRecipientArray{ TriggerRecipientArgs{...} }
 type TriggerRecipientArrayInput interface {
 	pulumi.Input
 
@@ -1455,7 +1455,7 @@ type TriggerRecipientNotificationDetails struct {
 // TriggerRecipientNotificationDetailsInput is an input type that accepts TriggerRecipientNotificationDetailsArgs and TriggerRecipientNotificationDetailsOutput values.
 // You can construct a concrete instance of `TriggerRecipientNotificationDetailsInput` via:
 //
-//	TriggerRecipientNotificationDetailsArgs{...}
+//          TriggerRecipientNotificationDetailsArgs{...}
 type TriggerRecipientNotificationDetailsInput interface {
 	pulumi.Input
 
@@ -1490,11 +1490,11 @@ func (i TriggerRecipientNotificationDetailsArgs) ToTriggerRecipientNotificationD
 // TriggerRecipientNotificationDetailsPtrInput is an input type that accepts TriggerRecipientNotificationDetailsArgs, TriggerRecipientNotificationDetailsPtr and TriggerRecipientNotificationDetailsPtrOutput values.
 // You can construct a concrete instance of `TriggerRecipientNotificationDetailsPtrInput` via:
 //
-//	        TriggerRecipientNotificationDetailsArgs{...}
+//          TriggerRecipientNotificationDetailsArgs{...}
 //
-//	or:
+//  or:
 //
-//	        nil
+//          nil
 type TriggerRecipientNotificationDetailsPtrInput interface {
 	pulumi.Input
 
@@ -1591,7 +1591,7 @@ type TriggerThreshold struct {
 // TriggerThresholdInput is an input type that accepts TriggerThresholdArgs and TriggerThresholdOutput values.
 // You can construct a concrete instance of `TriggerThresholdInput` via:
 //
-//	TriggerThresholdArgs{...}
+//          TriggerThresholdArgs{...}
 type TriggerThresholdInput interface {
 	pulumi.Input
 
@@ -1629,11 +1629,11 @@ func (i TriggerThresholdArgs) ToTriggerThresholdPtrOutputWithContext(ctx context
 // TriggerThresholdPtrInput is an input type that accepts TriggerThresholdArgs, TriggerThresholdPtr and TriggerThresholdPtrOutput values.
 // You can construct a concrete instance of `TriggerThresholdPtrInput` via:
 //
-//	        TriggerThresholdArgs{...}
+//          TriggerThresholdArgs{...}
 //
-//	or:
+//  or:
 //
-//	        nil
+//          nil
 type TriggerThresholdPtrInput interface {
 	pulumi.Input
 

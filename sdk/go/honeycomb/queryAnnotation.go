@@ -17,54 +17,51 @@ import (
 // package main
 //
 // import (
-//
-//	"github.com/pulumi/pulumi-honeycomb/sdk/go/honeycomb"
-//	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
-//	"github.com/pulumi/pulumi/sdk/v3/go/pulumi/config"
-//
+// 	"github.com/pulumi/pulumi-honeycomb/sdk/go/honeycomb"
+// 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+// 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi/config"
 // )
 //
-//	func main() {
-//		pulumi.Run(func(ctx *pulumi.Context) error {
-//			cfg := config.New(ctx, "")
-//			dataset := cfg.Require("dataset")
-//			testQueryGetQuerySpecification, err := honeycomb.GetQuerySpecification(ctx, &GetQuerySpecificationArgs{
-//				Calculations: []GetQuerySpecificationCalculation{
-//					GetQuerySpecificationCalculation{
-//						Op:     "AVG",
-//						Column: pulumi.StringRef("duration_ms"),
-//					},
-//				},
-//				Filters: []GetQuerySpecificationFilter{
-//					GetQuerySpecificationFilter{
-//						Column: "duration_ms",
-//						Op:     ">",
-//						Value:  pulumi.StringRef("10"),
-//					},
-//				},
-//			}, nil)
-//			if err != nil {
-//				return err
-//			}
-//			testQueryQuery, err := honeycomb.NewQuery(ctx, "testQueryQuery", &honeycomb.QueryArgs{
-//				Dataset:   pulumi.String(dataset),
-//				QueryJson: pulumi.String(testQueryGetQuerySpecification.Json),
-//			})
-//			if err != nil {
-//				return err
-//			}
-//			_, err = honeycomb.NewQueryAnnotation(ctx, "testAnnotation", &honeycomb.QueryAnnotationArgs{
-//				Dataset:     pulumi.String(dataset),
-//				QueryId:     testQueryQuery.ID(),
-//				Description: pulumi.String("Describes my cool query (optional)"),
-//			})
-//			if err != nil {
-//				return err
-//			}
-//			return nil
-//		})
-//	}
-//
+// func main() {
+// 	pulumi.Run(func(ctx *pulumi.Context) error {
+// 		cfg := config.New(ctx, "")
+// 		dataset := cfg.Require("dataset")
+// 		testQueryGetQuerySpecification, err := honeycomb.GetQuerySpecification(ctx, &GetQuerySpecificationArgs{
+// 			Calculations: []GetQuerySpecificationCalculation{
+// 				GetQuerySpecificationCalculation{
+// 					Op:     "AVG",
+// 					Column: pulumi.StringRef("duration_ms"),
+// 				},
+// 			},
+// 			Filters: []GetQuerySpecificationFilter{
+// 				GetQuerySpecificationFilter{
+// 					Column: "duration_ms",
+// 					Op:     ">",
+// 					Value:  pulumi.StringRef("10"),
+// 				},
+// 			},
+// 		}, nil)
+// 		if err != nil {
+// 			return err
+// 		}
+// 		testQueryQuery, err := honeycomb.NewQuery(ctx, "testQueryQuery", &honeycomb.QueryArgs{
+// 			Dataset:   pulumi.String(dataset),
+// 			QueryJson: pulumi.String(testQueryGetQuerySpecification.Json),
+// 		})
+// 		if err != nil {
+// 			return err
+// 		}
+// 		_, err = honeycomb.NewQueryAnnotation(ctx, "testAnnotation", &honeycomb.QueryAnnotationArgs{
+// 			Dataset:     pulumi.String(dataset),
+// 			QueryId:     testQueryQuery.ID(),
+// 			Description: pulumi.String("Describes my cool query (optional)"),
+// 		})
+// 		if err != nil {
+// 			return err
+// 		}
+// 		return nil
+// 	})
+// }
 // ```
 //
 // ## Import
@@ -193,7 +190,7 @@ func (i *QueryAnnotation) ToQueryAnnotationOutputWithContext(ctx context.Context
 // QueryAnnotationArrayInput is an input type that accepts QueryAnnotationArray and QueryAnnotationArrayOutput values.
 // You can construct a concrete instance of `QueryAnnotationArrayInput` via:
 //
-//	QueryAnnotationArray{ QueryAnnotationArgs{...} }
+//          QueryAnnotationArray{ QueryAnnotationArgs{...} }
 type QueryAnnotationArrayInput interface {
 	pulumi.Input
 
@@ -218,7 +215,7 @@ func (i QueryAnnotationArray) ToQueryAnnotationArrayOutputWithContext(ctx contex
 // QueryAnnotationMapInput is an input type that accepts QueryAnnotationMap and QueryAnnotationMapOutput values.
 // You can construct a concrete instance of `QueryAnnotationMapInput` via:
 //
-//	QueryAnnotationMap{ "key": QueryAnnotationArgs{...} }
+//          QueryAnnotationMap{ "key": QueryAnnotationArgs{...} }
 type QueryAnnotationMapInput interface {
 	pulumi.Input
 

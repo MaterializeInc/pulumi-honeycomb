@@ -17,30 +17,27 @@ import (
 // package main
 //
 // import (
-//
-//	"github.com/pulumi/pulumi-honeycomb/sdk/go/honeycomb"
-//	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
-//	"github.com/pulumi/pulumi/sdk/v3/go/pulumi/config"
-//
+// 	"github.com/pulumi/pulumi-honeycomb/sdk/go/honeycomb"
+// 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+// 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi/config"
 // )
 //
-//	func main() {
-//		pulumi.Run(func(ctx *pulumi.Context) error {
-//			cfg := config.New(ctx, "")
-//			dataset := cfg.Require("dataset")
-//			_, err := honeycomb.NewColumn(ctx, "durationMs", &honeycomb.ColumnArgs{
-//				KeyName:     pulumi.String("duration_ms_log10"),
-//				Type:        pulumi.String("float"),
-//				Description: pulumi.String("Duration of the trace"),
-//				Dataset:     pulumi.String(dataset),
-//			})
-//			if err != nil {
-//				return err
-//			}
-//			return nil
-//		})
-//	}
-//
+// func main() {
+// 	pulumi.Run(func(ctx *pulumi.Context) error {
+// 		cfg := config.New(ctx, "")
+// 		dataset := cfg.Require("dataset")
+// 		_, err := honeycomb.NewColumn(ctx, "durationMs", &honeycomb.ColumnArgs{
+// 			KeyName:     pulumi.String("duration_ms_log10"),
+// 			Type:        pulumi.String("float"),
+// 			Description: pulumi.String("Duration of the trace"),
+// 			Dataset:     pulumi.String(dataset),
+// 		})
+// 		if err != nil {
+// 			return err
+// 		}
+// 		return nil
+// 	})
+// }
 // ```
 //
 // ## Import
@@ -48,9 +45,7 @@ import (
 // Columns can be imported using a combination of the dataset name and their key name, e.g.
 //
 // ```sh
-//
-//	$ pulumi import honeycomb:index/column:Column my_column my-dataset/duration_ms
-//
+//  $ pulumi import honeycomb:index/column:Column my_column my-dataset/duration_ms
 // ```
 type Column struct {
 	pulumi.CustomResourceState
@@ -203,7 +198,7 @@ func (i *Column) ToColumnOutputWithContext(ctx context.Context) ColumnOutput {
 // ColumnArrayInput is an input type that accepts ColumnArray and ColumnArrayOutput values.
 // You can construct a concrete instance of `ColumnArrayInput` via:
 //
-//	ColumnArray{ ColumnArgs{...} }
+//          ColumnArray{ ColumnArgs{...} }
 type ColumnArrayInput interface {
 	pulumi.Input
 
@@ -228,7 +223,7 @@ func (i ColumnArray) ToColumnArrayOutputWithContext(ctx context.Context) ColumnA
 // ColumnMapInput is an input type that accepts ColumnMap and ColumnMapOutput values.
 // You can construct a concrete instance of `ColumnMapInput` via:
 //
-//	ColumnMap{ "key": ColumnArgs{...} }
+//          ColumnMap{ "key": ColumnArgs{...} }
 type ColumnMapInput interface {
 	pulumi.Input
 

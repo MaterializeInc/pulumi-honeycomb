@@ -24,24 +24,21 @@ import (
 // package main
 //
 // import (
-//
-//	"github.com/pulumi/pulumi-honeycomb/sdk/go/honeycomb"
-//	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
-//
+// 	"github.com/pulumi/pulumi-honeycomb/sdk/go/honeycomb"
+// 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 // )
 //
-//	func main() {
-//		pulumi.Run(func(ctx *pulumi.Context) error {
-//			_, err := honeycomb.NewDataset(ctx, "myDataset", &honeycomb.DatasetArgs{
-//				Description: pulumi.String("buzzing with data"),
-//			})
-//			if err != nil {
-//				return err
-//			}
-//			return nil
-//		})
-//	}
-//
+// func main() {
+// 	pulumi.Run(func(ctx *pulumi.Context) error {
+// 		_, err := honeycomb.NewDataset(ctx, "myDataset", &honeycomb.DatasetArgs{
+// 			Description: pulumi.String("buzzing with data"),
+// 		})
+// 		if err != nil {
+// 			return err
+// 		}
+// 		return nil
+// 	})
+// }
 // ```
 type Dataset struct {
 	pulumi.CustomResourceState
@@ -168,7 +165,7 @@ func (i *Dataset) ToDatasetOutputWithContext(ctx context.Context) DatasetOutput 
 // DatasetArrayInput is an input type that accepts DatasetArray and DatasetArrayOutput values.
 // You can construct a concrete instance of `DatasetArrayInput` via:
 //
-//	DatasetArray{ DatasetArgs{...} }
+//          DatasetArray{ DatasetArgs{...} }
 type DatasetArrayInput interface {
 	pulumi.Input
 
@@ -193,7 +190,7 @@ func (i DatasetArray) ToDatasetArrayOutputWithContext(ctx context.Context) Datas
 // DatasetMapInput is an input type that accepts DatasetMap and DatasetMapOutput values.
 // You can construct a concrete instance of `DatasetMapInput` via:
 //
-//	DatasetMap{ "key": DatasetArgs{...} }
+//          DatasetMap{ "key": DatasetArgs{...} }
 type DatasetMapInput interface {
 	pulumi.Input
 

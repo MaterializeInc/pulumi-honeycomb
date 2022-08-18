@@ -21,24 +21,21 @@ import (
 // package main
 //
 // import (
-//
-//	"github.com/pulumi/pulumi-honeycomb/sdk/go/honeycomb"
-//	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
-//
+// 	"github.com/pulumi/pulumi-honeycomb/sdk/go/honeycomb"
+// 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 // )
 //
-//	func main() {
-//		pulumi.Run(func(ctx *pulumi.Context) error {
-//			_, err := honeycomb.NewEmailRecipient(ctx, "alerts", &honeycomb.EmailRecipientArgs{
-//				Address: pulumi.String("alerts@example.com"),
-//			})
-//			if err != nil {
-//				return err
-//			}
-//			return nil
-//		})
-//	}
-//
+// func main() {
+// 	pulumi.Run(func(ctx *pulumi.Context) error {
+// 		_, err := honeycomb.NewEmailRecipient(ctx, "alerts", &honeycomb.EmailRecipientArgs{
+// 			Address: pulumi.String("alerts@example.com"),
+// 		})
+// 		if err != nil {
+// 			return err
+// 		}
+// 		return nil
+// 	})
+// }
 // ```
 //
 // ## Import
@@ -46,9 +43,7 @@ import (
 // Email Recipients can be imported by their ID, e.g.
 //
 // ```sh
-//
-//	$ pulumi import honeycomb:index/emailRecipient:EmailRecipient my_recipient nx2zsegA0dZ
-//
+//  $ pulumi import honeycomb:index/emailRecipient:EmailRecipient my_recipient nx2zsegA0dZ
 // ```
 type EmailRecipient struct {
 	pulumi.CustomResourceState
@@ -140,7 +135,7 @@ func (i *EmailRecipient) ToEmailRecipientOutputWithContext(ctx context.Context) 
 // EmailRecipientArrayInput is an input type that accepts EmailRecipientArray and EmailRecipientArrayOutput values.
 // You can construct a concrete instance of `EmailRecipientArrayInput` via:
 //
-//	EmailRecipientArray{ EmailRecipientArgs{...} }
+//          EmailRecipientArray{ EmailRecipientArgs{...} }
 type EmailRecipientArrayInput interface {
 	pulumi.Input
 
@@ -165,7 +160,7 @@ func (i EmailRecipientArray) ToEmailRecipientArrayOutputWithContext(ctx context.
 // EmailRecipientMapInput is an input type that accepts EmailRecipientMap and EmailRecipientMapOutput values.
 // You can construct a concrete instance of `EmailRecipientMapInput` via:
 //
-//	EmailRecipientMap{ "key": EmailRecipientArgs{...} }
+//          EmailRecipientMap{ "key": EmailRecipientArgs{...} }
 type EmailRecipientMapInput interface {
 	pulumi.Input
 
