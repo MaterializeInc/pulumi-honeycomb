@@ -1,6 +1,11 @@
 CHANGELOG
 =========
 
+## 0.0.14
+
+* Upgraded the terraform provider to 0.11.1.
+* New resource `MarkerSetting`.
+
 ## 0.0.13
 
 * Add missing resource `SlackRecipient` and data source `GetRecipients`.
