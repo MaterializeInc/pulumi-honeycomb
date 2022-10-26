@@ -61,6 +61,7 @@ func Provider() tfbridge.ProviderInfo {
 			"honeycombio_derived_column":      {Tok: tfbridge.MakeResource(mainPkg, mainMod, "DerivedColumn")},
 			"honeycombio_email_recipient":     {Tok: tfbridge.MakeResource(mainPkg, mainMod, "EmailRecipient")},
 			"honeycombio_marker":              {Tok: tfbridge.MakeResource(mainPkg, mainMod, "Marker")},
+			"honeycombio_marker_setting":      {Tok: tfbridge.MakeResource(mainPkg, mainMod, "MarkerSetting")},
 			"honeycombio_pagerduty_recipient": {Tok: tfbridge.MakeResource(mainPkg, mainMod, "PagerdutyRecipient")},
 			"honeycombio_query":               {Tok: tfbridge.MakeResource(mainPkg, mainMod, "Query")},
 			"honeycombio_query_annotation":    {Tok: tfbridge.MakeResource(mainPkg, mainMod, "QueryAnnotation")},
