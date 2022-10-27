@@ -1196,6 +1196,85 @@
                 "type": "object"
             }
         },
+        "honeycomb:index/markerSetting:MarkerSetting": {
+            "description": "## # Resource: honeycomb.MarkerSetting\n\nCreates a marker setting. For more information about marker settings, check out the [Marker Settings API](https://docs.honeycomb.io/api/marker-settings/).\n\n{{% examples %}}\n## Example Usage\n{{% example %}}\n\n```typescript\nimport * as pulumi from \"@pulumi/pulumi\";\nimport * as pulumi_honeycomb from \"@materializeinc/pulumi-honeycomb\";\n\nconst config = new pulumi.Config();\nconst dataset = config.require(\"dataset\");\nconst type = config.require(\"type\");\nconst markerSetting = new honeycomb.MarkerSetting(\"markerSetting\", {\n    type: type,\n    color: \"#DF4661\",\n    dataset: dataset,\n});\n```\n```python\nimport pulumi\nimport pulumi_honeycomb as honeycomb\n\nconfig = pulumi.Config()\ndataset = config.require(\"dataset\")\ntype = config.require(\"type\")\nmarker_setting = honeycomb.MarkerSetting(\"markerSetting\",\n    type=type,\n    color=\"#DF4661\",\n    dataset=dataset)\n```\n```csharp\nusing Pulumi;\nusing Honeycomb = Pulumi.Honeycomb;\n\nclass MyStack : Stack\n{\n    public MyStack()\n    {\n        var config = new Config();\n        var dataset = config.Require(\"dataset\");\n        var type = config.Require(\"type\");\n        var markerSetting = new Honeycomb.MarkerSetting(\"markerSetting\", new Honeycomb.MarkerSettingArgs\n        {\n            Type = type,\n            Color = \"#DF4661\",\n            Dataset = dataset,\n        });\n    }\n\n}\n```\n```java\npackage generated_program;\n\nimport com.pulumi.Context;\nimport com.pulumi.Pulumi;\nimport com.pulumi.core.Output;\nimport com.pulumi.honeycomb.MarkerSetting;\nimport com.pulumi.honeycomb.MarkerSettingArgs;\nimport java.util.List;\nimport java.util.ArrayList;\nimport java.util.Map;\nimport java.io.File;\nimport java.nio.file.Files;\nimport java.nio.file.Paths;\n\npublic class App {\n    public static void main(String[] args) {\n        Pulumi.run(App::stack);\n    }\n\n    public static void stack(Context ctx) {\n        final var config = ctx.config();\n        final var dataset = config.get(\"dataset\");\n        final var type = config.get(\"type\");\n        var markerSetting = new MarkerSetting(\"markerSetting\", MarkerSettingArgs.builder()        \n            .type(type)\n            .color(\"#DF4661\")\n            .dataset(dataset)\n            .build());\n\n    }\n}\n```\n```yaml\nconfiguration:\n  dataset:\n    type: string\n  type:\n    type: string\nresources:\n  markerSetting:\n    type: honeycomb:MarkerSetting\n    properties:\n      type: ${type}\n      color: '#DF4661'\n      dataset: ${dataset}\n```\n{{% /example %}}\n{{% /examples %}}",
+            "properties": {
+                "color": {
+                    "type": "string",
+                    "description": "The color set for the marker as a hex color code (e.g. `#DF4661`)\n"
+                },
+                "createdAt": {
+                    "type": "string",
+                    "description": "Timestamp when the marker setting was created.\n"
+                },
+                "dataset": {
+                    "type": "string",
+                    "description": "The dataset this marker setting is placed on.\n"
+                },
+                "type": {
+                    "type": "string",
+                    "description": "The type of the marker setting, Honeycomb.io can display markers in different colors depending on their type.\n"
+                },
+                "updatedAt": {
+                    "type": "string",
+                    "description": "Timestamp when the marker setting was last modified.\n"
+                }
+            },
+            "required": [
+                "color",
+                "createdAt",
+                "dataset",
+                "type",
+                "updatedAt"
+            ],
+            "inputProperties": {
+                "color": {
+                    "type": "string",
+                    "description": "The color set for the marker as a hex color code (e.g. `#DF4661`)\n"
+                },
+                "dataset": {
+                    "type": "string",
+                    "description": "The dataset this marker setting is placed on.\n",
+                    "willReplaceOnChanges": true
+                },
+                "type": {
+                    "type": "string",
+                    "description": "The type of the marker setting, Honeycomb.io can display markers in different colors depending on their type.\n"
+                }
+            },
+            "requiredInputs": [
+                "color",
+                "dataset",
+                "type"
+            ],
+            "stateInputs": {
+                "description": "Input properties used for looking up and filtering MarkerSetting resources.\n",
+                "properties": {
+                    "color": {
+                        "type": "string",
+                        "description": "The color set for the marker as a hex color code (e.g. `#DF4661`)\n"
+                    },
+                    "createdAt": {
+                        "type": "string",
+                        "description": "Timestamp when the marker setting was created.\n"
+                    },
+                    "dataset": {
+                        "type": "string",
+                        "description": "The dataset this marker setting is placed on.\n",
+                        "willReplaceOnChanges": true
+                    },
+                    "type": {
+                        "type": "string",
+                        "description": "The type of the marker setting, Honeycomb.io can display markers in different colors depending on their type.\n"
+                    },
+                    "updatedAt": {
+                        "type": "string",
+                        "description": "Timestamp when the marker setting was last modified.\n"
+                    }
+                },
+                "type": "object"
+            }
+        },
         "honeycomb:index/pagerdutyRecipient:PagerdutyRecipient": {
             "description": "## # Resource: honeycomb.PagerdutyRecipient\n\n`honeycomb.PagerdutyRecipient` allows you to define and manage a PagerDuty recipient that can be used by Triggers or BurnAlerts notifications.\n\n{{% examples %}}\n## Example Usage\n{{% example %}}\n\n```typescript\nimport * as pulumi from \"@pulumi/pulumi\";\nimport * as honeycombio from \"@pulumi/honeycombio\";\n\nconst prod_oncall = new honeycombio.PagerdutyRecipient(\"prod-oncall\", {\n    integrationKey: \"cd6e8de3c857aefc950e0d5ebcb79ac2\",\n    integrationName: \"Production on-call notifications\",\n});\n```\n```python\nimport pulumi\nimport pulumi_honeycomb as honeycomb\n\nprod_oncall = honeycomb.PagerdutyRecipient(\"prod-oncall\",\n    integration_key=\"cd6e8de3c857aefc950e0d5ebcb79ac2\",\n    integration_name=\"Production on-call notifications\")\n```\n```csharp\nusing Pulumi;\nusing Honeycomb = Pulumi.Honeycomb;\n\nclass MyStack : Stack\n{\n    public MyStack()\n    {\n        var prod_oncall = new Honeycomb.PagerdutyRecipient(\"prod-oncall\", new Honeycomb.PagerdutyRecipientArgs\n        {\n            IntegrationKey = \"cd6e8de3c857aefc950e0d5ebcb79ac2\",\n            IntegrationName = \"Production on-call notifications\",\n        });\n    }\n\n}\n```\n```go\npackage main\n\nimport (\n\t\"github.com/pulumi/pulumi-honeycomb/sdk/go/honeycomb\"\n\t\"github.com/pulumi/pulumi/sdk/v3/go/pulumi\"\n)\n\nfunc main() {\n\tpulumi.Run(func(ctx *pulumi.Context) error {\n\t\t_, err := honeycomb.NewPagerdutyRecipient(ctx, \"prod-oncall\", \u0026honeycomb.PagerdutyRecipientArgs{\n\t\t\tIntegrationKey:  pulumi.String(\"cd6e8de3c857aefc950e0d5ebcb79ac2\"),\n\t\t\tIntegrationName: pulumi.String(\"Production on-call notifications\"),\n\t\t})\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\treturn nil\n\t})\n}\n```\n```java\npackage generated_program;\n\nimport com.pulumi.Context;\nimport com.pulumi.Pulumi;\nimport com.pulumi.core.Output;\nimport com.pulumi.honeycomb.PagerdutyRecipient;\nimport com.pulumi.honeycomb.PagerdutyRecipientArgs;\nimport java.util.List;\nimport java.util.ArrayList;\nimport java.util.Map;\nimport java.io.File;\nimport java.nio.file.Files;\nimport java.nio.file.Paths;\n\npublic class App {\n    public static void main(String[] args) {\n        Pulumi.run(App::stack);\n    }\n\n    public static void stack(Context ctx) {\n        var prod_oncall = new PagerdutyRecipient(\"prod-oncall\", PagerdutyRecipientArgs.builder()        \n            .integrationKey(\"cd6e8de3c857aefc950e0d5ebcb79ac2\")\n            .integrationName(\"Production on-call notifications\")\n            .build());\n\n    }\n}\n```\n```yaml\nresources:\n  prod-oncall:\n    type: honeycomb:PagerdutyRecipient\n    properties:\n      integrationKey: cd6e8de3c857aefc950e0d5ebcb79ac2\n      integrationName: Production on-call notifications\n```\n{{% /example %}}\n{{% /examples %}}\n\n## Import\n\nPagerDuty Recipients can be imported by their ID, e.g.\n\n```sh\n $ pulumi import honeycomb:index/pagerdutyRecipient:PagerdutyRecipient my_recipient nx2zsegA0dZ\n```\n\n ",
             "properties": {
@@ -1516,7 +1595,7 @@
                 },
                 "frequency": {
                     "type": "integer",
-                    "description": "The interval (in seconds) in which to check the results of the query’s calculation against the threshold. Value must be divisible by 60 and between 60 and 86400 (between 1 minute and 1 day). Defaults to 900 (15 minutes).\n"
+                    "description": "The interval (in seconds) in which to check the results of the query’s calculation against the threshold. This value must be divisible by 60, between 60 and 86400 (between 1 minute and 1 day), and not be more than 4 times the query's duration. Defaults to 900 (15 minutes).\n"
                 },
                 "name": {
                     "type": "string",
@@ -1565,7 +1644,7 @@
                 },
                 "frequency": {
                     "type": "integer",
-                    "description": "The interval (in seconds) in which to check the results of the query’s calculation against the threshold. Value must be divisible by 60 and between 60 and 86400 (between 1 minute and 1 day). Defaults to 900 (15 minutes).\n"
+                    "description": "The interval (in seconds) in which to check the results of the query’s calculation against the threshold. This value must be divisible by 60, between 60 and 86400 (between 1 minute and 1 day), and not be more than 4 times the query's duration. Defaults to 900 (15 minutes).\n"
                 },
                 "name": {
                     "type": "string",
@@ -1614,7 +1693,7 @@
                     },
                     "frequency": {
                         "type": "integer",
-                        "description": "The interval (in seconds) in which to check the results of the query’s calculation against the threshold. Value must be divisible by 60 and between 60 and 86400 (between 1 minute and 1 day). Defaults to 900 (15 minutes).\n"
+                        "description": "The interval (in seconds) in which to check the results of the query’s calculation against the threshold. This value must be divisible by 60, between 60 and 86400 (between 1 minute and 1 day), and not be more than 4 times the query's duration. Defaults to 900 (15 minutes).\n"
                     },
                     "name": {
                         "type": "string",

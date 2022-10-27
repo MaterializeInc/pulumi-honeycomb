@@ -34,6 +34,8 @@ func (m *module) Construct(ctx *pulumi.Context, name, typ, urn string) (r pulumi
 		r = &EmailRecipient{}
 	case "honeycomb:index/marker:Marker":
 		r = &Marker{}
+	case "honeycomb:index/markerSetting:MarkerSetting":
+		r = &MarkerSetting{}
 	case "honeycomb:index/pagerdutyRecipient:PagerdutyRecipient":
 		r = &PagerdutyRecipient{}
 	case "honeycomb:index/query:Query":
@@ -109,6 +111,11 @@ func init() {
 	pulumi.RegisterResourceModule(
 		"honeycomb",
 		"index/marker",
+		&module{version},
+	)
+	pulumi.RegisterResourceModule(
+		"honeycomb",
+		"index/markerSetting",
 		&module{version},
 	)
 	pulumi.RegisterResourceModule(

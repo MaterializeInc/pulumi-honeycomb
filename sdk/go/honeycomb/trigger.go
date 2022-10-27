@@ -177,7 +177,7 @@ type Trigger struct {
 	Description pulumi.StringPtrOutput `pulumi:"description"`
 	// The state of the trigger. If true, the trigger will not be run. Defaults to false.
 	Disabled pulumi.BoolPtrOutput `pulumi:"disabled"`
-	// The interval (in seconds) in which to check the results of the query’s calculation against the threshold. Value must be divisible by 60 and between 60 and 86400 (between 1 minute and 1 day). Defaults to 900 (15 minutes).
+	// The interval (in seconds) in which to check the results of the query’s calculation against the threshold. This value must be divisible by 60, between 60 and 86400 (between 1 minute and 1 day), and not be more than 4 times the query's duration. Defaults to 900 (15 minutes).
 	Frequency pulumi.IntOutput `pulumi:"frequency"`
 	// Name of the trigger.
 	Name pulumi.StringOutput `pulumi:"name"`
@@ -236,7 +236,7 @@ type triggerState struct {
 	Description *string `pulumi:"description"`
 	// The state of the trigger. If true, the trigger will not be run. Defaults to false.
 	Disabled *bool `pulumi:"disabled"`
-	// The interval (in seconds) in which to check the results of the query’s calculation against the threshold. Value must be divisible by 60 and between 60 and 86400 (between 1 minute and 1 day). Defaults to 900 (15 minutes).
+	// The interval (in seconds) in which to check the results of the query’s calculation against the threshold. This value must be divisible by 60, between 60 and 86400 (between 1 minute and 1 day), and not be more than 4 times the query's duration. Defaults to 900 (15 minutes).
 	Frequency *int `pulumi:"frequency"`
 	// Name of the trigger.
 	Name *string `pulumi:"name"`
@@ -257,7 +257,7 @@ type TriggerState struct {
 	Description pulumi.StringPtrInput
 	// The state of the trigger. If true, the trigger will not be run. Defaults to false.
 	Disabled pulumi.BoolPtrInput
-	// The interval (in seconds) in which to check the results of the query’s calculation against the threshold. Value must be divisible by 60 and between 60 and 86400 (between 1 minute and 1 day). Defaults to 900 (15 minutes).
+	// The interval (in seconds) in which to check the results of the query’s calculation against the threshold. This value must be divisible by 60, between 60 and 86400 (between 1 minute and 1 day), and not be more than 4 times the query's duration. Defaults to 900 (15 minutes).
 	Frequency pulumi.IntPtrInput
 	// Name of the trigger.
 	Name pulumi.StringPtrInput
@@ -282,7 +282,7 @@ type triggerArgs struct {
 	Description *string `pulumi:"description"`
 	// The state of the trigger. If true, the trigger will not be run. Defaults to false.
 	Disabled *bool `pulumi:"disabled"`
-	// The interval (in seconds) in which to check the results of the query’s calculation against the threshold. Value must be divisible by 60 and between 60 and 86400 (between 1 minute and 1 day). Defaults to 900 (15 minutes).
+	// The interval (in seconds) in which to check the results of the query’s calculation against the threshold. This value must be divisible by 60, between 60 and 86400 (between 1 minute and 1 day), and not be more than 4 times the query's duration. Defaults to 900 (15 minutes).
 	Frequency *int `pulumi:"frequency"`
 	// Name of the trigger.
 	Name *string `pulumi:"name"`
@@ -304,7 +304,7 @@ type TriggerArgs struct {
 	Description pulumi.StringPtrInput
 	// The state of the trigger. If true, the trigger will not be run. Defaults to false.
 	Disabled pulumi.BoolPtrInput
-	// The interval (in seconds) in which to check the results of the query’s calculation against the threshold. Value must be divisible by 60 and between 60 and 86400 (between 1 minute and 1 day). Defaults to 900 (15 minutes).
+	// The interval (in seconds) in which to check the results of the query’s calculation against the threshold. This value must be divisible by 60, between 60 and 86400 (between 1 minute and 1 day), and not be more than 4 times the query's duration. Defaults to 900 (15 minutes).
 	Frequency pulumi.IntPtrInput
 	// Name of the trigger.
 	Name pulumi.StringPtrInput
@@ -423,7 +423,7 @@ func (o TriggerOutput) Disabled() pulumi.BoolPtrOutput {
 	return o.ApplyT(func(v *Trigger) pulumi.BoolPtrOutput { return v.Disabled }).(pulumi.BoolPtrOutput)
 }
 
-// The interval (in seconds) in which to check the results of the query’s calculation against the threshold. Value must be divisible by 60 and between 60 and 86400 (between 1 minute and 1 day). Defaults to 900 (15 minutes).
+// The interval (in seconds) in which to check the results of the query’s calculation against the threshold. This value must be divisible by 60, between 60 and 86400 (between 1 minute and 1 day), and not be more than 4 times the query's duration. Defaults to 900 (15 minutes).
 func (o TriggerOutput) Frequency() pulumi.IntOutput {
 	return o.ApplyT(func(v *Trigger) pulumi.IntOutput { return v.Frequency }).(pulumi.IntOutput)
 }
