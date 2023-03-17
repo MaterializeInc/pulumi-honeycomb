@@ -50,7 +50,7 @@ func Provider() tfbridge.ProviderInfo {
 		GitHubOrg:         "honeycombio",
 		Homepage:          "https://github.com/honeycombio/terraform-provider-honeycombio",
 		Repository:        "https://github.com/honeycombio/terraform-provider-honeycombio",
-		PluginDownloadURL: "https://github.com/MaterializeInc/pulumi-honeycomb/releases/download/v${VERSION}",
+		PluginDownloadURL: "github://api.github.com/MaterializeInc/pulumi-honeycomb",
 		DisplayName:       "Honeycomb.io",
 		Config:            map[string]*tfbridge.SchemaInfo{},
 		Resources: map[string]*tfbridge.ResourceInfo{

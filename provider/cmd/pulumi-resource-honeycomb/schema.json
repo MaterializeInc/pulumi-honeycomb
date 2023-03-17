@@ -16,7 +16,7 @@
     "attribution": "This Pulumi package is based on the [`honeycombio` Terraform Provider](https://github.com/honeycombio/terraform-provider-honeycombio).",
     "repository": "https://github.com/honeycombio/terraform-provider-honeycombio",
     "logoUrl": "https://raw.githubusercontent.com/MaterializeInc/pulumi-honeycomb/main/assets/honeycomb.svg",
-    "pluginDownloadURL": "https://github.com/MaterializeInc/pulumi-honeycomb/releases/download/v${VERSION}",
+    "pluginDownloadURL": "github://api.github.com/MaterializeInc/pulumi-honeycomb",
     "publisher": "Materialize Inc",
     "meta": {
         "moduleFormat": "(.*)(?:/[^/]*)"
